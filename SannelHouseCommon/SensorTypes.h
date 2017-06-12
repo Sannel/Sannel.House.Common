@@ -6,7 +6,10 @@ namespace Sannel
 {
 	namespace House
 	{
-		public enum class SensorTypes : int
+#ifndef ARDUINO
+		public 
+#endif
+		enum class SensorTypes : int
 		{
 			Test = 0,
 			Temperature = 1
