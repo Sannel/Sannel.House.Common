@@ -6,7 +6,7 @@ namespace Sannel
 {
 	namespace House
 	{
-#ifndef ARDUINO
+#ifdef _WINRT_DLL
 		public 
 #endif
 		enum class SensorTypes : int
