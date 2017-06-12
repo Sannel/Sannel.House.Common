@@ -2,10 +2,16 @@
 #ifndef _SENSORTYPES_H_
 #define _SENSORTYPES_H_
 
-enum class SensorTypes 
+namespace Sannel
 {
-	Test = 0,
-	Temperature = 1
-};
+	namespace House
+	{
+		public enum class SensorTypes : int
+		{
+			Test = 0,
+			Temperature = 1
+		};
+	}
+}
 
 #endif
