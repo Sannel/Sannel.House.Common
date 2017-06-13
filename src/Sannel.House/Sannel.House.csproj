@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard1.6</TargetFramework>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Version>0.1.0-dev-0001</Version>
+		<VersionSufix>$(VersionSuffix)</VersionSufix>
+		<Authors>Adam Holt</Authors>
+		<Description>Common Classes and Enums that are shared between layers of Sannel House</Description>
+		<PackageLicenseUrl>https://github.com/Sannel/Sannel.House.Common/blob/master/LICENSE</PackageLicenseUrl>
+		<PackageProjectUrl>https://github.com/Sannel/Sannel.House.Common</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Sannel/Sannel.House.Common</RepositoryUrl>
+	</PropertyGroup>
+
+</Project>
