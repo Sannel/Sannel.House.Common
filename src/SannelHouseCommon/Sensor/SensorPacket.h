@@ -26,6 +26,11 @@ namespace Sannel
 				SensorPacket Packet;
 				uint8 Data[80];
 			};
+
+			void ResetSensorPacketUnion(SensorPacketUnion* packet)
+			{
+				std::fill_n(packet->Data, sizeof(packet->Data), 0);
+			}
 		}
 	}
 }

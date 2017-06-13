@@ -14,22 +14,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Code\Sannel\Sannel.House.Common\src\SannelHouseCommon\SannelHouseCommon.cpp">
+    <ClCompile Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\SannelHouseCommon\SannelHouseCommon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="$(MSBuildThisFileDirectory)library.properties" />
-    <Text Include="C:\Code\Sannel\Sannel.House.Common\src\SannelHouseCommon\SannelHouseCommon.h">
+    <Text Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\SannelHouseCommon\SannelHouseCommon.h">
       <Filter>Header Files</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\SannelHouseCommon\Sensor\SensorPacket.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\SannelHouseCommon\Sensor\SensorPacket.h">
+      <Filter>Header Files\Sensor</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\SannelHouseCommon\Sensor\SensorTypes.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\SannelHouseCommon\Sensor\SensorTypes.h">
+      <Filter>Header Files\Sensor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
