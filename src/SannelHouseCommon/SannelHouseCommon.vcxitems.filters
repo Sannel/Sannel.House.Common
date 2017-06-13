@@ -26,10 +26,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\SannelHouseCommon\Sensor\SensorPacket.h">
-      <Filter>Header Files\Sensor</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\SannelHouseCommon\Sensor\SensorTypes.h">
-      <Filter>Header Files\Sensor</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

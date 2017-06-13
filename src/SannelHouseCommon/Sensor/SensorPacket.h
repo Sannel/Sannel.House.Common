@@ -29,7 +29,7 @@ namespace Sannel
 
 			void ResetSensorPacketUnion(SensorPacketUnion* packet)
 			{
-				std::fill_n(packet->Data, sizeof(packet->Data), 0);
+				std::fill_n(packet->Data, sizeof(packet->Data), 255);
 			}
 		}
 	}
