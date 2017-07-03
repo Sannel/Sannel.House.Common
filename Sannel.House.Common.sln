@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F84321D6-5C74-4960-AC46-AED4DB263C94}"
 EndProject
@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House", "src\Sannel.House\Sannel.House.csproj", "{645A807F-3373-41CB-A9CC-C9B08F03DA2C}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SannelHouseCommon", "src\SannelHouseCommon\SannelHouseCommon.vcxitems", "{63F9001F-0B86-4AC2-8844-ACE5300403EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +49,5 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{645A807F-3373-41CB-A9CC-C9B08F03DA2C} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
-		{63F9001F-0B86-4AC2-8844-ACE5300403EE} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
 	EndGlobalSection
 EndGlobal

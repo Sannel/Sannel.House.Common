@@ -4,11 +4,7 @@ using System.Text;
 
 namespace Sannel.House.Sensor
 {
-    public
-#if WINDOWSRUNTIME
-		sealed
-#endif
-	class SensorPacket
+    public class SensorPacket
     {
 		public int DeviceId { get; set; }
 		public SensorTypes SensorType { get; set; }
