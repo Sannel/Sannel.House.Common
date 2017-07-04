@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\.gitignore = ..\.gitignore
 		build.cake = build.cake
 		Gulpfile.js = Gulpfile.js
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House", "src\Sannel.House\Sannel.House.csproj", "{645A807F-3373-41CB-A9CC-C9B08F03DA2C}"
