@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 
 namespace Sannel.House.ToCPP
 {
@@ -21,7 +23,17 @@ namespace Sannel.House.ToCPP
    limitations under the License.*/
 /* This is generated code so probably best not to edit it */";
 
-			var type = typeof(IRun);
-        }
+			var ass = System.Reflection.Assembly.GetEntryAssembly();
+			var irun = typeof(IRun);
+
+			foreach (var ti in ass.DefinedTypes)
+			{
+				if (ti.ImplementedInterfaces.Contains(irun))
+				{
+					var r = ass.CreateInstance(ti.AssemblyQualifiedName) as IRun;
+					r?.Generate(license);
+				}
+			}
+		}
     }
 }
