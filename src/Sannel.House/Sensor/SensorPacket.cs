@@ -6,7 +6,7 @@ namespace Sannel.House.Sensor
 {
     public class SensorPacket
     {
-		public int DeviceId { get; set; }
+		public uint DeviceId { get; set; }
 		public SensorTypes SensorType { get; set; }
 
 		public double[] Values { get; internal set; } = new double[9];
@@ -27,7 +27,7 @@ namespace Sannel.House.Sensor
 
 			if(data.Length >= 4)
 			{
-				DeviceId = BitConverter.ToInt32(data, 0);
+				DeviceId = BitConverter.ToUInt32(data, 0);
 			}
 
 			if(data.Length >= 8)
