@@ -1,12 +1,6 @@
 ﻿#pragma once
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "arduino.h"
-#else
-	#include "WProgram.h"
-#endif
-
-#include "Sensor/SensorTypes.h"
+#include "SensorTypes.h"
 
 namespace Sannel
 {
