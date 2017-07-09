@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <ItemsProjectGuid>{eaca5b58-d1eb-4329-8fd4-11579862d300}</ItemsProjectGuid>
+    <ItemsProjectGuid>{4c4b7312-3b0c-4973-b431-e3c4a08ce0ab}</ItemsProjectGuid>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -16,16 +16,17 @@
   <ItemGroup>
     <Text Include="$(MSBuildThisFileDirectory)readme.txt" />
     <Text Include="$(MSBuildThisFileDirectory)library.properties" />
-    <Text Include="$(MSBuildThisFileDirectory)Sannel_House.h" />
+    <Text Include="$(MSBuildThisFileDirectory)Sannel.h" />
   </ItemGroup>
   <ItemGroup>
-    <!-- <ClInclude Include="$(MSBuildThisFileDirectory)Sannel_House.h" /> -->
-    <ClInclude Include="$(MSBuildThisFileDirectory)SannelDefines.h" />
+    <!-- <ClInclude Include="$(MSBuildThisFileDirectory)Sannel.h" /> -->
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sannel_House\SannelDefines.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\SannelDefines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorPacket.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorTypes.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sannel.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\SensorPacket.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Sannel_House.cpp" />
   </ItemGroup>
 </Project>

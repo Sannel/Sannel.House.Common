@@ -1,6 +1,6 @@
 ﻿
 #include "SensorPacket.h"
-#include <stdlib.h>
+#include <algorithm>
 
 void Sannel::House::Sensor::ResetSensorPacketUnion(SensorPacketUnion* packet)
 {

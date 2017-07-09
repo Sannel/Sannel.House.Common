@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "SensorTypes.h"
+#include <Arduino.h>
 
 namespace Sannel
 {
@@ -21,10 +22,7 @@ namespace Sannel
 				uint8 Data[80];
 			};
 
-			void ResetSensorPacketUnion(SensorPacketUnion* packet)
-			{
-				std::fill_n(packet->Data, sizeof(packet->Data), 255);
-			}
+			void ResetSensorPacketUnion(SensorPacketUnion* packet);
 		}
 	}
 }
