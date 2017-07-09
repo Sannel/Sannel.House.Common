@@ -3,15 +3,16 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard1.4</TargetFramework>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Version>0.3.0-alpha-0000</Version>
+		<Version>0.3.0-alpha-0001</Version>
 		<VersionSufix>$(VersionSuffix)</VersionSufix>
 		<Authors>Adam Holt</Authors>
 		<Description>Common Classes and Enums that are shared between layers of Sannel House</Description>
 		<PackageLicenseUrl>https://github.com/Sannel/Sannel.House.Common/blob/master/LICENSE</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/Sannel/Sannel.House.Common</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Sannel/Sannel.House.Common</RepositoryUrl>
-		<AssemblyVersion>0.3.0.0</AssemblyVersion>
-		<PackageReleaseNotes>Added Sensor Packet Listener to listen for packets.</PackageReleaseNotes>
+		<AssemblyVersion>0.3.0.1</AssemblyVersion>
+		<PackageReleaseNotes>DeviceId is now an int instead of a uint because the database does not support uint.</PackageReleaseNotes>
+		<FileVersion>0.3.0.1</FileVersion>
 	</PropertyGroup>
 
 </Project>
