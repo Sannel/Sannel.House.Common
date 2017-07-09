@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		..\.gitignore = ..\.gitignore
-		build.cake = build.cake
-		Gulpfile.js = Gulpfile.js
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -19,8 +17,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House.Tests", "src\Sannel.House.Tests\Sannel.House.Tests.csproj", "{DA6E194C-20B8-4971-BC1A-F3503F42F3F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House.ToCPP", "src\Sannel.House.ToCPP\Sannel.House.ToCPP.csproj", "{BA2ED84D-A4D6-45D8-B2C7-760DDA4C79EF}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sannel_House", "src\Sannel_House\Sannel_House.vcxitems", "{EACA5B58-D1EB-4329-8FD4-11579862D300}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,6 +86,5 @@ Global
 		{645A807F-3373-41CB-A9CC-C9B08F03DA2C} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
 		{DA6E194C-20B8-4971-BC1A-F3503F42F3F2} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
 		{BA2ED84D-A4D6-45D8-B2C7-760DDA4C79EF} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
-		{EACA5B58-D1EB-4329-8FD4-11579862D300} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
 	EndGlobalSection
 EndGlobal
