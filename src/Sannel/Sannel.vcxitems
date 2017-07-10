@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <!-- <ClInclude Include="$(MSBuildThisFileDirectory)Sannel.h" /> -->
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sannel_House\SannelDefines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SannelDefines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorPacket.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorTypes.h" />

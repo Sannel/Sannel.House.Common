@@ -12,7 +12,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.*/
 /* This is generated code so probably best not to edit it */
-#pragma once
+#ifndef _SANNELDEFINES_
+#define _SANNELDEFINES_
 
 #ifdef DEBUG
 #define SERVER_PORT 5000
@@ -20,4 +21,6 @@
 #else
 #define SERVER_PORT 6000
 #define SENSOR_BROADCAST_PORT 8257
+#endif
+
 #endif

@@ -11,11 +11,11 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-/* This is generated code so probably best not to edit it */
-#pragma once
+   
+#ifndef _SENSORPACKET_
+#define _SENSORPACKET_
 
 #include "SensorTypes.h"
-#include <Arduino.h>
 
 namespace Sannel
 {
@@ -33,10 +33,12 @@ namespace Sannel
 			union SensorPacketUnion
 			{
 				SensorPacket Packet;
-				uint8 Data[80];
+				unsigned char Data[80];
 			};
 
 			void ResetSensorPacketUnion(SensorPacketUnion* packet);
 		}
 	}
 }
+
+#endif

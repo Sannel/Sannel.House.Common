@@ -13,7 +13,9 @@
    limitations under the License.*/
 /* This is generated code so probably best not to edit it */
 
-#pragma once
+#ifndef _SENSORTYPES_
+#define _SENSORTYPES_
+
 namespace Sannel
 {
 	namespace House
@@ -33,3 +35,5 @@ namespace Sannel
 		}
 	}
 }
+
+#endif

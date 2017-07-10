@@ -26,9 +26,6 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\Sannel\..\Sannel_House\SannelDefines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\Sannel\src\SannelDefines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
