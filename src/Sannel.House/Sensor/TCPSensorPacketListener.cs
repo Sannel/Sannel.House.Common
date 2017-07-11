@@ -22,39 +22,60 @@ namespace Sannel.House.Sensor
 {
 	public class TCPSensorPacketListener : IDisposable
 	{
+		protected bool running = false;
 		protected TcpListener listener;
 
 		public event EventHandler<SensorPacketReceivedEventArgs> PacketReceived;
 
 		public async void Begin(uint port)
 		{
+			running = true;
 			listener = new TcpListener(new IPEndPoint(IPAddress.Any, (int)port));
 
 			listener.Start();
 
-			while(true)
+			while(running)
 			{
 				var client = await listener.AcceptTcpClientAsync();
 				if (client != null)
 				{
-					Task.Run(() => ProcessClient(client));
+					ProcessClient(client);
 				}
 			}
 		}
 
-		protected virtual void ProcessClient(TcpClient client)
+		protected virtual async void ProcessClient(TcpClient client)
 		{
+			await Task.Delay(0); // let the client accept another connection
 			using (client)
 			{
 				using (var stream = client.GetStream())
 				{
+					var count = stream.ReadByte();
+					for(var i = 0; i < count; i++)
+					{
+						var buffer = new byte[84];
+						var read = await stream.ReadAsync(buffer, 0, buffer.Length);
+						var packet = new SensorPacket();
+						packet.Fill(buffer);
+						try
+						{
+							PacketReceived?.Invoke(this, new SensorPacketReceivedEventArgs()
+							{
+								Packet = packet
+							});
+						}
+						catch
+						{ }
+					}
 				}
 			}
 		}
 
 		public void Dispose()
 		{
-			listener.Stop();
+			running = false;
+			listener?.Stop();
 		}
 	}
 }

@@ -25,7 +25,8 @@ namespace Sannel.House.ToCPP
 		{
 			var builder = new StringBuilder(license);
 			builder.AppendLine();
-			builder.AppendLine(@"#pragma once
+			builder.AppendLine(@"#ifndef _SANNELDEFINES_
+#define _SANNELDEFINES_
 
 #ifdef DEBUG");
 			var t = typeof(Defaults.Development);
@@ -44,6 +45,7 @@ namespace Sannel.House.ToCPP
 				builder.AppendLine($"#define {field.Name} {field.GetValue(null)}");
 			}
 
+			builder.AppendLine("#endif");
 			builder.AppendLine("#endif");
 
 			var path = Path.GetFullPath("..\\Sannel\\src\\SannelDefines.h");

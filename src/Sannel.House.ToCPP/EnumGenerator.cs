@@ -29,7 +29,8 @@ namespace Sannel.House.ToCPP
 			var builder = new StringBuilder();
 			builder.AppendLine(license);
 			builder.AppendLine();
-			builder.AppendLine("#pragma once");
+			builder.AppendLine($"#ifndef _{type.Name.ToUpper()}_");
+			builder.AppendLine($"#define _{type.Name.ToUpper()}_");
 
 			var namespaces = type.Namespace.Split('.');
 
@@ -47,7 +48,7 @@ namespace Sannel.House.ToCPP
 			}
 
 			builder.AppendTabs(tabs);
-			builder.AppendLine($"enum class {type.Name} : int");
+			builder.AppendLine($"enum class {type.Name} : long");
 			builder.AppendTabs(tabs);
 			builder.AppendLine("{");
 			tabs++;
@@ -77,6 +78,8 @@ namespace Sannel.House.ToCPP
 				builder.AppendTabs(tabs);
 				builder.AppendLine("}");
 			}
+
+			builder.AppendLine("#endif");
 
 			var path = Path.GetFullPath("..\\Sannel\\src");
 

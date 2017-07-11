@@ -22,5 +22,4 @@
 #define SERVER_PORT 6000
 #define SENSOR_BROADCAST_PORT 8257
 #endif
-
 #endif

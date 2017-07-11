@@ -1,4 +1,4 @@
-﻿/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2017 Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
 
 #ifndef _SENSORTYPES_
 #define _SENSORTYPES_
-
 namespace Sannel
 {
 	namespace House
@@ -35,5 +34,4 @@ namespace Sannel
 		}
 	}
 }
-
 #endif
