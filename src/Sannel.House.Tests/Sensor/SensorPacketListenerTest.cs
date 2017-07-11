@@ -25,7 +25,7 @@ namespace Sannel.House.Tests.Sensor
 		[Fact]
 		public async Task Begin()
 		{
-			using(var listener = new SensorPacketListener())
+			using(var listener = new UDPSensorPacketListener())
 			{
 				listener.Begin(8172);
 

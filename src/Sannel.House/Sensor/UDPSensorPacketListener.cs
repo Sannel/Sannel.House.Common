@@ -19,7 +19,7 @@ using System.Text;
 
 namespace Sannel.House.Sensor
 {
-	public class SensorPacketListener : IDisposable
+	public class UDPSensorPacketListener : IDisposable
 	{
 		protected UdpClient client;
 

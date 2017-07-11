@@ -25,15 +25,16 @@ namespace Sannel
 		{
 			struct SensorPacket
 			{
-				int DeviceId;
+				long DeviceId;
 				SensorTypes SensorType;
+				unsigned long MillsOffset;
 				double Values[9];
 			};
 
 			union SensorPacketUnion
 			{
 				SensorPacket Packet;
-				unsigned char Data[80];
+				unsigned char Data[84];
 			};
 
 			void ResetSensorPacketUnion(SensorPacketUnion* packet);

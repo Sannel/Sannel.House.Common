@@ -22,6 +22,8 @@ namespace Sannel.House.Sensor
 		public int DeviceId { get; set; }
 		public SensorTypes SensorType { get; set; }
 
+		public uint MillisOffset { get; set; } = 0;
+
 		public double[] Values { get; internal set; } = new double[9];
 
 		public void Fill(byte[] data)
@@ -48,10 +50,15 @@ namespace Sannel.House.Sensor
 				SensorType = (SensorTypes)BitConverter.ToInt32(data, 4);
 			}
 
+			if(data.Length >= 12)
+			{
+				MillisOffset = BitConverter.ToUInt32(data, 8);
+			}
+
 			int startIndex;
 			for(var i = 0; i < Values.Length; i++)
 			{
-				startIndex = 8 + (i * 8);
+				startIndex = 12 + (i * 8);
 				if(data.Length >= startIndex + 8)
 				{
 					Values[i] = BitConverter.ToDouble(data, startIndex);
