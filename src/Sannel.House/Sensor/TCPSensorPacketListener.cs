@@ -55,7 +55,13 @@ namespace Sannel.House.Sensor
 					for(var i = 0; i < count; i++)
 					{
 						var buffer = new byte[84];
-						var read = await stream.ReadAsync(buffer, 0, buffer.Length);
+						var index = 0;
+						while (index < buffer.Length)
+						{
+							var read = await stream.ReadAsync(buffer, index, buffer.Length - index);
+							index += read;
+						}
+
 						var packet = new SensorPacket();
 						packet.Fill(buffer);
 						try
