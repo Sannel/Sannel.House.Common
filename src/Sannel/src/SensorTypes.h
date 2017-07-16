@@ -21,7 +21,7 @@ namespace Sannel
 	{
 		namespace Sensor
 		{
-			enum class SensorTypes : long
+			enum class SensorTypes : int
 			{
 				Test = 0,
 				Temperature = 1,

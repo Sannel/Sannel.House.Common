@@ -48,7 +48,7 @@ namespace Sannel.House.ToCPP
 			}
 
 			builder.AppendTabs(tabs);
-			builder.AppendLine($"enum class {type.Name} : long");
+			builder.AppendLine($"enum class {type.Name} : int");
 			builder.AppendTabs(tabs);
 			builder.AppendLine("{");
 			tabs++;
