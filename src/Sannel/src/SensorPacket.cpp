@@ -15,7 +15,7 @@
 #include "SensorPacket.h"
 #include <algorithm>
 
-void Sannel::House::Sensor::ResetSensorPacketUnion(SensorPacketUnion &packet)
+void Sannel::House::Sensor::ResetSensorPacketUnion(Sannel::House::Sensor::SensorPacketUnion &packet)
 {
 	std::fill_n(packet.Data, sizeof(packet.Data), 255);
 }
