@@ -37,7 +37,7 @@ namespace Sannel
 				unsigned char Data[84];
 			};
 
-			void ResetSensorPacketUnion(SensorPacketUnion* packet);
+			void ResetSensorPacketUnion(SensorPacketUnion &packet);
 		}
 	}
 }
