@@ -29,15 +29,9 @@ namespace Sannel
 				SensorTypes SensorType;
 				unsigned long MillsOffset;
 				double Values[9];
-			} __attribute__((packed));
-
-			union SensorPacketUnion
-			{
-				SensorPacket Packet;
-				unsigned char Data[84];
 			};
-
-			void ResetSensorPacketUnion(SensorPacketUnion &packet);
+			
+			void ResetSensorPacket(SensorPacket &packet);
 		}
 	}
 }

@@ -13,9 +13,15 @@
    limitations under the License.*/
 /* This is generated code so probably best not to edit it */
 #include "SensorPacket.h"
-#include <algorithm>
 
-void Sannel::House::Sensor::ResetSensorPacketUnion(Sannel::House::Sensor::SensorPacketUnion &packet)
+void Sannel::House::Sensor::ResetSensorPacket(SensorPacket &packet)
 {
-	std::fill_n(packet.Data, sizeof(packet.Data), 255);
+	unsigned char* data = (unsigned char*)&packet;
+	int size = sizeof(packet);
+	for(int i=0;i<size;i++)
+	{ 
+		data[i] = 255;
+	}
 }
+
+
