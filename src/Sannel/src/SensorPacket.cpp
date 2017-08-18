@@ -11,13 +11,12 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-/* This is generated code so probably best not to edit it */
 #include "SensorPacket.h"
 
 void Sannel::House::Sensor::ResetSensorPacket(SensorPacket &packet)
 {
-	unsigned char* data = (unsigned char*)&packet;
-	int size = sizeof(packet);
+	unsigned char* data = (unsigned char*)&(packet.Values);
+	int size = sizeof(packet.Values);
 	for(int i=0;i<size;i++)
 	{ 
 		data[i] = 255;

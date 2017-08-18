@@ -1,4 +1,4 @@
-﻿/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2017 Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,6 +17,10 @@
 
 #include "SensorTypes.h"
 
+#ifndef READINGS_BUFFER
+#define READINGS_BUFFER 15 // the number of readings we hold in memory before sending it to the server
+#endif
+
 namespace Sannel
 {
 	namespace House
@@ -25,10 +29,9 @@ namespace Sannel
 		{
 			struct SensorPacket
 			{
-				long DeviceId;
+				unsigned char MacAddress[6];
 				SensorTypes SensorType;
-				unsigned long MillsOffset;
-				double Values[9];
+				double Values[10];
 			};
 			
 			void ResetSensorPacket(SensorPacket &packet);
