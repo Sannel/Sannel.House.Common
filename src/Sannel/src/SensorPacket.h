@@ -29,7 +29,6 @@ namespace Sannel
 		{
 			struct SensorPacket
 			{
-				unsigned char MacAddress[6];
 				SensorTypes SensorType;
 				double Values[10];
 			};

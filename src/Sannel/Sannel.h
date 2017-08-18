@@ -12,6 +12,7 @@
 	#include "arduino.h"
 #else
 	#include "WProgram.h"
+	#include "stdafx.h"
 #endif
 
 

@@ -11,19 +11,34 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-#include "stdafx.h"
+
+#ifndef _SENSORSTORE_H_
+#define _SENSORSTORE_H_
 
 #include "SensorPacket.h"
 
-void Sannel::House::Sensor::ResetSensorPacket(SensorPacket &packet)
+namespace Sannel
 {
-	packet.SensorType = SensorTypes::Test;
-	unsigned char* data = (unsigned char*)&(packet.Values);
-	int size = sizeof(packet.Values);
-	for(int i=0;i<size;i++)
-	{ 
-		data[i] = 255;
+	namespace House
+	{
+		namespace Sensor
+		{
+			class SensorStore
+			{
+			public:
+				SensorStore(int size);
+				void SetMacAddress(unsigned char* mac);
+
+				const unsigned char* GetMacAddress();
+				int GetSize();
+
+			private:
+				int size;
+				SensorPacket *packets;
+				unsigned char macAddress[6];
+			};
+		}
 	}
 }
 
-
+#endif

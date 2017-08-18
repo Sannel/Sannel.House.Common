@@ -21,11 +21,13 @@
   <ItemGroup>
     <!-- <ClInclude Include="$(MSBuildThisFileDirectory)Sannel.h" /> -->
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SannelDefines.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorStore.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorPacket.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Sannel.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\SensorPacket.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\SensorStore.cpp" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F84321D6-5C74-4960-AC46-AED4DB263C94}"
 EndProject
@@ -20,7 +20,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House.ToCPP", "src\S
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sannel", "src\Sannel\Sannel.vcxitems", "{4C4B7312-3B0C-4973-B431-E3C4A08CE0AB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sannel.Tests", "src\Sannel.Tests\Sannel.Tests.vcxproj", "{17CC2479-667E-47B4-9E2A-B3148A90D4D7}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\Sannel\Sannel.vcxitems*{4c4b7312-3b0c-4973-b431-e3c4a08ce0ab}*SharedItemsImports = 9
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
@@ -80,6 +85,18 @@ Global
 		{BA2ED84D-A4D6-45D8-B2C7-760DDA4C79EF}.Release|x64.Build.0 = Release|Any CPU
 		{BA2ED84D-A4D6-45D8-B2C7-760DDA4C79EF}.Release|x86.ActiveCfg = Release|Any CPU
 		{BA2ED84D-A4D6-45D8-B2C7-760DDA4C79EF}.Release|x86.Build.0 = Release|Any CPU
+		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Debug|ARM.ActiveCfg = Debug|Win32
+		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Debug|x64.ActiveCfg = Debug|x64
+		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Debug|x64.Build.0 = Debug|x64
+		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Debug|x86.ActiveCfg = Debug|Win32
+		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Debug|x86.Build.0 = Debug|Win32
+		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Release|Any CPU.ActiveCfg = Release|Win32
+		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Release|ARM.ActiveCfg = Release|Win32
+		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Release|x64.ActiveCfg = Release|x64
+		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Release|x64.Build.0 = Release|x64
+		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Release|x86.ActiveCfg = Release|Win32
+		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,5 +106,9 @@ Global
 		{DA6E194C-20B8-4971-BC1A-F3503F42F3F2} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
 		{BA2ED84D-A4D6-45D8-B2C7-760DDA4C79EF} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
 		{4C4B7312-3B0C-4973-B431-E3C4A08CE0AB} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
+		{17CC2479-667E-47B4-9E2A-B3148A90D4D7} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {39A1912D-C82B-4B54-A2C2-CB22583396DD}
 	EndGlobalSection
 EndGlobal
