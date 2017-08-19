@@ -17,10 +17,6 @@
 
 #include "SensorTypes.h"
 
-#ifndef READINGS_BUFFER
-#define READINGS_BUFFER 15 // the number of readings we hold in memory before sending it to the server
-#endif
-
 namespace Sannel
 {
 	namespace House
@@ -30,6 +26,7 @@ namespace Sannel
 			struct SensorPacket
 			{
 				SensorTypes SensorType;
+				unsigned long Offset;
 				double Values[10];
 			};
 			

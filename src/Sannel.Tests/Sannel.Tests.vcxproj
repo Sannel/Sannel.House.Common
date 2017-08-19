@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Sannel\src\MAddress.h" />
     <ClInclude Include="..\Sannel\src\SensorPacket.h" />
     <ClInclude Include="..\Sannel\src\SensorStore.h" />
     <ClInclude Include="..\Sannel\src\SensorTypes.h" />

@@ -12,8 +12,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.*/
 
-#include "stdafx.h"
+#include "stdafx.h";
 
+#include "Sannel.h"
 #include "SensorStore.h"
 
 using namespace Sannel::House::Sensor;
@@ -21,26 +22,64 @@ using namespace Sannel::House::Sensor;
 SensorStore::SensorStore(int size)
 {
 	this->size = size;
-	this->packets = new SensorPacket[size];
-	this->macAddress[0] = 0;
-	this->macAddress[1] = 0;
-	this->macAddress[2] = 0;
-	this->macAddress[3] = 0;
-	this->macAddress[4] = 0;
-	this->macAddress[5] = 0;
+	packets = new SensorPacket[size];
+	current = 0;
+	macAddress.Byte1 = 0;
+	macAddress.Byte2 = 0;
+	macAddress.Byte3 = 0;
+	macAddress.Byte4 = 0;
+	macAddress.Byte5 = 0;
+	macAddress.Byte6 = 0;
 }
 
 void SensorStore::SetMacAddress(unsigned char* mac)
 {
-
+	macAddress.Byte1 = mac[0];
+	macAddress.Byte2 = mac[1];
+	macAddress.Byte3 = mac[2];
+	macAddress.Byte4 = mac[3];
+	macAddress.Byte5 = mac[4];
+	macAddress.Byte6 = mac[5];
 }
 
-const unsigned char* SensorStore::GetMacAddress()
+MAddress SensorStore::GetMacAddress()
 {
-	return this->macAddress;
+	return macAddress;
 }
 
 int SensorStore::GetSize()
 {
 	return size;
+}
+
+int SensorStore::GetStoredPackets()
+{
+	return current;
+}
+
+bool SensorStore::AddReading(SensorPacket &packet)
+{
+	if (current >= size) 
+	{
+		return true;
+	}
+
+	this->packets[current].SensorType = packet.SensorType;
+	this->packets[current].Offset = packet.Offset;
+	for (int i = 0; i < 10; i++) 
+	{
+		this->packets[current].Values[i] = packet.Values[i];
+	}
+
+	current++;
+
+	return current >= size;
+}
+
+SensorPacket &SensorStore::GetPacket(int index)
+{
+	if (index >= 0 && index < size)
+	{
+		return packets[index];
+	}
 }

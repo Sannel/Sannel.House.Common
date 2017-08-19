@@ -16,10 +16,11 @@
   <ItemGroup>
     <Text Include="$(MSBuildThisFileDirectory)readme.txt" />
     <Text Include="$(MSBuildThisFileDirectory)library.properties" />
-    <Text Include="$(MSBuildThisFileDirectory)Sannel.h" />
+    <Text Include="$(MSBuildThisFileDirectory)src\Sannel.h" />
   </ItemGroup>
   <ItemGroup>
     <!-- <ClInclude Include="$(MSBuildThisFileDirectory)Sannel.h" /> -->
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\MAddress.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SannelDefines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorStore.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorPacket.h" />

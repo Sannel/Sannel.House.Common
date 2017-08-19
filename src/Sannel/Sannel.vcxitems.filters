@@ -24,7 +24,7 @@
   <ItemGroup>
     <Text Include="$(MSBuildThisFileDirectory)readme.txt" />
     <Text Include="$(MSBuildThisFileDirectory)library.properties" />
-    <Text Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\Sannel.h">
+    <Text Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\Sannel.h">
       <Filter>Header Files</Filter>
     </Text>
   </ItemGroup>
@@ -39,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\SensorStore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\MAddress.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

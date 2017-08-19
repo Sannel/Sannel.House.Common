@@ -16,6 +16,7 @@
 #define _SENSORSTORE_H_
 
 #include "SensorPacket.h"
+#include "MAddress.h"
 
 namespace Sannel
 {
@@ -29,13 +30,20 @@ namespace Sannel
 				SensorStore(int size);
 				void SetMacAddress(unsigned char* mac);
 
-				const unsigned char* GetMacAddress();
+				MAddress GetMacAddress();
 				int GetSize();
 
+				int GetStoredPackets();
+
+				bool AddReading(SensorPacket &packet);
+
+				SensorPacket &GetPacket(int index);
+
 			private:
+				int current;
 				int size;
+				MAddress macAddress;
 				SensorPacket *packets;
-				unsigned char macAddress[6];
 			};
 		}
 	}

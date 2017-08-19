@@ -15,6 +15,7 @@ namespace SannelTests
 		{
 			SensorPacket p;
 			p.SensorType = SensorTypes::RainAmount;
+			p.Offset = 300;
 			for (int i = 0; i < 10; i++) 
 			{
 				p.Values[i] = 2;
@@ -23,6 +24,7 @@ namespace SannelTests
 			ResetSensorPacket(p);
 
 			Assert::AreEqual(int(SensorTypes::Test), int(p.SensorType));
+			Assert::AreEqual(unsigned long(0), p.Offset);
 
 			unsigned char* data = (unsigned char*)p.Values;
 

@@ -30,6 +30,9 @@
     <ClInclude Include="..\Sannel\src\SensorStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Sannel\src\MAddress.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
