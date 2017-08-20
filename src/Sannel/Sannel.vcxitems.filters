@@ -29,19 +29,19 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\MAddress.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\SannelDefines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\SensorStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\SensorPacket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\SensorTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\SensorStore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\MAddress.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

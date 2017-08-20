@@ -19,7 +19,7 @@
 
 using namespace Sannel::House::Sensor;
 
-SensorStore::SensorStore(int size)
+SensorStore::SensorStore(unsigned char size)
 {
 	this->size = size;
 	packets = new SensorPacket[size];
@@ -47,12 +47,12 @@ MAddress SensorStore::GetMacAddress()
 	return macAddress;
 }
 
-int SensorStore::GetSize()
+unsigned char SensorStore::GetSize()
 {
 	return size;
 }
 
-int SensorStore::GetStoredPackets()
+unsigned char SensorStore::GetStoredPackets()
 {
 	return current;
 }
@@ -76,10 +76,44 @@ bool SensorStore::AddReading(SensorPacket &packet)
 	return current >= size;
 }
 
-SensorPacket &SensorStore::GetPacket(int index)
+SensorPacket &SensorStore::GetPacket(unsigned char index)
 {
 	if (index >= 0 && index < size)
 	{
 		return packets[index];
+	}
+}
+
+void SensorStore::WritePackets(Stream &stream)
+{
+	stream.print(current);
+	stream.print(macAddress.Byte1);
+	stream.print(macAddress.Byte2);
+	stream.print(macAddress.Byte3);
+	stream.print(macAddress.Byte4);
+	stream.print(macAddress.Byte5);
+	stream.print(macAddress.Byte6);
+
+	SensorPacket* p;
+	for (unsigned char i = 0; i < current; i++)
+	{
+		p = &packets[i];
+
+		stream.print(int(p->SensorType));
+		stream.print(p->Offset);
+		for (unsigned char j = 0; j < 10; j++) 
+		{
+			stream.print(p->Values[j]);
+		}
+	}
+}
+
+void SensorStore::Reset()
+{
+	current = 0;
+
+	for (unsigned int i = 0; i < size; i++) 
+	{
+		ResetSensorPacket(packets[i]);
 	}
 }

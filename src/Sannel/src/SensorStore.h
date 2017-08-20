@@ -18,6 +18,12 @@
 #include "SensorPacket.h"
 #include "MAddress.h"
 
+#if defined(ARDUINO) && ARDUINO >= 100
+	#include "arduino.h"
+#else
+	#include "..\..\Sannel.Tests\Stream.h"
+#endif
+
 namespace Sannel
 {
 	namespace House
@@ -27,21 +33,26 @@ namespace Sannel
 			class SensorStore
 			{
 			public:
-				SensorStore(int size);
+				SensorStore(unsigned char size);
 				void SetMacAddress(unsigned char* mac);
 
 				MAddress GetMacAddress();
-				int GetSize();
+				unsigned char GetSize();
 
-				int GetStoredPackets();
+				unsigned char GetStoredPackets();
 
 				bool AddReading(SensorPacket &packet);
 
-				SensorPacket &GetPacket(int index);
+				SensorPacket &GetPacket(unsigned char index);
+
+
+
+				void WritePackets(Stream &stream);
+				void Reset();
 
 			private:
-				int current;
-				int size;
+				unsigned char current;
+				unsigned char size;
 				MAddress macAddress;
 				SensorPacket *packets;
 			};
