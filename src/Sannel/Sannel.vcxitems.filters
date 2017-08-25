@@ -11,37 +11,40 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\Sannel.cpp">
+    <ClCompile Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\Sannel\Sannel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\SensorPacket.cpp">
+    <ClCompile Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\Sannel\src\SensorPacket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\SensorStore.cpp">
+    <ClCompile Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\Sannel\src\SensorStore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="$(MSBuildThisFileDirectory)readme.txt" />
     <Text Include="$(MSBuildThisFileDirectory)library.properties" />
-    <Text Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\Sannel.h">
+    <Text Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\Sannel\src\Sannel.h">
       <Filter>Header Files</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\MAddress.h">
+    <ClInclude Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\Sannel\src\MAddress.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\SannelDefines.h">
+    <ClInclude Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\Sannel\src\SannelDefines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\SensorStore.h">
+    <ClInclude Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\Sannel\src\SensorStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\SensorPacket.h">
+    <ClInclude Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\Sannel\src\SensorPacket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Code\Sannel\Sannel.House.Common\src\Sannel\src\SensorTypes.h">
+    <ClInclude Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\Sannel\src\SensorTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Code\Sannel\Sannel.House.Devices\Sannel.House.Common\src\Sannel\src\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

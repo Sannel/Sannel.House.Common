@@ -25,7 +25,7 @@ namespace Sannel
 			{
 				Test = 0,
 				Temperature = 1,
-				TemperatureHumidityPresure = 2,
+				TemperatureHumidityPressure = 2,
 				WindSpeed = 3,
 				WindDirection = 4,
 				SoilMoisture = 5,
