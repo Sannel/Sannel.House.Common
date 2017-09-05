@@ -25,6 +25,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorStore.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorPacket.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorTypes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Sannel.cpp" />
