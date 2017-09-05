@@ -1,4 +1,4 @@
-﻿/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2017 Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the ""License"");
    you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ namespace Sannel.House.Sensor
 		protected bool running = false;
 		protected TcpListener listener;
 
-		public event EventHandler<SensorPacketReceivedEventArgs> PacketReceived;
+		public event EventHandler<SensorPacketsReceivedEventArgs> PacketReceived;
 
 		public async void Begin(uint port)
 		{
@@ -34,7 +34,7 @@ namespace Sannel.House.Sensor
 
 			listener.Start();
 
-			while(running)
+			while (running)
 			{
 				var client = await listener.AcceptTcpClientAsync();
 				if (client != null)
@@ -52,28 +52,42 @@ namespace Sannel.House.Sensor
 				using (var stream = client.GetStream())
 				{
 					var count = stream.ReadByte();
-					for(var i = 0; i < count; i++)
+
+					var macBytes = new byte[8];
+
+					var read = await stream.ReadAsync(macBytes, 0, 6);
+					if (read != 6) // if its less then a mac address exit
+					{
+						return;
+					}
+
+					var mac = BitConverter.ToInt64(macBytes, 0);
+					var args = new SensorPacketsReceivedEventArgs
+					{
+						MacAddress = mac
+					};
+
+					for (var i = 0; i < count; i++)
 					{
 						var buffer = new byte[84];
 						var index = 0;
 						while (index < buffer.Length)
 						{
-							var read = await stream.ReadAsync(buffer, index, buffer.Length - index);
+							read = await stream.ReadAsync(buffer, index, buffer.Length - index);
 							index += read;
 						}
 
 						var packet = new SensorPacket();
 						packet.Fill(buffer);
-						try
-						{
-							PacketReceived?.Invoke(this, new SensorPacketReceivedEventArgs()
-							{
-								Packet = packet
-							});
-						}
-						catch
-						{ }
+						args.Packets.Add(packet);
 					}
+
+					try
+					{
+						PacketReceived?.Invoke(this, args);
+					}
+					catch
+					{ }
 				}
 			}
 		}

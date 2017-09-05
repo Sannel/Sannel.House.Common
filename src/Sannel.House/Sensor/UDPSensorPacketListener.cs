@@ -23,7 +23,7 @@ namespace Sannel.House.Sensor
 	{
 		protected UdpClient client;
 
-		public event EventHandler<SensorPacketReceivedEventArgs> PacketReceived;
+		public event EventHandler<SensorPacketsReceivedEventArgs> PacketReceived;
 
 		public async void Begin(uint port)
 		{
@@ -41,7 +41,7 @@ namespace Sannel.House.Sensor
 				packet.Fill(result.Buffer);
 				try
 				{
-					PacketReceived?.Invoke(this, new SensorPacketReceivedEventArgs()
+					PacketReceived?.Invoke(this, new SensorPacketsReceivedEventArgs()
 					{
 						Packet = packet
 					});

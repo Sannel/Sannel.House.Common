@@ -1,4 +1,4 @@
-﻿/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2017 Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the ""License"");
    you may not use this file except in compliance with the License.
@@ -17,8 +17,21 @@ using System.Text;
 
 namespace Sannel.House.Sensor
 {
-    public class SensorPacketReceivedEventArgs : EventArgs
-    {
-		public SensorPacket Packet { get; set; }
+	public class SensorPacketsReceivedEventArgs : EventArgs
+	{
+		/// <summary>
+		/// Gets or sets the mac address.
+		/// </summary>
+		/// <value>
+		/// The mac address.
+		/// </value>
+		public long MacAddress { get; set; }
+		/// <summary>
+		/// Gets the packets.
+		/// </summary>
+		/// <value>
+		/// The packets.
+		/// </value>
+		public IList<SensorPacket> Packets { get; } = new List<SensorPacket>();
 	}
 }
