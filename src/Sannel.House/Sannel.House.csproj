@@ -3,16 +3,16 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard1.4</TargetFramework>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Version>0.3.0-alpha-0003</Version>
+		<Version>0.4.0-alpha-0001</Version>
 		<VersionSufix>$(VersionSuffix)</VersionSufix>
 		<Authors>Adam Holt</Authors>
 		<Description>Common Classes and Enums that are shared between layers of Sannel House</Description>
 		<PackageLicenseUrl>https://github.com/Sannel/Sannel.House.Common/blob/master/LICENSE</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/Sannel/Sannel.House.Common</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Sannel/Sannel.House.Common</RepositoryUrl>
-		<AssemblyVersion>0.3.0.3</AssemblyVersion>
+		<AssemblyVersion>0.4.0.0</AssemblyVersion>
 		<PackageReleaseNotes>Moved SensorPacketListener to UDPSensorPacketListner added TCPSensorPacketListener</PackageReleaseNotes>
-		<FileVersion>0.3.0.3</FileVersion>
+		<FileVersion>0.4.0.0</FileVersion>
 	</PropertyGroup>
 
 </Project>
