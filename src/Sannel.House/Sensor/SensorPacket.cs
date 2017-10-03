@@ -1,4 +1,4 @@
-﻿/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2017 Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the ""License"");
    you may not use this file except in compliance with the License.
@@ -17,49 +17,42 @@ using System.Text;
 
 namespace Sannel.House.Sensor
 {
-    public class SensorPacket
-    {
-		public int DeviceId { get; set; }
+	public class SensorPacket
+	{
 		public SensorTypes SensorType { get; set; }
 
 		public uint MillisOffset { get; set; } = 0;
 
-		public double[] Values { get; internal set; } = new double[9];
+		public double[] Values { get; internal set; } = new double[10];
 
 		public void Fill(byte[] data)
 		{
-			DeviceId = 0;
 			SensorType = SensorTypes.Test;
-			for(var i = 0; i < Values.Length; i++)
+			for (var i = 0; i < Values.Length; i++)
 			{
 				Values[i] = 0;
 			}
 
-			if(data == null)
+			if (data == null)
 			{
 				return;
 			}
 
-			if(data.Length >= 4)
+			if (data.Length >= 4)
 			{
-				DeviceId = BitConverter.ToInt32(data, 0);
+				SensorType = (SensorTypes)BitConverter.ToInt32(data, 0);
 			}
 
-			if(data.Length >= 8)
+			if (data.Length >= 8)
 			{
-				SensorType = (SensorTypes)BitConverter.ToInt32(data, 4);
-			}
-
-			if(data.Length >= 12)
-			{
-				MillisOffset = BitConverter.ToUInt32(data, 8);
+				MillisOffset = BitConverter.ToUInt32(data, 4);
 			}
 
 			int startIndex;
-			for(var i = 0; i < Values.Length; i++)
+			for (var i = 0; i < Values.Length; i++)
 			{
-				startIndex = 12 + (i * 8);
-				if(data.Length >= startIndex + 8)
+				startIndex = 8 + (i * 8);
+				if (data.Length >= startIndex + 8)
 				{
 					Values[i] = BitConverter.ToDouble(data, startIndex);
 				}

@@ -13,6 +13,7 @@
    limitations under the License.*/
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -44,52 +45,65 @@ namespace Sannel.House.Sensor
 			}
 		}
 
-		protected virtual async void ProcessClient(TcpClient client)
+		protected virtual void ProcessClient(TcpClient client)
 		{
-			await Task.Delay(0); // let the client accept another connection
-			using (client)
+			Task.Run(async () =>
 			{
-				using (var stream = client.GetStream())
+				using (client)
 				{
-					var count = stream.ReadByte();
-
-					var macBytes = new byte[8];
-
-					var read = await stream.ReadAsync(macBytes, 0, 6);
-					if (read != 6) // if its less then a mac address exit
+					using (var stream = client.GetStream())
 					{
-						return;
+						await ReadStreamAsync(stream);
 					}
-
-					var mac = BitConverter.ToInt64(macBytes, 0);
-					var args = new SensorPacketsReceivedEventArgs
-					{
-						MacAddress = mac
-					};
-
-					for (var i = 0; i < count; i++)
-					{
-						var buffer = new byte[84];
-						var index = 0;
-						while (index < buffer.Length)
-						{
-							read = await stream.ReadAsync(buffer, index, buffer.Length - index);
-							index += read;
-						}
-
-						var packet = new SensorPacket();
-						packet.Fill(buffer);
-						args.Packets.Add(packet);
-					}
-
-					try
-					{
-						PacketReceived?.Invoke(this, args);
-					}
-					catch
-					{ }
 				}
+			});
+		}
+
+		protected virtual async Task<SensorPacketsReceivedEventArgs> ReadStreamAsync(Stream stream)
+		{
+			if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
 			}
+
+			var count = stream.ReadByte();
+
+			var macBytes = new byte[8];
+
+			var read = await stream.ReadAsync(macBytes, 0, 6);
+			if (read != 6) // if its less then a mac address exit
+			{
+				return null;
+			}
+
+			var mac = BitConverter.ToInt64(macBytes, 0);
+			var args = new SensorPacketsReceivedEventArgs
+			{
+				MacAddress = mac
+			};
+
+			for (var i = 0; i < count; i++)
+			{
+				var buffer = new byte[88];
+				var index = 0;
+				while (index < buffer.Length)
+				{
+					read = await stream.ReadAsync(buffer, index, buffer.Length - index);
+					index += read;
+				}
+
+				var packet = new SensorPacket();
+				packet.Fill(buffer);
+				args.Packets.Add(packet);
+			}
+
+			FirePacketReceived(args);
+			return args;
+		}
+
+		protected virtual void FirePacketReceived(SensorPacketsReceivedEventArgs args)
+		{
+			PacketReceived?.Invoke(this, args);
 		}
 
 		public void Dispose()
