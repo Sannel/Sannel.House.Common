@@ -37,7 +37,11 @@ namespace Sannel.House.Tests.Sensor
 		[Fact]
 		public async Task ReadStreamAsyncTest()
 		{
-			using (var listener = new TCPSensorPacketListenerMock())
+			var loggingFactory = new Microsoft.Extensions.Logging.LoggerFactory();
+			var logger = new Microsoft.Extensions.Logging.Logger<TCPSensorPacketListener>(loggingFactory);
+			loggingFactory.AddProvider(new Microsoft.Extensions.Logging.Debug.DebugLoggerProvider((f,l)=> true));
+
+			using (var listener = new TCPSensorPacketListenerMock(logger))
 			{
 				var called = false;
 
