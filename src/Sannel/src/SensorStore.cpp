@@ -86,24 +86,67 @@ SensorPacket &SensorStore::GetPacket(unsigned char index)
 
 void SensorStore::WritePackets(Stream &stream)
 {
-	stream.print(current);
-	stream.print(macAddress.Byte1);
-	stream.print(macAddress.Byte2);
-	stream.print(macAddress.Byte3);
-	stream.print(macAddress.Byte4);
-	stream.print(macAddress.Byte5);
-	stream.print(macAddress.Byte6);
+	Serial.println(current);
+	stream.write(current);
+	stream.write(macAddress.Byte1);
+	stream.write(macAddress.Byte2);
+	stream.write(macAddress.Byte3);
+	stream.write(macAddress.Byte4);
+	stream.write(macAddress.Byte5);
+	stream.write(macAddress.Byte6);
+	stream.flush();
+
+	Serial.print(macAddress.Byte1);
+	Serial.print(" ");
+	Serial.print(macAddress.Byte2);
+	Serial.print(" ");
+	Serial.print(macAddress.Byte3);
+	Serial.print(" ");
+	Serial.print(macAddress.Byte4);
+	Serial.print(" ");
+	Serial.print(macAddress.Byte5);
+	Serial.print(" ");
+	Serial.println(macAddress.Byte6);
+
+
 
 	SensorPacket* p;
 	for (unsigned char i = 0; i < current; i++)
 	{
 		p = &packets[i];
 
-		stream.print(int(p->SensorType));
-		stream.print(p->Offset);
+		byte *b;
+
+		b = (byte*)&(p->SensorType);
+
+		for (unsigned char y = 0; y < 4; y++) 
+		{
+			stream.write(b[y]);
+		}
+		stream.flush();
+		Serial.print("Sensor Type ");
+		Serial.println(int(p->SensorType));
+		b = (byte*)&(p->Offset);
+		for (unsigned char y = 0; y < 4; y++) 
+		{
+			stream.write(b[y]);
+		}
+		stream.flush();
+		Serial.print("Offset ");
+		Serial.println(p->Offset);
+
 		for (unsigned char j = 0; j < 10; j++) 
 		{
-			stream.print(p->Values[j]);
+			b = (byte*)(&(p->Values[j]));
+			for (unsigned char k = 0; k < 8; k++) 
+			{
+				stream.write(b[k]);
+			}
+			stream.flush();
+			Serial.print("Values[");
+			Serial.print(j);
+			Serial.print("] = ");
+			Serial.println(p->Values[j]);
 		}
 	}
 }
