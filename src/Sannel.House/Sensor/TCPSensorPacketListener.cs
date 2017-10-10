@@ -1,16 +1,16 @@
 /* Copyright 2017 Sannel Software, L.L.C.
 
-   Licensed under the Apache License, Version 2.0 (the ""License"");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+	Licensed under the Apache License, Version 2.0 (the ""License"");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
 
-	   http://www.apache.org/licenses/LICENSE-2.0
+		http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an ""AS IS"" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.*/
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an ""AS IS"" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.*/
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -53,21 +53,49 @@ namespace Sannel.House.Sensor
 			}
 		}
 
-		protected virtual void ProcessClient(TcpClient client) =>
-			Task.Run(async () =>
+		protected virtual void ProcessClient(TcpClient client)
+		{
+			Task.Run(() =>
 			{
-				logger.LogInformation("New client connected from {0}", client.Client.RemoteEndPoint);
-				using (client)
+				try
 				{
-					using (var stream = client.GetStream())
+					logger.LogInformation("New client connected from {0}", client.Client.RemoteEndPoint);
+					using (client)
 					{
-						await ReadStreamAsync(stream);
+						client.ReceiveBufferSize = 88;
+						using (var stream = client.GetStream())
+						{
+							logger.LogInformation("Have stream {0}", stream != null);
+							ReadStream(stream);
+						}
 					}
 				}
+				catch(Exception ex)
+				{
+					logger.LogError(new EventId(), ex, "Exception while dealing with client");
+				}
 			});
+		}
 
-		protected virtual async Task<SensorPacketsReceivedEventArgs> ReadStreamAsync(Stream stream)
+		protected virtual bool ReadBytes(ref byte[] bits, int length, Stream stream)
 		{
+			var read = 0;
+			var count = 0;
+
+			while(count < length && stream.CanRead)
+			{
+				read = stream.Read(bits, count, length - count);
+				count += read;
+			}
+
+			return count == length;
+
+		}
+
+		protected virtual SensorPacketsReceivedEventArgs ReadStream(Stream stream)
+		{
+
+			logger.LogInformation("Begin of ReadStreamAsync");
 			if (stream == null)
 			{
 				throw new ArgumentNullException(nameof(stream));
@@ -78,12 +106,12 @@ namespace Sannel.House.Sensor
 			logger.LogDebug("Incoming packages count {0}", count);
 
 			var macBytes = new byte[]{
-				0,0,0,0,0,0,0,0
-			};
+					0,0,0,0,0,0,0,0
+				};
 
-			var read = await stream.ReadAsync(macBytes, 0, 6);
-			if (read != 6) // if its less then a mac address exit
+			if(!ReadBytes(ref macBytes, 6, stream))
 			{
+				logger.LogDebug("Mac address was not the correct length.");
 				return null;
 			}
 
@@ -99,13 +127,16 @@ namespace Sannel.House.Sensor
 			for (var i = 0; i < count; i++)
 			{
 				var buffer = new byte[88];
-				var index = 0;
-				while (index < buffer.Length)
+				for(var k = 0; k < 8; k++)
 				{
-					read = await stream.ReadAsync(buffer, index, buffer.Length - index);
-					logger.LogDebug("Read {0} bytes from stream", read);
-					index += read;
+					buffer[k] = 0;
 				}
+				for(var b = 9;b < buffer.Length; b++)
+				{
+					buffer[b] = 255;
+				}
+
+				ReadBytes(ref buffer, buffer.Length, stream);
 
 				var packet = new SensorPacket();
 				packet.Fill(buffer);

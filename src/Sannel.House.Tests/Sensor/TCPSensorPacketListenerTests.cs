@@ -45,9 +45,9 @@ namespace Sannel.House.Tests.Sensor
 			{
 				var called = false;
 
-				await Assert.ThrowsAsync<ArgumentNullException>("stream", () =>
+				Assert.Throws<ArgumentNullException>("stream", () =>
 				{
-					return listener.ReadStreamAsyncWrapper(null);
+					return listener.ReadStreamWrapper(null);
 				});
 
 				var mstream = new MemoryStream();
@@ -59,7 +59,7 @@ namespace Sannel.House.Tests.Sensor
 
 				listener.PacketReceived += m;
 
-				await listener.ReadStreamAsyncWrapper(mstream);
+				listener.ReadStreamWrapper(mstream);
 
 				Assert.False(called);
 
@@ -69,7 +69,7 @@ namespace Sannel.House.Tests.Sensor
 				mstream.Write(bits, 0, 4);
 				mstream.Seek(0, SeekOrigin.Begin);
 
-				await listener.ReadStreamAsyncWrapper(mstream);
+				listener.ReadStreamWrapper(mstream);
 
 				Assert.False(called);
 
@@ -119,7 +119,7 @@ namespace Sannel.House.Tests.Sensor
 
 				mstream.Seek(0, SeekOrigin.Begin);
 
-				await listener.ReadStreamAsyncWrapper(mstream);
+				listener.ReadStreamWrapper(mstream);
 
 				Assert.True(called);
 
