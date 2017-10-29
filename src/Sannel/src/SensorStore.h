@@ -17,6 +17,8 @@
 
 #include "SensorPacket.h"
 #include "MAddress.h"
+#include "ITemperatureSensor.h"
+#include "ITHPSensor.h"
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "arduino.h"
@@ -42,6 +44,8 @@ namespace Sannel
 				unsigned char GetStoredPackets();
 
 				bool AddReading(SensorPacket &packet);
+				bool AddReading(ITemperatureSensor &sensor, unsigned long offset=0);
+				bool AddReading(ITHPSensor &sensor, unsigned long offset = 0);
 
 				SensorPacket &GetPacket(unsigned char index);
 

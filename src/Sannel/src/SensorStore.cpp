@@ -76,6 +76,32 @@ bool SensorStore::AddReading(SensorPacket &packet)
 	return current >= size;
 }
 
+bool SensorStore::AddReading(ITemperatureSensor &sensor, unsigned long offset)
+{
+	SensorPacket p;
+	ResetSensorPacket(p);
+
+	p.SensorType = SensorTypes::Temperature;
+	p.Offset = offset;
+	p.Values[0] = sensor.GetTemperatureCelsius();
+
+	return this->AddReading(p);
+}
+
+bool SensorStore::AddReading(ITHPSensor &sensor, unsigned long offset = 0)
+{
+	SensorPacket p;
+	ResetSensorPacket(p);
+
+	p.SensorType = SensorTypes::TemperatureHumidityPressure;
+	p.Offset = offset;
+	p.Values[0] = sensor.GetTemperatureCelsius();
+	p.Values[1] = sensor.GetRelativeHumidity();
+	p.Values[2] = sensor.GetPressure();
+
+	return this->AddReading(p);
+}
+
 SensorPacket &SensorStore::GetPacket(unsigned char index)
 {
 	if (index >= 0 && index < size)
