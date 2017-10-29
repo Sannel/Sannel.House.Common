@@ -62,6 +62,7 @@ namespace Sannel.House.Sensor
 					logger.LogInformation("New client connected from {0}", client.Client.RemoteEndPoint);
 					using (client)
 					{
+						client.ReceiveTimeout = 1000;
 						client.ReceiveBufferSize = 88;
 						using (var stream = client.GetStream())
 						{
@@ -81,11 +82,17 @@ namespace Sannel.House.Sensor
 		{
 			var read = 0;
 			var count = 0;
+			var tryCount = 0;
 
-			while(count < length && stream.CanRead)
+			while(count < length && stream.CanRead && tryCount < 30)
 			{
+				if(tryCount > 0)
+				{
+					Task.Delay(200).GetAwaiter().GetResult();
+				}
 				read = stream.Read(bits, count, length - count);
 				count += read;
+				tryCount++;
 			}
 
 			return count == length;
