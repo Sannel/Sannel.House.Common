@@ -88,7 +88,7 @@ bool SensorStore::AddReading(ITemperatureSensor &sensor, unsigned long offset)
 	return this->AddReading(p);
 }
 
-bool SensorStore::AddReading(ITHPSensor &sensor, unsigned long offset = 0)
+bool SensorStore::AddReading(ITHPSensor &sensor, unsigned long offset)
 {
 	SensorPacket p;
 	ResetSensorPacket(p);

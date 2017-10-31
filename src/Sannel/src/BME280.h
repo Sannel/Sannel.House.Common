@@ -34,8 +34,9 @@ namespace Sannel
 	{
 		namespace Sensor
 		{
-
-			//Register names:
+			namespace Temp
+			{
+				//Register names:
 #define BME280_DIG_T1_LSB_REG			0x88
 #define BME280_DIG_T1_MSB_REG			0x89
 #define BME280_DIG_T2_LSB_REG			0x8A
@@ -94,104 +95,105 @@ namespace Sannel
 //A power user would strip out SensorSettings entirely, and send specific read and
 //write command directly to the IC. (ST #defines below)
 //
-			struct BME280SensorSettings
-			{
-			public:
+				struct BME280SensorSettings
+				{
+				public:
 
-				//Main Interface and mode settings
-				uint8_t commInterface;
-				uint8_t I2CAddress;
-				uint8_t chipSelectPin;
+					//Main Interface and mode settings
+					uint8_t commInterface;
+					uint8_t I2CAddress;
+					uint8_t chipSelectPin;
 
-				uint8_t runMode;
-				uint8_t tStandby;
-				uint8_t filter;
-				uint8_t tempOverSample;
-				uint8_t pressOverSample;
-				uint8_t humidOverSample;
+					uint8_t runMode;
+					uint8_t tStandby;
+					uint8_t filter;
+					uint8_t tempOverSample;
+					uint8_t pressOverSample;
+					uint8_t humidOverSample;
 
-			};
+				};
 
-			//Used to hold the calibration constants.  These are used
-			//by the driver as measurements are being taking
-			struct BME280SensorCalibration
-			{
-			public:
-				uint16_t dig_T1;
-				int16_t dig_T2;
-				int16_t dig_T3;
+				//Used to hold the calibration constants.  These are used
+				//by the driver as measurements are being taking
+				struct BME280SensorCalibration
+				{
+				public:
+					uint16_t dig_T1;
+					int16_t dig_T2;
+					int16_t dig_T3;
 
-				uint16_t dig_P1;
-				int16_t dig_P2;
-				int16_t dig_P3;
-				int16_t dig_P4;
-				int16_t dig_P5;
-				int16_t dig_P6;
-				int16_t dig_P7;
-				int16_t dig_P8;
-				int16_t dig_P9;
+					uint16_t dig_P1;
+					int16_t dig_P2;
+					int16_t dig_P3;
+					int16_t dig_P4;
+					int16_t dig_P5;
+					int16_t dig_P6;
+					int16_t dig_P7;
+					int16_t dig_P8;
+					int16_t dig_P9;
 
-				uint8_t dig_H1;
-				int16_t dig_H2;
-				uint8_t dig_H3;
-				int16_t dig_H4;
-				int16_t dig_H5;
-				uint8_t dig_H6;
+					uint8_t dig_H1;
+					int16_t dig_H2;
+					uint8_t dig_H3;
+					int16_t dig_H4;
+					int16_t dig_H5;
+					uint8_t dig_H6;
 
-			};
+				};
 
-			//This is the man operational class of the driver.
+				//This is the man operational class of the driver.
 
-			class BME280 : public ITHPSensor
-			{
-			public:
-				//settings
-				BME280SensorSettings settings;
-				BME280SensorCalibration calibration;
-				int32_t t_fine;
+				class BME280 : public ITHPSensor, public ISensor
+				{
+				public:
+					//settings
+					BME280SensorSettings settings;
+					BME280SensorCalibration calibration;
+					int32_t t_fine;
 
-				//Constructor generates default SensorSettings.
-				//(over-ride after construction if desired)
-				BME280(void);
-				BME280(uint8_t address, uint8_t pin=10);
-				//~BME280() = default;
+					//Constructor generates default SensorSettings.
+					//(over-ride after construction if desired)
+					BME280(void);
+					BME280(uint8_t address);
+					//~BME280() = default;
 
-				//Call to apply SensorSettings.
-				//This also gets the SensorCalibration constants
-				uint8_t begin(void);
+					//Call to apply SensorSettings.
+					//This also gets the SensorCalibration constants
+					uint8_t begin(void);
 
-				//Software reset routine
-				void reset(void);
+					//Software reset routine
+					void reset(void);
 
-				//Returns the values as floats.
-				float readFloatPressure(void);
-				float readFloatAltitudeMeters(void);
-				float readFloatAltitudeFeet(void);
+					//Returns the values as floats.
+					float readFloatPressure(void);
+					float readFloatAltitudeMeters(void);
+					float readFloatAltitudeFeet(void);
 
-				float readFloatHumidity(void);
+					float readFloatHumidity(void);
 
-				//Temperature related methods
-				float readTempC(void);
-				float readTempF(void);
+					//Temperature related methods
+					float readTempC(void);
+					float readTempF(void);
 
-				//The following utilities read and write
+					//The following utilities read and write
 
-				//ReadRegisterRegion takes a uint8 array address as input and reads
-				//a chunk of memory into that array.
-				void readRegisterRegion(uint8_t*, uint8_t, uint8_t);
-				//readRegister reads one register
-				uint8_t readRegister(uint8_t);
-				//Reads two regs, LSByte then MSByte order, and concatenates them
-				//Used for two-byte reads
-				int16_t readRegisterInt16(uint8_t offset);
-				//Writes a byte;
-				void writeRegister(uint8_t, uint8_t);
+					//ReadRegisterRegion takes a uint8 array address as input and reads
+					//a chunk of memory into that array.
+					void readRegisterRegion(uint8_t*, uint8_t, uint8_t);
+					//readRegister reads one register
+					uint8_t readRegister(uint8_t);
+					//Reads two regs, LSByte then MSByte order, and concatenates them
+					//Used for two-byte reads
+					int16_t readRegisterInt16(uint8_t offset);
+					//Writes a byte;
+					void writeRegister(uint8_t, uint8_t);
 
-				double GetTemperatureCelsius() override;
-				double GetRelativeHumidity() override;
-				double GetPressure() override;
-				void Begin() override;
-			};
+					double GetTemperatureCelsius() override;
+					double GetRelativeHumidity() override;
+					double GetPressure() override;
+					void Begin() override;
+				};
+			}
 		}
 	}
 }

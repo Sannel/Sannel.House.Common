@@ -1,6 +1,8 @@
 /******************************************************************************
 BME280.cpp
 
+This file is a modified version of SparkFun's library
+
 
 SparkFunBME280.cpp
 BME280 Arduino and Teensy Driver
@@ -26,7 +28,10 @@ Distributed as-is; no warranty is given.
 #include "stdint.h"
 #include <math.h>
 
-#include "Wire.h"
+#include "Arduino.h"
+#include <Wire.h>
+
+using namespace Sannel::House::Sensor::Temp;
 
 //****************************************************************************//
 //
@@ -35,14 +40,13 @@ Distributed as-is; no warranty is given.
 //****************************************************************************//
 
 //Constructor -- Specifies default configuration
-Sannel::House::Sensor::BME280::BME280(void)
+BME280::BME280(void)
 {
 	//Construct with these default settings if nothing is specified
 
 	//Select interface mode
 	settings.I2CAddress = 0x77; //Ignored for SPI_MODE
 								//Select CS pin for SPI.  Does nothing for I2C
-	settings.chipSelectPin = 10;
 	settings.runMode = 0;
 	settings.tempOverSample = 0;
 	settings.pressOverSample = 0;
@@ -50,10 +54,9 @@ Sannel::House::Sensor::BME280::BME280(void)
 
 }
 
-Sannel::House::Sensor::BME280::BME280(uint8_t address, uint8_t pin)
+BME280::BME280(uint8_t address)
 {
 	settings.I2CAddress = address; 
-	settings.chipSelectPin = pin;
 	settings.runMode = 0;
 	settings.tempOverSample = 0;
 	settings.pressOverSample = 0;
@@ -61,9 +64,45 @@ Sannel::House::Sensor::BME280::BME280(uint8_t address, uint8_t pin)
 }
 
 
-void Sannel::House::Sensor::BME280::Begin()
+void BME280::Begin()
 {
-	this->begin();
+	//renMode can be:
+	//  0, Sleep mode
+	//  1 or 2, Forced mode
+	//  3, Normal mode
+	this->settings.runMode = 3;
+	//tStandby can be:
+	//  0, 0.5ms
+	//  1, 62.5ms
+	//  2, 125ms
+	//  3, 250ms
+	//  4, 500ms
+	//  5, 1000ms
+	//  6, 10ms
+	//  7, 20ms
+	this->settings.tStandby = 0;
+	//filter can be off or number of FIR coefficients to use:
+	//  0, filter off
+	//  1, coefficients = 2
+	//  2, coefficients = 4
+	//  3, coefficients = 8
+	//  4, coefficients = 16
+	this->settings.filter = 3;
+	//tempOverSample can be:
+	//  0, skipped
+	//  1 through 5, oversampling *1, *2, *4, *8, *16 respectively
+	this->settings.tempOverSample = 5;
+	//pressOverSample can be:
+	//  0, skipped
+	//  1 through 5, oversampling *1, *2, *4, *8, *16 respectively
+	this->settings.pressOverSample = 5;
+	//humidOverSample can be:
+	//  0, skipped
+	//  1 through 5, oversampling *1, *2, *4, *8, *16 respectively
+	this->settings.humidOverSample = 5;
+
+	Serial.println(this->begin(), HEX);
+	Serial.println("End of Begin");
 }
 
 //****************************************************************************//
@@ -75,7 +114,7 @@ void Sannel::House::Sensor::BME280::Begin()
 //  configure before calling .begin();
 //
 //****************************************************************************//
-uint8_t Sannel::House::Sensor::BME280::begin()
+uint8_t BME280::begin()
 {
 	//Check the settings structure values to determine how to setup the device
 	uint8_t dataToWrite = 0;  //Temporary variable
@@ -131,7 +170,7 @@ uint8_t Sannel::House::Sensor::BME280::begin()
 }
 
 //Strictly resets.  Run .begin() afterwards
-void Sannel::House::Sensor::BME280::reset(void)
+void BME280::reset(void)
 {
 	writeRegister(BME280_RST_REG, 0xB6);
 
@@ -142,7 +181,7 @@ void Sannel::House::Sensor::BME280::reset(void)
 //  Pressure Section
 //
 //****************************************************************************//
-float Sannel::House::Sensor::BME280::readFloatPressure(void)
+float BME280::readFloatPressure(void)
 {
 
 	// Returns pressure in Pa as unsigned 32 bit integer in Q24.8 format (24 integer bits and 8 fractional bits).
@@ -170,7 +209,7 @@ float Sannel::House::Sensor::BME280::readFloatPressure(void)
 
 }
 
-float Sannel::House::Sensor::BME280::readFloatAltitudeMeters(void)
+float BME280::readFloatAltitudeMeters(void)
 {
 	float heightOutput = 0;
 
@@ -179,7 +218,7 @@ float Sannel::House::Sensor::BME280::readFloatAltitudeMeters(void)
 
 }
 
-float Sannel::House::Sensor::BME280::readFloatAltitudeFeet(void)
+float BME280::readFloatAltitudeFeet(void)
 {
 	float heightOutput = 0;
 
@@ -193,7 +232,7 @@ float Sannel::House::Sensor::BME280::readFloatAltitudeFeet(void)
 //  Humidity Section
 //
 //****************************************************************************//
-float Sannel::House::Sensor::BME280::readFloatHumidity(void)
+float BME280::readFloatHumidity(void)
 {
 
 	// Returns humidity in %RH as unsigned 32 bit integer in Q22. 10 format (22 integer and 10 fractional bits).
@@ -221,7 +260,7 @@ float Sannel::House::Sensor::BME280::readFloatHumidity(void)
 //
 //****************************************************************************//
 
-float Sannel::House::Sensor::BME280::readTempC(void)
+float BME280::readTempC(void)
 {
 	// Returns temperature in DegC, resolution is 0.01 DegC. Output value of “5123” equals 51.23 DegC.
 	// t_fine carries fine temperature as global value
@@ -243,7 +282,7 @@ float Sannel::House::Sensor::BME280::readTempC(void)
 	return output;
 }
 
-float Sannel::House::Sensor::BME280::readTempF(void)
+float BME280::readTempF(void)
 {
 	float output = readTempC();
 	output = (output * 9) / 5 + 32;
@@ -256,7 +295,7 @@ float Sannel::House::Sensor::BME280::readTempF(void)
 //  Utility
 //
 //****************************************************************************//
-void Sannel::House::Sensor::BME280::readRegisterRegion(uint8_t *outputPointer, uint8_t offset, uint8_t length)
+void BME280::readRegisterRegion(uint8_t *outputPointer, uint8_t offset, uint8_t length)
 {
 	//define pointer that will point to the external space
 	uint8_t i = 0;
@@ -277,7 +316,7 @@ void Sannel::House::Sensor::BME280::readRegisterRegion(uint8_t *outputPointer, u
 	}
 }
 
-uint8_t Sannel::House::Sensor::BME280::readRegister(uint8_t offset)
+uint8_t BME280::readRegister(uint8_t offset)
 {
 	//Return value
 	uint8_t result;
@@ -291,9 +330,11 @@ uint8_t Sannel::House::Sensor::BME280::readRegister(uint8_t offset)
 	{
 		result = Wire.read(); // receive a byte as a proper uint8_t
 	}
+
+	return result;
 }
 
-int16_t Sannel::House::Sensor::BME280::readRegisterInt16(uint8_t offset)
+int16_t BME280::readRegisterInt16(uint8_t offset)
 {
 	uint8_t myBuffer[2];
 	readRegisterRegion(myBuffer, offset, 2);  //Does memory transfer
@@ -302,7 +343,7 @@ int16_t Sannel::House::Sensor::BME280::readRegisterInt16(uint8_t offset)
 	return output;
 }
 
-void Sannel::House::Sensor::BME280::writeRegister(uint8_t offset, uint8_t dataToWrite)
+void BME280::writeRegister(uint8_t offset, uint8_t dataToWrite)
 {
 	//Write the byte
 	Wire.beginTransmission(settings.I2CAddress);
@@ -311,17 +352,17 @@ void Sannel::House::Sensor::BME280::writeRegister(uint8_t offset, uint8_t dataTo
 	Wire.endTransmission();
 }
 
-double Sannel::House::Sensor::BME280::GetTemperatureCelsius()
+double BME280::GetTemperatureCelsius()
 {
 	return double(this->readTempC());
 }
 
-double Sannel::House::Sensor::BME280::GetRelativeHumidity()
+double BME280::GetRelativeHumidity()
 {
 	return double(this->readFloatHumidity());
 }
 
-double Sannel::House::Sensor::BME280::GetPressure()
+double BME280::GetPressure()
 {
 	return double(this->readFloatPressure());
 }

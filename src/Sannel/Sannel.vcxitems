@@ -32,11 +32,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorPacket.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorTypes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\stdafx.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\TMP102.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Sannel.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\BME280.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\SensorPacket.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\SensorStore.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\TMP102.cpp" />
   </ItemGroup>
 </Project>
