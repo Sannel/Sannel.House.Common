@@ -21,11 +21,14 @@
   <ItemGroup>
     <!-- <ClInclude Include="$(MSBuildThisFileDirectory)Sannel.h" /> -->
     <ClInclude Include="$(MSBuildThisFileDirectory)src\BME280.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Defaults.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\IHumiditySensor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\IPressureSensor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\ISensor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\ITemperatureSensor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\ITHPSensor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\IWire.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\IWireDevice.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\MAddress.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SannelDefines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorStore.h" />
@@ -33,6 +36,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorTypes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\stdafx.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\TMP102.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\WProgram.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Sannel.cpp" />

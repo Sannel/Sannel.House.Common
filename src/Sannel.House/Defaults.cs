@@ -8,14 +8,12 @@ namespace Sannel.House
 	{
 		public static class Development
 		{
-			public static readonly uint SERVER_PORT = 5000;
-			public static readonly uint SENSOR_BROADCAST_PORT = 8175;
+			public const uint SENSOR_BROADCAST_PORT = 8175;
 		}
 
 		public static class Production
 		{
-			public static readonly uint SERVER_PORT = 6000;
-			public static readonly uint SENSOR_BROADCAST_PORT = 8257;
+			public const uint SENSOR_BROADCAST_PORT = 8257;
 		}
 	}
 }

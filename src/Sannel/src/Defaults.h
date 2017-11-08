@@ -12,32 +12,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.*/
 /* This is generated code so probably best not to edit it */
-#ifndef _ITEMPERATURESENSOR_H_
-#define _ITEMPERATURESENSOR_H_
-
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
-
-#include "ISensor.h"
-
-
 namespace Sannel
 {
 	namespace House
 	{
-		namespace Sensor
-		{
-			class ITemperatureSensor : public ISensor
-			{
-			public:
-				virtual double GetTemperatureCelsius() = 0;
-			private:
-			};
-		}
 	}
 }
-
-#endif

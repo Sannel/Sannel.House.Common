@@ -1,0 +1,400 @@
+/* Copyright 2017 Sannel Software, L.L.C.
+
+Licensed under the Apache License, Version 2.0 (the ""License"");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an ""AS IS"" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.*/
+/*
+This file is based off the work from Sparkfun the original file can be found here
+
+https://github.com/sparkfun/SparkFun_BME280_Arduino_Library
+
+SparkFunBME280.cpp
+BME280 Arduino and Teensy Driver
+Marshall Taylor @ SparkFun Electronics
+May 20, 2015
+https://github.com/sparkfun/SparkFun_BME280_Arduino_Library
+
+This code is released under the [MIT License](http://opensource.org/licenses/MIT).
+Please review the LICENSE.md file included with this example. If you have any questions
+or concerns with licensing, please contact techsupport@sparkfun.com.
+Distributed as-is; no warranty is given.
+******************************************************************************/
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
+
+namespace Sannel.House.Sensor.Temperature
+{
+	[Exportable(Includes = @"#include ""IWire.h""
+#include ""IWireDevice.h""
+#include ""ITHPSensor.h""")]
+	public class BME280 : ITHPSensor
+	{
+		public const byte BME280_DIG_T1_LSB_REG = 0x88;
+		public const byte BME280_DIG_T1_MSB_REG = 0x89;
+		public const byte BME280_DIG_T2_LSB_REG = 0x8A;
+		public const byte BME280_DIG_T2_MSB_REG = 0x8B;
+		public const byte BME280_DIG_T3_LSB_REG = 0x8C;
+		public const byte BME280_DIG_T3_MSB_REG = 0x8D;
+		public const byte BME280_DIG_P1_LSB_REG = 0x8E;
+		public const byte BME280_DIG_P1_MSB_REG = 0x8F;
+		public const byte BME280_DIG_P2_LSB_REG = 0x90;
+		public const byte BME280_DIG_P2_MSB_REG = 0x91;
+		public const byte BME280_DIG_P3_LSB_REG = 0x92;
+		public const byte BME280_DIG_P3_MSB_REG = 0x93;
+		public const byte BME280_DIG_P4_LSB_REG = 0x94;
+		public const byte BME280_DIG_P4_MSB_REG = 0x95;
+		public const byte BME280_DIG_P5_LSB_REG = 0x96;
+		public const byte BME280_DIG_P5_MSB_REG = 0x97;
+		public const byte BME280_DIG_P6_LSB_REG = 0x98;
+		public const byte BME280_DIG_P6_MSB_REG = 0x99;
+		public const byte BME280_DIG_P7_LSB_REG = 0x9A;
+		public const byte BME280_DIG_P7_MSB_REG = 0x9B;
+		public const byte BME280_DIG_P8_LSB_REG = 0x9C;
+		public const byte BME280_DIG_P8_MSB_REG = 0x9D;
+		public const byte BME280_DIG_P9_LSB_REG = 0x9E;
+		public const byte BME280_DIG_P9_MSB_REG = 0x9F;
+		public const byte BME280_DIG_H1_REG = 0xA1;
+		public const byte BME280_CHIP_ID_REG = 0xD0;//Chip ID;
+		public const byte BME280_RST_REG = 0xE0;//Softreset Reg;
+		public const byte BME280_DIG_H2_LSB_REG = 0xE1;
+		public const byte BME280_DIG_H2_MSB_REG = 0xE2;
+		public const byte BME280_DIG_H3_REG = 0xE3;
+		public const byte BME280_DIG_H4_MSB_REG = 0xE4;
+		public const byte BME280_DIG_H4_LSB_REG = 0xE5;
+		public const byte BME280_DIG_H5_MSB_REG = 0xE6;
+		public const byte BME280_DIG_H6_REG = 0xE7;
+		public const byte BME280_CTRL_HUMIDITY_REG = 0xF2;//Ctrl Humidity Reg;
+		public const byte BME280_STAT_REG = 0xF3;//Status Reg;
+		public const byte BME280_CTRL_MEAS_REG = 0xF4;//Ctrl Measure Reg;
+		public const byte BME280_CONFIG_REG = 0xF5;//Configuration Reg;
+		public const byte BME280_PRESSURE_MSB_REG = 0xF7;//Pressure MSB;
+		public const byte BME280_PRESSURE_LSB_REG = 0xF8;//Pressure LSB;
+		public const byte BME280_PRESSURE_XLSB_REG = 0xF9;//Pressure XLSB;
+		public const byte BME280_TEMPERATURE_MSB_REG = 0xFA;//Temperature MSB;
+		public const byte BME280_TEMPERATURE_LSB_REG = 0xFB;//Temperature LSB;
+		public const byte BME280_TEMPERATURE_XLSB_REG = 0xFC;//Temperature XLSB;
+		public const byte BME280_HUMIDITY_MSB_REG = 0xFD;//Humidity MSB;
+		public const byte BME280_HUMIDITY_LSB_REG = 0xFE;//Humidity LSB;
+
+
+		private readonly IWireDevice device;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BME280"/> class.
+		/// </summary>
+		/// <param name="wire">The wire.</param>
+		/// <param name="deviceId">The device identifier. 0x76 or 0x77</param>
+		/// <exception cref="ArgumentNullException">wire</exception>
+		public BME280(IWire wire, byte deviceId)
+		{
+
+			if (wire == null)
+			{
+				throw new ArgumentNullException(nameof(wire));
+			}
+
+			device = wire.GetDeviceById(deviceId);
+			RunMode = 0;
+			TemperatureOverSample = 0;
+			PressureOverSample = 0;
+			HumidityOverSample = 0;
+		}
+
+		public BME280(IWireDevice device)
+		{
+			if (device == null)
+			{
+				throw new ArgumentNullException(nameof(device));
+			}
+
+			this.device = device;
+			RunMode = 0;
+			TemperatureOverSample = 0;
+			PressureOverSample = 0;
+			HumidityOverSample = 0;
+		}
+
+		/// <summary>
+		/// Gets or sets the run mode.
+		/// 0 Sleep mode
+		/// 1 or 2 Forced mode
+		/// 3 Normal mode
+		/// </summary>
+		/// <value>
+		/// The run mode.
+		/// </value>
+		public byte RunMode
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the time stand by.
+		///  0, 0.5ms
+		///  1, 62.5ms
+		///  2, 125ms
+		///  3, 250ms
+		///  4, 500ms
+		///  5, 1000ms
+		///  6, 10ms
+		///  7, 20ms
+		/// </summary>
+		/// <value>
+		/// The time stand by.
+		/// </value>
+		public byte TimeStandBy
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the filter.
+		/// filter can be off or number of FIR coefficient to use
+		/// 0 filter off
+		/// 1 coefficients = 2
+		/// 2 coefficients = 4
+		/// 3 coefficients = 8
+		/// 4 coefficients = 16
+		/// </summary>
+		/// <value>
+		/// The filter.
+		/// </value>
+		public byte Filter
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the temperature over sample.
+		/// 0 skipped
+		/// 1 = *1
+		/// 2 = *2
+		/// 3 = *4
+		/// 4 = *8
+		/// 5 = *16
+		/// </summary>
+		/// <value>
+		/// The temperature over sample.
+		/// </value>
+		public byte TemperatureOverSample
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the pressure over sample.
+		/// 0 skipped
+		/// 1 = *1
+		/// 2 = *2
+		/// 3 = *4
+		/// 4 = *8
+		/// 5 = *16
+		/// </summary>
+		/// <value>
+		/// The pressure over sample.
+		/// </value>
+		public byte PressureOverSample
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the humidity over sample.
+		/// 0 skipped
+		/// 1 = *1
+		/// 2 = *2
+		/// 3 = *4
+		/// 4 = *8
+		/// 5 = *16
+		/// </summary>
+		/// <value>
+		/// The humidity over sample.
+		/// </value>
+		public byte HumidityOverSample
+		{
+			get;
+			set;
+		}
+
+
+		private long storedTemperature;
+		private ushort digT1;
+		private short digT2;
+		private short digT3;
+		private ushort digP1;
+		private short digP2;
+		private short digP3;
+		private short digP4;
+		private short digP5;
+		private short digP6;
+		private short digP7;
+		private short digP8;
+		private short digP9;
+		private byte digH1;
+		private short digH2;
+		private byte digH3;
+		private short digH4;
+		private short digH5;
+		private byte digH6;
+
+		public void Begin()
+		{
+			digT1 = (ushort)((device.WriteRead(BME280_DIG_T1_MSB_REG) << 8) + device.WriteRead(BME280_DIG_T1_LSB_REG));
+			digT2 = (short)((device.WriteRead(BME280_DIG_T2_MSB_REG) << 8) + device.WriteRead(BME280_DIG_T2_LSB_REG));
+			digT3 = (short)((device.WriteRead(BME280_DIG_T3_MSB_REG) << 8) + device.WriteRead(BME280_DIG_T3_LSB_REG));
+
+			digP1 = (ushort)((device.WriteRead(BME280_DIG_P1_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P1_LSB_REG));
+			digP2 = (short)((device.WriteRead(BME280_DIG_P2_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P2_LSB_REG));
+			digP3 = (short)((device.WriteRead(BME280_DIG_P3_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P3_LSB_REG));
+			digP4 = (short)((device.WriteRead(BME280_DIG_P4_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P4_LSB_REG));
+			digP5 = (short)((device.WriteRead(BME280_DIG_P5_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P5_LSB_REG));
+			digP6 = (short)((device.WriteRead(BME280_DIG_P6_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P6_LSB_REG));
+			digP7 = (short)((device.WriteRead(BME280_DIG_P7_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P7_LSB_REG));
+			digP8 = (short)((device.WriteRead(BME280_DIG_P8_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P8_LSB_REG));
+			digP9 = (short)((device.WriteRead(BME280_DIG_P9_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P9_LSB_REG));
+
+			digH1 = device.WriteRead(BME280_DIG_H1_REG);
+			digH2 = (short)((device.WriteRead(BME280_DIG_H2_MSB_REG) << 8) + device.WriteRead(BME280_DIG_H2_LSB_REG));
+			digH3 = device.WriteRead(BME280_DIG_H3_REG);
+			digH4 = (short)((device.WriteRead(BME280_DIG_H4_MSB_REG) << 4) + (device.WriteRead(BME280_DIG_H4_LSB_REG) & 0x0F));
+			digH5 = (short)((device.WriteRead(BME280_DIG_H5_MSB_REG) << 4) + ((device.WriteRead(BME280_DIG_H4_LSB_REG) >> 4) & 0x0F));
+			digH6 = device.WriteRead(BME280_DIG_H6_REG);
+
+			//Set the oversampling control words.
+			//config will only be writable in sleep mode, so first insure that.
+			device.Write(BME280_CTRL_MEAS_REG, 0x00);
+
+			//Set the config word
+			var dataToWrite = (byte)((TimeStandBy << 0x5) & 0xE0);
+			dataToWrite |= (byte)((Filter << 0x02) & 0x1C);
+			device.Write(BME280_CONFIG_REG, dataToWrite);
+
+			//Set ctrl_hum first, then ctrl_meas to activate ctrl_hum
+			dataToWrite = (byte)(HumidityOverSample & 0x07); //all other bits can be ignored
+			device.Write(BME280_CTRL_HUMIDITY_REG, dataToWrite);
+
+			//set ctrl_meas
+			//First, set temp oversampling
+			dataToWrite = (byte)((TemperatureOverSample << 0x5) & 0xE0);
+			//Next, pressure oversampling
+			dataToWrite |= (byte)((PressureOverSample << 0x02) & 0x1C);
+			//Last, set mode
+			dataToWrite |= (byte)(RunMode & 0x03);
+			//Load the byte
+			device.Write(BME280_CTRL_MEAS_REG, dataToWrite);
+
+			dataToWrite = device.WriteRead(0xD0);
+		}
+
+		public void Dispose()
+		{
+			device?.Dispose();
+		}
+
+		/// <summary>
+		/// Resets this instance. 
+		/// Need to call Begin again after words
+		/// </summary>
+		public void Reset()
+		{
+			device.Write(BME280_RST_REG, 0xB6);
+		}
+
+		/// <summary>
+		/// Gets the pressure.
+		/// Output value of “24674867” represents 24674867/256 = 96386.2 Pa = 963.862 hPa
+		/// </summary>
+		/// <returns></returns>
+		public double GetPressure()
+		{
+			// Returns pressure in Pa as unsigned 32 bit integer in Q24.8 format (24 integer bits and 8 fractional bits).
+			// Output value of “24674867” represents 24674867/256 = 96386.2 Pa = 963.862 hPa
+			var adc_P = ((uint)device.WriteRead(BME280_PRESSURE_MSB_REG) << 12) | ((uint)device.WriteRead(BME280_PRESSURE_LSB_REG) << 4) | ((uint)(device.WriteRead(BME280_PRESSURE_XLSB_REG) >> 4) & 0x0F);
+
+			long var1, var2, p_acc;
+			var1 = storedTemperature - 128000;
+			var2 = var1 * var1 * (long)digP6;
+			var2 = var2 + ((var1 * (long)digP5) << 17);
+			var2 = var2 + (((long)digP4) << 35);
+			var1 = ((var1 * var1 * (long)digP3) >> 8) + ((var1 * (long)digP2) << 12);
+			var1 = ((((1L) << 47) + var1)) * ((long)digP1) >> 33;
+			if (var1 == 0)
+			{
+				return 0; // avoid exception caused by division by zero
+			}
+			p_acc = 1048576 - adc_P;
+			p_acc = (((p_acc << 31) - var2) * 3125) / var1;
+			var1 = (((long)digP9) * (p_acc >> 13) * (p_acc >> 13)) >> 25;
+			var2 = (((long)digP8) * p_acc) >> 19;
+			p_acc = ((p_acc + var1 + var2) >> 8) + (((long)digP7) << 4);
+
+			return (float)p_acc / 256.0;
+		}
+
+		/// <summary>
+		/// Gets the relative humidity.
+		/// Output value of “47445” represents 47445/1024 = 46. 333 %RH
+		/// </summary>
+		/// <returns></returns>
+		public double GetRelativeHumidity()
+		{
+			// Returns humidity in %RH as unsigned 32 bit integer in Q22. 10 format (22 integer and 10 fractional bits).
+			// Output value of “47445” represents 47445/1024 = 46. 333 %RH
+			long adcH = ((uint)device.WriteRead(BME280_HUMIDITY_MSB_REG) << 8) | ((uint)device.WriteRead(BME280_HUMIDITY_LSB_REG));
+
+			long var1;
+			var1 = (storedTemperature - ((int)76800));
+			var1 = (((((adcH << 14) - (((int)digH4) << 20) - (((int)digH5) * var1)) +
+				((int)16384)) >> 15) * (((((((var1 * ((int)digH6)) >> 10) * (((var1 * ((int)digH3)) >> 11) + ((int)32768))) >> 10) + ((int)2097152)) *
+				((int)digH2) + 8192) >> 14));
+			var1 = (var1 - (((((var1 >> 15) * (var1 >> 15)) >> 7) * ((int)digH1)) >> 4));
+			var1 = (var1 < 0 ? 0 : var1);
+			var1 = (var1 > 419430400 ? 419430400 : var1);
+
+			return (float)(var1 >> 12) / 1024.0;
+		}
+
+		/// <summary>
+		/// Gets the temperature Celsius.
+		/// Resolution is 0.01 Degrease Celsius
+		/// </summary>
+		/// <returns></returns>
+		public double GetTemperatureCelsius()
+		{
+			// Returns temperature in DegC, resolution is 0.01 DegC. Output value of “5123” equals 51.23 DegC.
+			// t_fine carries fine temperature as global value
+
+			//get the reading (adc_T);
+			var adcT = ((uint)device.WriteRead(BME280_TEMPERATURE_MSB_REG) << 12) | ((uint)device.WriteRead(BME280_TEMPERATURE_LSB_REG) << 4) | (((uint)device.WriteRead(BME280_TEMPERATURE_XLSB_REG) >> 4) & 0x0F);
+
+			//By datasheet, calibrate
+			long var1, var2;
+
+			var1 = ((((adcT >> 3) - (digT1 << 1))) * (digT2)) >> 11;
+			var2 = (((((adcT >> 4) - ((int)digT1)) * ((adcT >> 4) - ((int)digT1))) >> 12) *
+				((int)digT3)) >> 14;
+			storedTemperature = var1 + var2;
+			double output = (storedTemperature * 5 + 128) >> 8;
+
+			output = output / 100;
+
+			return output;
+		}
+
+	}
+}
