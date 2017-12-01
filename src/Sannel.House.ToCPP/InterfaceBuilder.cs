@@ -61,6 +61,10 @@ namespace Sannel.House.ToCPP
 			{
 				return "uint64_t";
 			}
+			else if(t == typeof(bool))
+			{
+				return "bool";
+			}
 
 			return t.Name;
 		}

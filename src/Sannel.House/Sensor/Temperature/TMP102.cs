@@ -26,12 +26,15 @@ using System.Text;
 
 namespace Sannel.House.Sensor.Temperature
 {
+	[Exportable(Includes = @"#include ""IWire.h""
+#include ""IWireDevice.h""
+#include ""ITemperatureSensor.h""")]
 	public class TMP102 : ITemperatureSensor
 	{
-		public const byte TEMPERATURE_REGISTER = 0x00;
-		public const byte CONFIG_REGISTER = 0x01;
-		public const byte T_LOW_REGISTER = 0x02;
-		public const byte T_HIGH_REGISTER = 0x03;
+		public const byte TMP102_TEMPERATURE_REGISTER = 0x00;
+		public const byte TMP102_CONFIG_REGISTER = 0x01;
+		public const byte TMP102_T_LOW_REGISTER = 0x02;
+		public const byte TMP102_T_HIGH_REGISTER = 0x03;
 
 		private readonly IWireDevice device;
 		/// <summary>
@@ -40,12 +43,12 @@ namespace Sannel.House.Sensor.Temperature
 		/// <param name="wire">The wire.</param>
 		/// <param name="address">The address. (0x48,0x49,0x4A,0x4B)</param>
 		/// <exception cref="ArgumentNullException">wire</exception>
-		TMP102(IWire wire, byte address)
+		public TMP102(IWire wire, byte address)
 		{
 			this.device = (wire ?? throw new ArgumentNullException(nameof(wire))).GetDeviceById(address);
 		}
 
-		TMP102(IWireDevice device)
+		public TMP102(IWireDevice device)
 		{
 			this.device = device ?? throw new ArgumentNullException(nameof(device));
 		}
@@ -57,7 +60,7 @@ namespace Sannel.House.Sensor.Temperature
 
 			// Read Temperature
 			// Change pointer address to temperature register (0)
-			device.Write(TEMPERATURE_REGISTER);
+			device.Write(TMP102_TEMPERATURE_REGISTER);
 			// Read from temperature register
 			registerByte[0] = device.WriteRead(0);
 			registerByte[1] = device.WriteRead(1);
@@ -97,7 +100,7 @@ namespace Sannel.House.Sensor.Temperature
 			byte registerByte; // Store the data from the register here
 
 			// Change pointer address to configuration register (0x01)
-			device.Write(CONFIG_REGISTER);
+			device.Write(TMP102_CONFIG_REGISTER);
 
 			// Read current configuration register value
 			registerByte = device.WriteRead(0);
@@ -105,7 +108,7 @@ namespace Sannel.House.Sensor.Temperature
 			registerByte |= 0x01;   // Set SD (bit 0 of first byte)
 
 			// Set configuration register
-			device.Write(CONFIG_REGISTER, // Point to configuration register
+			device.Write(TMP102_CONFIG_REGISTER, // Point to configuration register
 				registerByte); // write first byte
 		}
 
@@ -117,7 +120,7 @@ namespace Sannel.House.Sensor.Temperature
 			byte registerByte; // Store the data from the register here
 
 			// Change pointer address to configuration register (1)
-			device.Write(CONFIG_REGISTER);
+			device.Write(TMP102_CONFIG_REGISTER);
 
 			// Read current configuration register value
 			registerByte = device.WriteRead(0);
@@ -125,7 +128,7 @@ namespace Sannel.House.Sensor.Temperature
 			registerByte &= 0xFE;	// Clear SD (bit 0 of first byte)
 
 			// Set configuration registers
-			device.Write(CONFIG_REGISTER, // Point to configuration register
+			device.Write(TMP102_CONFIG_REGISTER, // Point to configuration register
 						registerByte); // Write first byte
 		}
 
@@ -139,7 +142,7 @@ namespace Sannel.House.Sensor.Temperature
 			byte registerByte; // Store the data from the register here
 
 			// Change pointer address to configuration register (1)
-			device.Write(CONFIG_REGISTER);
+			device.Write(TMP102_CONFIG_REGISTER);
 
 			// Read current configuration register value
 			registerByte = device.WriteRead(1);
@@ -154,7 +157,7 @@ namespace Sannel.House.Sensor.Temperature
 			rate = (byte)(rate & 0x03); // Make sure rate is not set higher than 3.
 
 			// Change pointer address to configuration register (0x01)
-			device.Write(CONFIG_REGISTER);
+			device.Write(TMP102_CONFIG_REGISTER);
 
 			// Read current configuration register value
 			registerByte[0] = device.WriteRead(0);
@@ -165,7 +168,7 @@ namespace Sannel.House.Sensor.Temperature
 			registerByte[1] |= rate << 6;   // Shift in new conversion rate
 
 			// Set configuration registers
-			device.Write(CONFIG_REGISTER,
+			device.Write(TMP102_CONFIG_REGISTER,
 						(byte)registerByte[0],
 						(byte)registerByte[1]);
 		}
@@ -174,7 +177,7 @@ namespace Sannel.House.Sensor.Temperature
 			var registerByte = new int[2]; // Store the data from the register here
 
 			// Change pointer address to configuration register (0x01)
-			device.Write(CONFIG_REGISTER);
+			device.Write(TMP102_CONFIG_REGISTER);
 
 			// Read current configuration register value
 			registerByte[0] = device.WriteRead(0);
@@ -186,7 +189,7 @@ namespace Sannel.House.Sensor.Temperature
 			registerByte[1] |= m << 4;	// Shift in new exentended mode bit
 
 			// Set configuration registers
-			device.Write(CONFIG_REGISTER, // Point to configuration register
+			device.Write(TMP102_CONFIG_REGISTER, // Point to configuration register
 						(byte)registerByte[0],	// Write first byte
 						(byte)registerByte[1]); 	// Write second byte
 		}
@@ -196,7 +199,7 @@ namespace Sannel.House.Sensor.Temperature
 			byte registerByte; // Store the data from the register here
 
 			// Change pointer address to configuration register (1)
-			device.Write(CONFIG_REGISTER);
+			device.Write(TMP102_CONFIG_REGISTER);
 
 			// Read current configuration register value
 			registerByte = device.WriteRead(0);
@@ -206,10 +209,10 @@ namespace Sannel.House.Sensor.Temperature
 			registerByte |= (byte)((polarity?1:0) << 2);  // Shift in new POL bit
 
 			// Set configuration register
-			device.Write(CONFIG_REGISTER,	// Point to configuration register
+			device.Write(TMP102_CONFIG_REGISTER,	// Point to configuration register
 						registerByte);	    // Write first byte
 		}
-		public void SetLowTempC(double temperature)
+		public void SetLowTemperatureCelsius(double temperature)
 		{
 			var registerByte = new int[2];	// Store the data from the register here
 			bool extendedMode;	// Store extended mode bit here 0:-55C to +128C, 1:-55C to +150C
@@ -225,7 +228,7 @@ namespace Sannel.House.Sensor.Temperature
 			}
 
 			//Check if temperature should be 12 or 13 bits
-			device.Write(CONFIG_REGISTER);	// Read configuration register settings
+			device.Write(TMP102_CONFIG_REGISTER);	// Read configuration register settings
 
 													// Read current configuration register value
 			registerByte[0] = device.WriteRead(0);
@@ -249,13 +252,13 @@ namespace Sannel.House.Sensor.Temperature
 			}
 
 			// Write to T_LOW Register
-			device.Write(T_LOW_REGISTER, 	// Point to T_LOW
+			device.Write(TMP102_T_LOW_REGISTER, 	// Point to T_LOW
 						(byte)registerByte[0],  // Write first byte
 						(byte)registerByte[1]);  // Write second byte
 		}
 
 
-		public void SetHighTempC(double temperature)
+		public void SetHighTemperatureCelsius(double temperature)
 		{
 			var registerByte = new int[2];	// Store the data from the register here
 			bool extendedMode;	// Store extended mode bit here 0:-55C to +128C, 1:-55C to +150C
@@ -271,7 +274,7 @@ namespace Sannel.House.Sensor.Temperature
 			}
 
 			// Check if temperature should be 12 or 13 bits
-			device.Write(CONFIG_REGISTER);	// Read configuration register settings
+			device.Write(TMP102_CONFIG_REGISTER);	// Read configuration register settings
 
 													// Read current configuration register value
 			registerByte[0] = device.WriteRead(0);
@@ -295,26 +298,26 @@ namespace Sannel.House.Sensor.Temperature
 			}
 
 			// Write to T_HIGH Register
-			device.Write(T_HIGH_REGISTER, 	// Point to T_HIGH register
+			device.Write(TMP102_T_HIGH_REGISTER, 	// Point to T_HIGH register
 						(byte)registerByte[0],  // Write first byte
 						(byte)registerByte[1]);  // Write second byte
 		}
 
-		public double ReadLowTempC()
+		public double ReadLowTemperatureCelsius()
 		{
 			var registerByte = new int[2];	// Store the data from the register here
 			bool extendedMode;	// Store extended mode bit here 0:-55C to +128C, 1:-55C to +150C
 			int digitalTemp;		// Store the digital temperature value here
 
 			// Check if temperature should be 12 or 13 bits
-			device.Write(CONFIG_REGISTER);	// Read configuration register settings
+			device.Write(TMP102_CONFIG_REGISTER);	// Read configuration register settings
 											// Read current configuration register value
 
 			registerByte[0] = device.WriteRead(0);
 			registerByte[1] = device.WriteRead(1);
 			extendedMode = ((registerByte[1] & 0x10) >> 4) > 0;	// 0 - temp data will be 12 bits
 																// 1 - temp data will be 13 bits
-			device.Write(T_LOW_REGISTER);
+			device.Write(TMP102_T_LOW_REGISTER);
 			registerByte[0] = device.WriteRead(0);
 			registerByte[1] = device.WriteRead(1);
 
@@ -345,20 +348,20 @@ namespace Sannel.House.Sensor.Temperature
 		}
 
 
-		public double ReadHighTempC()
+		public double ReadHighTemperatureCelsius()
 		{
 			var registerByte = new int[2];	// Store the data from the register here
 			bool extendedMode;	// Store extended mode bit here 0:-55C to +128C, 1:-55C to +150C
 			int digitalTemp;		// Store the digital temperature value here
 
 			// Check if temperature should be 12 or 13 bits
-			device.Write(CONFIG_REGISTER);	// read configuration register settings
+			device.Write(TMP102_CONFIG_REGISTER);	// read configuration register settings
 											// Read current configuration register value
 			registerByte[0] = device.WriteRead(0);
 			registerByte[1] = device.WriteRead(1);
 			extendedMode = ((registerByte[1] & 0x10) >> 4) > 0;	// 0 - temp data will be 12 bits
 																// 1 - temp data will be 13 bits
-			device.Write(T_HIGH_REGISTER);
+			device.Write(TMP102_T_HIGH_REGISTER);
 			registerByte[0] = device.WriteRead(0);
 			registerByte[1] = device.WriteRead(1);
 
@@ -395,7 +398,7 @@ namespace Sannel.House.Sensor.Temperature
 			faultSetting = (byte)(faultSetting & 3); // Make sure rate is not set higher than 3.
 
 			// Change pointer address to configuration register (0x01)
-			device.Write(CONFIG_REGISTER);
+			device.Write(TMP102_CONFIG_REGISTER);
 
 			// Read current configuration register value
 			registerByte = device.WriteRead(0);
@@ -405,7 +408,7 @@ namespace Sannel.House.Sensor.Temperature
 			registerByte |= (byte)(faultSetting << 3);// Shift new fault setting
 
 			// Set configuration registers
-			device.Write(CONFIG_REGISTER, 	// Point to configuration register
+			device.Write(TMP102_CONFIG_REGISTER, 	// Point to configuration register
 						registerByte);     // Write byte to register
 		}
 
@@ -414,7 +417,7 @@ namespace Sannel.House.Sensor.Temperature
 			byte registerByte; // Store the data from the register here
 
 			// Change pointer address to configuration register (1)
-			device.Write(CONFIG_REGISTER);
+			device.Write(TMP102_CONFIG_REGISTER);
 
 			// Read current configuration register value
 			registerByte = device.WriteRead(0);
@@ -424,7 +427,7 @@ namespace Sannel.House.Sensor.Temperature
 			registerByte |= (byte)((mode?1:0) << 1);	// Shift in new TM bit
 
 			// Set configuration registers
-			device.Write(CONFIG_REGISTER, 	// Point to configuration register
+			device.Write(TMP102_CONFIG_REGISTER, 	// Point to configuration register
 						registerByte);     // Write byte to register
 		}
 
