@@ -1,4 +1,4 @@
-/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2018 Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -35,7 +35,6 @@ namespace Sannel
 				virtual void Write(uint8_t b1, uint8_t b2) = 0;
 				virtual uint8_t WriteRead(uint8_t write) = 0;
 				virtual void WriteRead(uint8_t write, uint8_t* read, int length) = 0;
-			private:
 			};
 		}
 	}

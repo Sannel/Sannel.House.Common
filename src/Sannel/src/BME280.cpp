@@ -1,4 +1,4 @@
-/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2018 Sannel Software, L.L.C.
 
 Licensed under the Apache License, Version 2.0 (the ""License"");
 you may not use this file except in compliance with the License.
@@ -44,11 +44,6 @@ using namespace Sannel::House::Sensor::Temperature;
 //****************************************************************************//
 
 //Constructor -- Specifies default configuration
-BME280::BME280(IWire& wire, uint8_t& deviceId)
-{
-	this->device = &wire.GetDeviceById(deviceId);
-}
-
 BME280::BME280(IWireDevice& device)
 {
 	this->device = &device;

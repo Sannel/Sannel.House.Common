@@ -1,3 +1,16 @@
+/* Copyright 2018 Sannel Software, L.L.C.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+	   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.*/
 
 /******************************************************************************
 SparkFunTMP102.cpp
@@ -17,9 +30,8 @@ local, and you've found our code helpful, please buy us a round!
 Distributed as-is; no warranty is given.
 ******************************************************************************/
 #include "TMP102.h"
-#include <Wire.h>
 
-using namespace Sannel::House::Sensor::Temp;
+using namespace Sannel::House::Sensor::Temperature;
 
 #define TEMPERATURE_REGISTER 0x00
 #define CONFIG_REGISTER 0x01
@@ -35,7 +47,6 @@ TMP102::TMP102(byte address)
 
 void TMP102::Begin(void)
 {
-	Wire.begin();  // Join I2C bus
 }
 
 

@@ -1,4 +1,4 @@
-/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2018 Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -11,7 +11,6 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-/* This is generated code so probably best not to edit it */
 #ifndef _BME280_H_
 #define _BME280_H_
 
@@ -83,8 +82,7 @@ namespace Sannel
 				class BME280 : public ITHPSensor
 				{
 				public:
-					BME280(IWire& wire, uint8_t& deviceId);
-					BME280(IWireDevice& device);
+					BME280(IWireDevice& wire);
 					void Begin() override;
 					void Reset();
 					double GetPressure() override;
