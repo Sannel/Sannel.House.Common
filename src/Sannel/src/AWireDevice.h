@@ -12,8 +12,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.*/
 
-#ifndef _ILIGHTSENSOR_H_
-#define _ILIGHTSENSOR_H_
+
+#ifndef _AWIREDEVICE_H_
+#define _AWIREDEVICE_H_
+
+#include "IWireDevice.h"
 
 namespace Sannel
 {
@@ -21,13 +24,25 @@ namespace Sannel
 	{
 		namespace Sensor
 		{
-			class ILightSensor
+			class AWireDevice : public IWireDevice
 			{
 			public:
-				virtual double GetLuxLevel() = 0;
+				AWireDevice(uint8_t id);
+				void Write(uint8_t b) override;
+				void Write(uint8_t b1, uint8_t b2) override;
+				void Write(uint8_t b1, uint8_t b2, uint8_t b3) override;
+				uint8_t WriteRead(uint8_t write) override;
+				void WriteRead(uint8_t write, uint8_t* read, int length) override;
+				unsigned int Read(uint8_t* read, int length) override;
+				unsigned int Read(int* read, int length) override;
+				unsigned int Read(unsigned int* read, int length) override;
+				uint8_t ReadByte() override;
+			private:
+				uint8_t address;
 			};
 		}
 	}
 }
 
 #endif
+

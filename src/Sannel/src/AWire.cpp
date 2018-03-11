@@ -12,22 +12,29 @@
    See the License for the specific language governing permissions and
    limitations under the License.*/
 
-#ifndef _ILIGHTSENSOR_H_
-#define _ILIGHTSENSOR_H_
+#include "AWire.h"
 
-namespace Sannel
+#include "Wire.h"
+#include "AWireDevice.h"
+
+using namespace Sannel::House::Sensor;
+
+AWire::AWire()
 {
-	namespace House
-	{
-		namespace Sensor
-		{
-			class ILightSensor
-			{
-			public:
-				virtual double GetLuxLevel() = 0;
-			};
-		}
-	}
 }
 
-#endif
+void AWire::Begin()
+{
+	Wire.begin();
+}
+
+void AWire::Begin(int sda, int scl)
+{
+	Wire.begin(sda, scl);
+}
+
+IWireDevice& AWire::GetDeviceById(uint8_t deviceId)
+{
+	return *(new AWireDevice(deviceId));
+}
+

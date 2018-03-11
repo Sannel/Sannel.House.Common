@@ -11,9 +11,7 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-/* This is generated code so probably best not to edit it */
-#ifndef _IWIREDEVICE_H_
-#define _IWIREDEVICE_H_
+
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "Arduino.h"
@@ -21,25 +19,23 @@
 	#include "WProgram.h"
 #endif
 
+#ifndef _AWIRE_H_
+#define _AWIRE_H_
 
+#include "IWire.h"
 namespace Sannel
 {
 	namespace House
 	{
 		namespace Sensor
 		{
-			class IWireDevice
+			class AWire : IWire
 			{
 			public:
-				virtual void Write(uint8_t b) = 0;
-				virtual void Write(uint8_t b1, uint8_t b2) = 0;
-				virtual void Write(uint8_t b1, uint8_t b2, uint8_t b3) = 0;
-				virtual uint8_t WriteRead(uint8_t write) = 0;
-				virtual void WriteRead(uint8_t write, uint8_t* read, int length) = 0;
-				virtual unsigned int Read(uint8_t* read, int length) = 0;
-				virtual unsigned int Read(int* read, int length) = 0;
-				virtual unsigned int Read(unsigned int* read, int length) = 0;
-				virtual uint8_t ReadByte() = 0;
+				AWire();
+				void Begin();
+				void Begin(int sda, int scl);
+				IWireDevice& GetDeviceById(uint8_t deviceId) override;
 			};
 		}
 	}

@@ -34,8 +34,8 @@ Distributed as-is; no warranty is given.
 #else
 #include "WProgram.h"
 #endif
-#include <Wire.h>
 #include <ITemperatureSensor.h>
+#include "IWireDevice.h"
 
 namespace Sannel
 {
@@ -48,7 +48,7 @@ namespace Sannel
 				class TMP102 : public ITemperatureSensor
 				{
 				public:
-					TMP102(byte address);	// Initialize TMP102 sensor at given address
+					TMP102(IWireDevice &device);	// Initialize TMP102 sensor at given address
 					float readTempC(void);	// Returns the temperature in degrees C
 					float readTempF(void);	// Converts readTempC result to degrees F
 					void sleep(void);	// Switch sensor to low power mode
@@ -96,7 +96,7 @@ namespace Sannel
 					double GetTemperatureCelsius() override;
 
 				private:
-					int _address; // Address of Temperature sensor (0x48,0x49,0x4A,0x4B)
+					IWireDevice * device; // Address of Temperature sensor (0x48,0x49,0x4A,0x4B)
 					void openPointerRegister(byte pointerReg); // Changes the pointer register
 					byte readRegister(bool registerNumber);	// reads 1 byte of from register
 				};

@@ -34,6 +34,7 @@ For a copy of the GNU General Public License, see
 #include "ITemperatureSensor.h"
 #include "IHumiditySensor.h"
 #include "ISensor.h"
+#include "IWireDevice.h"
 
 #define SI7021_TEMP_MEASURE_HOLD  0xE3
 #define SI7021_HUMD_MEASURE_HOLD  0xE5
@@ -60,13 +61,13 @@ namespace Sannel
 	{
 		namespace Sensor
 		{
-			namespace Temp
+			namespace Temperature
 			{
 				class Si7021 : public ISensor, public ITemperatureSensor, public IHumiditySensor 
 				{
 				public:
 					// Constructor
-					Si7021(uint8_t address=0x40);
+					Si7021(IWireDevice& device);// 0x40
 
 					bool begin();
 
@@ -87,7 +88,7 @@ namespace Sannel
 					double GetRelativeHumidity() override;
 
 				private:
-					uint16_t address;
+					IWireDevice* device;
 					uint16_t makeMeasurment(uint8_t command);
 					void writeReg(uint8_t value);
 					uint8_t readReg();

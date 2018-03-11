@@ -30,6 +30,7 @@ local, and you've found our code helpful, please buy us a round!
 Distributed as-is; no warranty is given.
 ******************************************************************************/
 #include "TMP102.h"
+#include "IWireDevice.h"
 
 using namespace Sannel::House::Sensor::Temperature;
 
@@ -40,9 +41,9 @@ using namespace Sannel::House::Sensor::Temperature;
 
 
 
-TMP102::TMP102(byte address)
+TMP102::TMP102(IWireDevice& device)
 {
-	_address = address;
+	this->device = &device;
 }
 
 void TMP102::Begin(void)
@@ -52,20 +53,13 @@ void TMP102::Begin(void)
 
 void TMP102::openPointerRegister(byte pointerReg)
 {
-	Wire.beginTransmission(_address); // Connect to TMP102
-	Wire.write(pointerReg); // Open specified register
-	Wire.endTransmission(); // Close communication with TMP102
+	this->device->Write(pointerReg);
 }
 
 
 byte TMP102::readRegister(bool registerNumber) {
 	int registerByte[2];	// We'll store the data from the registers here
-
-							// Read current configuration register value
-	Wire.requestFrom(_address, 2); 	// Read two bytes from TMP102
-	Wire.endTransmission();
-	registerByte[0] = (Wire.read());	// Read first byte
-	registerByte[1] = (Wire.read());	// Read second byte
+	this->device->Read(registerByte, 2);
 
 	return registerByte[registerNumber];
 }
@@ -107,7 +101,7 @@ float TMP102::readTempC(void)
 		}
 	}
 	// Convert digital reading to analog temperature (1-bit is equal to 0.0625 C)
-	return digitalTemp*0.0625;
+	return digitalTemp * 0.0625;
 }
 
 
@@ -134,11 +128,10 @@ void TMP102::setConversionRate(byte rate)
 	registerByte[1] |= rate << 6;	// Shift in new conversion rate
 
 									// Set configuration registers
-	Wire.beginTransmission(_address);
-	Wire.write(CONFIG_REGISTER); 	// Point to configuration register
-	Wire.write(registerByte[0]);  // Write first byte
-	Wire.write(registerByte[1]);  // Write second byte
-	Wire.endTransmission();  		// Close communication with TMP102
+	this->device->Write(CONFIG_REGISTER,
+		registerByte[0],
+		registerByte[1]
+	);
 }
 
 
@@ -158,11 +151,11 @@ void TMP102::setExtendedMode(bool mode)
 	registerByte[1] |= mode << 4;	// Shift in new exentended mode bit
 
 									// Set configuration registers
-	Wire.beginTransmission(_address);
-	Wire.write(CONFIG_REGISTER);	// Point to configuration register
-	Wire.write(registerByte[0]);	// Write first byte
-	Wire.write(registerByte[1]); 	// Write second byte
-	Wire.endTransmission(); 		// Close communication with TMP102
+	this->device->Write(
+		CONFIG_REGISTER,
+		registerByte[0],
+		registerByte[1]
+	);
 }
 
 
@@ -179,10 +172,8 @@ void TMP102::sleep(void)
 	registerByte |= 0x01;	// Set SD (bit 0 of first byte)
 
 							// Set configuration register
-	Wire.beginTransmission(_address);
-	Wire.write(CONFIG_REGISTER);	// Point to configuration register
-	Wire.write(registerByte);     // Write first byte
-	Wire.endTransmission(); 	    // Close communication with TMP102
+	this->device->Write(CONFIG_REGISTER,
+		registerByte);
 }
 
 
@@ -199,10 +190,8 @@ void TMP102::wakeup(void)
 	registerByte &= 0xFE;	// Clear SD (bit 0 of first byte)
 
 							// Set configuration registers
-	Wire.beginTransmission(_address);
-	Wire.write(CONFIG_REGISTER);	// Point to configuration register
-	Wire.write(registerByte);	    // Write first byte
-	Wire.endTransmission(); 	    // Close communication with TMP102
+	this->device->Write(CONFIG_REGISTER,
+		registerByte);
 }
 
 
@@ -221,10 +210,8 @@ void TMP102::setAlertPolarity(bool polarity)
 	registerByte |= polarity << 2;  // Shift in new POL bit
 
 									// Set configuration register
-	Wire.beginTransmission(_address);
-	Wire.write(CONFIG_REGISTER);	// Point to configuration register
-	Wire.write(registerByte);	    // Write first byte
-	Wire.endTransmission(); 	    // Close communication with TMP102
+	this->device->Write(CONFIG_REGISTER,
+		registerByte);
 }
 
 
@@ -283,11 +270,11 @@ void TMP102::setLowTempC(float temperature)
 	}
 
 	// Write to T_LOW Register
-	Wire.beginTransmission(_address);
-	Wire.write(T_LOW_REGISTER); 	// Point to T_LOW
-	Wire.write(registerByte[0]);  // Write first byte
-	Wire.write(registerByte[1]);  // Write second byte
-	Wire.endTransmission();  		// Close communication with TMP102
+	this->device->Write(
+		T_LOW_REGISTER,
+		registerByte[0],
+		registerByte[1]
+	);
 }
 
 
@@ -331,11 +318,11 @@ void TMP102::setHighTempC(float temperature)
 	}
 
 	// Write to T_HIGH Register
-	Wire.beginTransmission(_address);
-	Wire.write(T_HIGH_REGISTER); 	// Point to T_HIGH register
-	Wire.write(registerByte[0]);  // Write first byte
-	Wire.write(registerByte[1]);  // Write second byte
-	Wire.endTransmission();  		// Close communication with TMP102
+	this->device->Write(
+		T_HIGH_REGISTER,
+		registerByte[0],
+		registerByte[1]
+	);
 }
 
 
@@ -472,10 +459,10 @@ void TMP102::setFault(byte faultSetting)
 	registerByte |= faultSetting << 3;	// Shift new fault setting
 
 										// Set configuration registers
-	Wire.beginTransmission(_address);
-	Wire.write(CONFIG_REGISTER); 	// Point to configuration register
-	Wire.write(registerByte);     // Write byte to register
-	Wire.endTransmission();       // Close communication with TMP102
+	this->device->Write(
+		CONFIG_REGISTER,
+		registerByte
+	);
 }
 
 
@@ -494,10 +481,10 @@ void TMP102::setAlertMode(bool mode)
 	registerByte |= mode << 1;	// Shift in new TM bit
 
 								// Set configuration registers
-	Wire.beginTransmission(_address);
-	Wire.write(CONFIG_REGISTER); 	// Point to configuration register
-	Wire.write(registerByte);     // Write byte to register
-	Wire.endTransmission();       // Close communication with TMP102
+	this->device->Write(
+		CONFIG_REGISTER,
+		registerByte
+	);
 }
 
 double TMP102::GetTemperatureCelsius()

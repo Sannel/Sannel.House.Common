@@ -1,4 +1,4 @@
-﻿/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2017 Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the ""License"");
    you may not use this file except in compliance with the License.
@@ -17,14 +17,15 @@ using System.Text;
 
 namespace Sannel.House.Sensor
 {
-    public enum SensorTypes
-    {
+	public enum SensorTypes
+	{
 		Test = 0,
 		Temperature = 1,
 		TemperatureHumidityPresure = 2,
-		WindSpeed=3,
-		WindDirection=4,
-		SoilMoisture=5,
-		RainAmount=6
-    }
+		WindSpeed = 3,
+		WindDirection = 4,
+		SoilMoisture = 5,
+		RainAmount = 6,
+		LightSensor = 7
+	}
 }

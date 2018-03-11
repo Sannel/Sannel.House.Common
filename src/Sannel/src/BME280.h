@@ -95,7 +95,17 @@ namespace Sannel
 					uint8_t PressureOverSample;
 					uint8_t HumidityOverSample;
 				private:
+					uint8_t readRegister(uint8_t offset);
+					void readRegisterRegion(uint8_t *outputPointer, uint8_t offset, uint8_t length);
+					int16_t readRegisterInt16(uint8_t offset);
+					void writeRegister(uint8_t offset, uint8_t dataToWrite);
 					IWireDevice* device;
+					uint8_t filter;
+					uint8_t tStandby;
+					uint8_t tempOverSample;
+					uint8_t pressOverSample;
+					uint8_t humidOverSample;
+					uint8_t runMode;
 					int64_t storedTemperature;
 					uint16_t digT1;
 					int16_t digT2;

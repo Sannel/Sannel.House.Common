@@ -26,5 +26,9 @@ namespace Sannel.House.Sensor
 		void Write(params byte[] bytes);
 		byte WriteRead(byte write);
 		void WriteRead(byte write, ref byte[] read, int length);
+		uint Read(ref byte[] read, int length);
+		uint Read(ref int[] read, int length);
+		uint Read(ref uint[] read, int length);
+		byte ReadByte();
 	}
 }

@@ -28,19 +28,17 @@ For a copy of the GNU General Public License, see
 */
 
 #include "Si7021.h"
-#include <Wire.h>
+#include "IWireDevice.h"
 
-using namespace Sannel::House::Sensor::Temp;
+using namespace Sannel::House::Sensor::Temperature;
 
-Si7021::Si7021(uint8_t address)
+Si7021::Si7021(IWireDevice& device)
 {
-	this->address = address;
+	this->device = &device;
 }
 
 bool Si7021::begin()
 {
-	Wire.begin();
-
 	uint8_t id_Temp_Hum = checkID();
 
 	int x = 0;
@@ -170,14 +168,9 @@ uint8_t Si7021::checkID()
 	uint8_t ID_1;
 
 	// Check device ID
-	Wire.beginTransmission(address);
-	Wire.write(0xFC);
-	Wire.write(0xC9);
-	Wire.endTransmission();
+	this->device->Write(0xFC, 0xC9);
 
-	Wire.requestFrom(address, 1);
-
-	ID_1 = Wire.read();
+	ID_1 = this->device->ReadByte();
 
 	return(ID_1);
 }
@@ -192,20 +185,22 @@ uint16_t Si7021::makeMeasurment(uint8_t command)
 	// if we are only reading old temperature, read only msb and lsb
 	if (command == 0xE0) nBytes = 2;
 
-	Wire.beginTransmission(address);
-	Wire.write(command);
-	Wire.endTransmission();
+	this->device->Write(command);
 	// When not using clock stretching (*_NOHOLD commands) delay here
 	// is needed to wait for the measurement.
 	// According to datasheet the max. conversion time is ~22ms
 	delay(100);
 
-	Wire.requestFrom(address, nBytes);
-	if (Wire.available() != nBytes)
-		return 100;
+	unsigned int data[3];
 
-	unsigned int msb = Wire.read();
-	unsigned int lsb = Wire.read();
+	int read = this->device->Read(data, nBytes);
+	if (read != nBytes) 
+	{
+		return 100;
+	}
+
+	unsigned int msb = data[0];
+	unsigned int lsb = data[1];
 	// Clear the last to bits of LSB to 00.
 	// According to datasheet LSB of RH is always xxxxxx10
 	lsb &= 0xFC;
@@ -217,20 +212,13 @@ uint16_t Si7021::makeMeasurment(uint8_t command)
 void Si7021::writeReg(uint8_t value)
 {
 	// Write to user register on ADDRESS
-	Wire.beginTransmission(address);
-	Wire.write(SI7021_WRITE_USER_REG);
-	Wire.write(value);
-	Wire.endTransmission();
+	this->device->Write(SI7021_WRITE_USER_REG, value);
 }
 
 uint8_t Si7021::readReg()
 {
 	// Read from user register on ADDRESS
-	Wire.beginTransmission(address);
-	Wire.write(SI7021_READ_USER_REG);
-	Wire.endTransmission();
-	Wire.requestFrom(address, 1);
-	uint8_t regVal = Wire.read();
+	uint8_t regVal = this->device->WriteRead(SI7021_READ_USER_REG);
 	return regVal;
 }
 
