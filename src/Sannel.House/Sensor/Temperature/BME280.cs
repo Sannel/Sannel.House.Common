@@ -89,27 +89,6 @@ namespace Sannel.House.Sensor.Temperature
 
 		private readonly IWireDevice device;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BME280"/> class.
-		/// </summary>
-		/// <param name="wire">The wire.</param>
-		/// <param name="deviceId">The device identifier. 0x76 or 0x77</param>
-		/// <exception cref="ArgumentNullException">wire</exception>
-		public BME280(IWire wire, byte deviceId)
-		{
-
-			if (wire == null)
-			{
-				throw new ArgumentNullException(nameof(wire));
-			}
-
-			device = wire.GetDeviceById(deviceId);
-			RunMode = 0;
-			TemperatureOverSample = 0;
-			PressureOverSample = 0;
-			HumidityOverSample = 0;
-		}
-
 		public BME280(IWireDevice device)
 		{
 			if (device == null)
@@ -254,39 +233,42 @@ namespace Sannel.House.Sensor.Temperature
 
 		public void Begin()
 		{
-			digT1 = (ushort)((device.WriteRead(BME280_DIG_T1_MSB_REG) << 8) + device.WriteRead(BME280_DIG_T1_LSB_REG));
-			digT2 = (short)((device.WriteRead(BME280_DIG_T2_MSB_REG) << 8) + device.WriteRead(BME280_DIG_T2_LSB_REG));
-			digT3 = (short)((device.WriteRead(BME280_DIG_T3_MSB_REG) << 8) + device.WriteRead(BME280_DIG_T3_LSB_REG));
+			//Reading all compensation data, range 0x88:A1, 0xE1:E7
+			byte dataToWrite = 0;  //Temporary variable
 
-			digP1 = (ushort)((device.WriteRead(BME280_DIG_P1_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P1_LSB_REG));
-			digP2 = (short)((device.WriteRead(BME280_DIG_P2_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P2_LSB_REG));
-			digP3 = (short)((device.WriteRead(BME280_DIG_P3_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P3_LSB_REG));
-			digP4 = (short)((device.WriteRead(BME280_DIG_P4_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P4_LSB_REG));
-			digP5 = (short)((device.WriteRead(BME280_DIG_P5_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P5_LSB_REG));
-			digP6 = (short)((device.WriteRead(BME280_DIG_P6_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P6_LSB_REG));
-			digP7 = (short)((device.WriteRead(BME280_DIG_P7_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P7_LSB_REG));
-			digP8 = (short)((device.WriteRead(BME280_DIG_P8_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P8_LSB_REG));
-			digP9 = (short)((device.WriteRead(BME280_DIG_P9_MSB_REG) << 8) + device.WriteRead(BME280_DIG_P9_LSB_REG));
+			digT1 = ((ushort)((readRegister(BME280_DIG_T1_MSB_REG) << 8) + readRegister(BME280_DIG_T1_LSB_REG)));
+			digT2 = ((short)((readRegister(BME280_DIG_T2_MSB_REG) << 8) + readRegister(BME280_DIG_T2_LSB_REG)));
+			digT3 = ((short)((readRegister(BME280_DIG_T3_MSB_REG) << 8) + readRegister(BME280_DIG_T3_LSB_REG)));
 
-			digH1 = device.WriteRead(BME280_DIG_H1_REG);
-			digH2 = (short)((device.WriteRead(BME280_DIG_H2_MSB_REG) << 8) + device.WriteRead(BME280_DIG_H2_LSB_REG));
-			digH3 = device.WriteRead(BME280_DIG_H3_REG);
-			digH4 = (short)((device.WriteRead(BME280_DIG_H4_MSB_REG) << 4) + (device.WriteRead(BME280_DIG_H4_LSB_REG) & 0x0F));
-			digH5 = (short)((device.WriteRead(BME280_DIG_H5_MSB_REG) << 4) + ((device.WriteRead(BME280_DIG_H4_LSB_REG) >> 4) & 0x0F));
-			digH6 = device.WriteRead(BME280_DIG_H6_REG);
+			digP1 = ((ushort)((readRegister(BME280_DIG_P1_MSB_REG) << 8) + readRegister(BME280_DIG_P1_LSB_REG)));
+			digP2 = ((short)((readRegister(BME280_DIG_P2_MSB_REG) << 8) + readRegister(BME280_DIG_P2_LSB_REG)));
+			digP3 = ((short)((readRegister(BME280_DIG_P3_MSB_REG) << 8) + readRegister(BME280_DIG_P3_LSB_REG)));
+			digP4 = ((short)((readRegister(BME280_DIG_P4_MSB_REG) << 8) + readRegister(BME280_DIG_P4_LSB_REG)));
+			digP5 = ((short)((readRegister(BME280_DIG_P5_MSB_REG) << 8) + readRegister(BME280_DIG_P5_LSB_REG)));
+			digP6 = ((short)((readRegister(BME280_DIG_P6_MSB_REG) << 8) + readRegister(BME280_DIG_P6_LSB_REG)));
+			digP7 = ((short)((readRegister(BME280_DIG_P7_MSB_REG) << 8) + readRegister(BME280_DIG_P7_LSB_REG)));
+			digP8 = ((short)((readRegister(BME280_DIG_P8_MSB_REG) << 8) + readRegister(BME280_DIG_P8_LSB_REG)));
+			digP9 = ((short)((readRegister(BME280_DIG_P9_MSB_REG) << 8) + readRegister(BME280_DIG_P9_LSB_REG)));
+
+			digH1 = ((byte)(readRegister(BME280_DIG_H1_REG)));
+			digH2 = ((short)((readRegister(BME280_DIG_H2_MSB_REG) << 8) + readRegister(BME280_DIG_H2_LSB_REG)));
+			digH3 = ((byte)(readRegister(BME280_DIG_H3_REG)));
+			digH4 = ((short)((readRegister(BME280_DIG_H4_MSB_REG) << 4) + (readRegister(BME280_DIG_H4_LSB_REG) & 0x0F)));
+			digH5 = ((short)((readRegister(BME280_DIG_H5_MSB_REG) << 4) + ((readRegister(BME280_DIG_H4_LSB_REG) >> 4) & 0x0F)));
+			digH6 = ((byte)readRegister(BME280_DIG_H6_REG));
 
 			//Set the oversampling control words.
 			//config will only be writable in sleep mode, so first insure that.
-			device.Write(BME280_CTRL_MEAS_REG, 0x00);
+			writeRegister(BME280_CTRL_MEAS_REG, 0x00);
 
 			//Set the config word
-			var dataToWrite = (byte)((TimeStandBy << 0x5) & 0xE0);
+			dataToWrite = (byte)((TimeStandBy << 0x5) & 0xE0);
 			dataToWrite |= (byte)((Filter << 0x02) & 0x1C);
-			device.Write(BME280_CONFIG_REG, dataToWrite);
+			writeRegister(BME280_CONFIG_REG, dataToWrite);
 
 			//Set ctrl_hum first, then ctrl_meas to activate ctrl_hum
 			dataToWrite = (byte)(HumidityOverSample & 0x07); //all other bits can be ignored
-			device.Write(BME280_CTRL_HUMIDITY_REG, dataToWrite);
+			writeRegister(BME280_CTRL_HUMIDITY_REG, dataToWrite);
 
 			//set ctrl_meas
 			//First, set temp oversampling
@@ -294,11 +276,11 @@ namespace Sannel.House.Sensor.Temperature
 			//Next, pressure oversampling
 			dataToWrite |= (byte)((PressureOverSample << 0x02) & 0x1C);
 			//Last, set mode
-			dataToWrite |= (byte)(RunMode & 0x03);
+			dataToWrite |= (byte)((RunMode) & 0x03);
 			//Load the byte
-			device.Write(BME280_CTRL_MEAS_REG, dataToWrite);
+			writeRegister(BME280_CTRL_MEAS_REG, dataToWrite);
 
-			dataToWrite = device.WriteRead(0xD0);
+			readRegister(0xD0);
 		}
 
 		public void Dispose()
@@ -312,7 +294,7 @@ namespace Sannel.House.Sensor.Temperature
 		/// </summary>
 		public void Reset()
 		{
-			device.Write(BME280_RST_REG, 0xB6);
+			writeRegister(BME280_RST_REG, 0xB6);
 		}
 
 		/// <summary>
@@ -324,15 +306,15 @@ namespace Sannel.House.Sensor.Temperature
 		{
 			// Returns pressure in Pa as unsigned 32 bit integer in Q24.8 format (24 integer bits and 8 fractional bits).
 			// Output value of “24674867” represents 24674867/256 = 96386.2 Pa = 963.862 hPa
-			var adc_P = ((uint)device.WriteRead(BME280_PRESSURE_MSB_REG) << 12) | ((uint)device.WriteRead(BME280_PRESSURE_LSB_REG) << 4) | ((uint)(device.WriteRead(BME280_PRESSURE_XLSB_REG) >> 4) & 0x0F);
+			var adc_P = (int)(((uint)readRegister(BME280_PRESSURE_MSB_REG) << 12) | ((uint)readRegister(BME280_PRESSURE_LSB_REG) << 4) | ((readRegister(BME280_PRESSURE_XLSB_REG) >> 4) & 0x0F));
 
 			long var1, var2, p_acc;
-			var1 = storedTemperature - 128000;
+			var1 = (storedTemperature) - 128000;
 			var2 = var1 * var1 * (long)digP6;
 			var2 = var2 + ((var1 * (long)digP5) << 17);
 			var2 = var2 + (((long)digP4) << 35);
 			var1 = ((var1 * var1 * (long)digP3) >> 8) + ((var1 * (long)digP2) << 12);
-			var1 = ((((1L) << 47) + var1)) * ((long)digP1) >> 33;
+			var1 = (((((long)1) << 47) + var1)) * ((long)digP1) >> 33;
 			if (var1 == 0)
 			{
 				return 0; // avoid exception caused by division by zero
@@ -355,11 +337,11 @@ namespace Sannel.House.Sensor.Temperature
 		{
 			// Returns humidity in %RH as unsigned 32 bit integer in Q22. 10 format (22 integer and 10 fractional bits).
 			// Output value of “47445” represents 47445/1024 = 46. 333 %RH
-			long adcH = ((uint)device.WriteRead(BME280_HUMIDITY_MSB_REG) << 8) | ((uint)device.WriteRead(BME280_HUMIDITY_LSB_REG));
+			var adc_H = (int)(((uint)readRegister(BME280_HUMIDITY_MSB_REG) << 8) | ((uint)readRegister(BME280_HUMIDITY_LSB_REG)));
 
-			long var1;
-			var1 = (storedTemperature - ((int)76800));
-			var1 = (((((adcH << 14) - (((int)digH4) << 20) - (((int)digH5) * var1)) +
+			int var1;
+			var1 = (int)((storedTemperature - ((int)76800)));
+			var1 = (((((adc_H << 14) - (((int)digH4) << 20) - (((int)digH5) * var1)) +
 				((int)16384)) >> 15) * (((((((var1 * ((int)digH6)) >> 10) * (((var1 * ((int)digH3)) >> 11) + ((int)32768))) >> 10) + ((int)2097152)) *
 				((int)digH2) + 8192) >> 14));
 			var1 = (var1 - (((((var1 >> 15) * (var1 >> 15)) >> 7) * ((int)digH1)) >> 4));
@@ -380,13 +362,13 @@ namespace Sannel.House.Sensor.Temperature
 			// t_fine carries fine temperature as global value
 
 			//get the reading (adc_T);
-			var adcT = ((uint)device.WriteRead(BME280_TEMPERATURE_MSB_REG) << 12) | ((uint)device.WriteRead(BME280_TEMPERATURE_LSB_REG) << 4) | (((uint)device.WriteRead(BME280_TEMPERATURE_XLSB_REG) >> 4) & 0x0F);
+			var adc_T = (int)(((uint)readRegister(BME280_TEMPERATURE_MSB_REG) << 12) | ((uint)readRegister(BME280_TEMPERATURE_LSB_REG) << 4) | ((readRegister(BME280_TEMPERATURE_XLSB_REG) >> 4) & 0x0F));
 
-			//By datasheet, calibrate
+			//By data sheet, calibrate
 			long var1, var2;
 
-			var1 = ((((adcT >> 3) - (digT1 << 1))) * (digT2)) >> 11;
-			var2 = (((((adcT >> 4) - ((int)digT1)) * ((adcT >> 4) - ((int)digT1))) >> 12) *
+			var1 = ((((adc_T >> 3) - ((int)digT1 << 1))) * ((int)digT2)) >> 11;
+			var2 = (((((adc_T >> 4) - ((int)digT1)) * ((adc_T >> 4) - ((int)digT1))) >> 12) *
 				((int)digT3)) >> 14;
 			storedTemperature = var1 + var2;
 			double output = (storedTemperature * 5 + 128) >> 8;
@@ -395,6 +377,28 @@ namespace Sannel.House.Sensor.Temperature
 
 			return output;
 		}
+
+		private byte readRegister(byte offset)
+		{
+			return offset;
+		}
+
+		private void readRegisterRegion(byte[] outputPointer, byte offset, byte length)
+		{
+
+		}
+
+		short readRegisterInt16(byte offset)
+		{
+			return 0;
+		}
+
+
+		private void writeRegister(byte offset, byte dataToWrite)
+		{
+
+		}
+
 
 	}
 }

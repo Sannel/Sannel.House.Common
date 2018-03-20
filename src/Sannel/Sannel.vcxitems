@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <!-- <ClInclude Include="$(MSBuildThisFileDirectory)Sannel.h" /> -->
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\ILightSensor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\AWire.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\AWireDevice.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\BME280.h" />
@@ -37,6 +38,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorPacket.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SensorTypes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Si7021.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Si7021Resolutions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\stdafx.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\TMP102.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\WProgram.h" />

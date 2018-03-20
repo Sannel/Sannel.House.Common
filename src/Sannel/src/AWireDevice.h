@@ -31,11 +31,10 @@ namespace Sannel
 				void Write(uint8_t b) override;
 				void Write(uint8_t b1, uint8_t b2) override;
 				void Write(uint8_t b1, uint8_t b2, uint8_t b3) override;
+				void Write(uint8_t* b, int length) override;
 				uint8_t WriteRead(uint8_t write) override;
 				void WriteRead(uint8_t write, uint8_t* read, int length) override;
 				unsigned int Read(uint8_t* read, int length) override;
-				unsigned int Read(int* read, int length) override;
-				unsigned int Read(unsigned int* read, int length) override;
 				uint8_t ReadByte() override;
 			private:
 				uint8_t address;

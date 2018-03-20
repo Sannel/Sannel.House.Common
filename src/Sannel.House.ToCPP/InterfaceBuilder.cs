@@ -29,19 +29,23 @@ namespace Sannel.House.ToCPP
 			{
 				return "void";
 			}
+			else if(t == typeof(bool))
+			{
+				return "bool";
+			}
 			else if (t == typeof(byte))
 			{
 				return "uint8_t";
 			}
-			else if(t == typeof(ushort))
+			else if (t == typeof(ushort))
 			{
 				return "uint16_t";
 			}
-			else if(t == typeof(short))
+			else if (t == typeof(short))
 			{
 				return "int16_t";
 			}
-			else if(t == typeof(int))
+			else if (t == typeof(int))
 			{
 				return "int";
 			}
@@ -49,9 +53,25 @@ namespace Sannel.House.ToCPP
 			{
 				return "double";
 			}
+			else if (t == typeof(uint))
+			{
+				return "unsigned int";
+			}
 			else if (t == typeof(byte[]) || t.Name == "Byte[]&")
 			{
 				return "uint8_t*";
+			}
+			else if (t == typeof(ushort[]) || t.Name == "UInt16[]&") 
+			{
+				return "uint16_t*";
+			}
+			else if(t == typeof(uint[]) || t.Name == "UInt32[]&")
+			{
+				return "uint32_t*";
+			}
+			else if(t == typeof(int[]) || t.Name == "Int32[]&")
+			{
+				return "int32_t*";
 			}
 			else if(t == typeof(long))
 			{
@@ -87,7 +107,12 @@ namespace Sannel.House.ToCPP
 		protected virtual void AddMethod(MethodInfo mi)
 		{
 			Code.AppendTabs(Tabs);
-			Code.Append($"virtual {GetCppType(mi.ReturnType)} {mi.Name}(");
+			var rtype = GetCppType(mi.ReturnType);
+			if(mi.ReturnType.IsClass || mi.ReturnType.IsInterface)
+			{
+				rtype += "&";
+			}
+			Code.Append($"virtual {rtype} {mi.Name}(");
 			var firstRun = true;
 			foreach (var v in mi.GetParameters())
 			{
@@ -142,11 +167,14 @@ namespace Sannel.House.ToCPP
 
 		protected virtual void AddPrivateMethods()
 		{
-			foreach (var m in ProcessType.GetMethods().Where(i => i.IsPrivate))
+			foreach (MethodInfo m in ((dynamic)ProcessType).DeclaredMethods)
 			{
-				if (!IsIgnoredMethod(m.Name))
+				if (m.IsPrivate)
 				{
-					AddMethod(m);
+					if (!IsIgnoredMethod(m.Name))
+					{
+						AddMethod(m);
+					}
 				}
 			}
 		}

@@ -11,31 +11,15 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-/* This is generated code so probably best not to edit it */
-#ifndef _ILIGHTSENSOR_H_
-#define _ILIGHTSENSOR_H_
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#ifndef _SI7021RESOLUTIONS_H_
+#define _SI7021RESOLUTIONS_H_
 
-
-namespace Sannel
-{
-	namespace House
-	{
-		namespace Sensor
-		{
-			class ILightSensor
-			{
-			public:
-				virtual double GetLuxLevel() = 0;
-			private:
-			};
-		}
-	}
-}
+enum Si7021Resolutions {
+			_12Bit = 0,
+			_8Bit = 1,
+			_10Bit = 2,
+			_11Bit = 3
+};
 
 #endif

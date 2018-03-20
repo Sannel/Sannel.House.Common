@@ -34,12 +34,12 @@ namespace Sannel
 				virtual void Write(uint8_t b) = 0;
 				virtual void Write(uint8_t b1, uint8_t b2) = 0;
 				virtual void Write(uint8_t b1, uint8_t b2, uint8_t b3) = 0;
+				virtual void Write(uint8_t* bytes, int length) = 0;
 				virtual uint8_t WriteRead(uint8_t write) = 0;
 				virtual void WriteRead(uint8_t write, uint8_t* read, int length) = 0;
 				virtual unsigned int Read(uint8_t* read, int length) = 0;
-				virtual unsigned int Read(int* read, int length) = 0;
-				virtual unsigned int Read(unsigned int* read, int length) = 0;
 				virtual uint8_t ReadByte() = 0;
+			private:
 			};
 		}
 	}

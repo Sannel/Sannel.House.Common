@@ -34,11 +34,6 @@ Distributed as-is; no warranty is given.
 
 using namespace Sannel::House::Sensor::Temperature;
 
-#define TEMPERATURE_REGISTER 0x00
-#define CONFIG_REGISTER 0x01
-#define T_LOW_REGISTER 0x02
-#define T_HIGH_REGISTER 0x03
-
 
 
 TMP102::TMP102(IWireDevice& device)
@@ -57,22 +52,22 @@ void TMP102::openPointerRegister(byte pointerReg)
 }
 
 
-byte TMP102::readRegister(bool registerNumber) {
-	int registerByte[2];	// We'll store the data from the registers here
+uint8_t TMP102::readRegister(uint8_t registerNumber) {
+	uint8_t registerByte[2];	// We'll store the data from the registers here
 	this->device->Read(registerByte, 2);
 
 	return registerByte[registerNumber];
 }
 
 
-float TMP102::readTempC(void)
+double TMP102::GetTemperatureCelsius(void)
 {
 	int registerByte[2];	// Store the data from the register here
 	int digitalTemp;  // Temperature stored in TMP102 register
 
 					  // Read Temperature
 					  // Change pointer address to temperature register (0)
-	openPointerRegister(TEMPERATURE_REGISTER);
+	openPointerRegister(TMP102_TEMPERATURE_REGISTER);
 	// Read from temperature register
 	registerByte[0] = readRegister(0);
 	registerByte[1] = readRegister(1);
@@ -105,19 +100,13 @@ float TMP102::readTempC(void)
 }
 
 
-float TMP102::readTempF(void)
-{
-	return readTempC()*9.0 / 5.0 + 32.0;
-}
-
-
-void TMP102::setConversionRate(byte rate)
+void TMP102::SetConversionRate(byte rate)
 {
 	int registerByte[2]; // Store the data from the register here
 	rate = rate & 0x03; // Make sure rate is not set higher than 3.
 
 						// Change pointer address to configuration register (0x01)
-	openPointerRegister(CONFIG_REGISTER);
+	openPointerRegister(TMP102_CONFIG_REGISTER);
 
 	// Read current configuration register value
 	registerByte[0] = readRegister(0);
@@ -128,19 +117,19 @@ void TMP102::setConversionRate(byte rate)
 	registerByte[1] |= rate << 6;	// Shift in new conversion rate
 
 									// Set configuration registers
-	this->device->Write(CONFIG_REGISTER,
+	this->device->Write(TMP102_CONFIG_REGISTER,
 		registerByte[0],
 		registerByte[1]
 	);
 }
 
 
-void TMP102::setExtendedMode(bool mode)
+void TMP102::SetExtendedMode(bool mode)
 {
 	int registerByte[2]; // Store the data from the register here
 
 						 // Change pointer address to configuration register (0x01)
-	openPointerRegister(CONFIG_REGISTER);
+	openPointerRegister(TMP102_CONFIG_REGISTER);
 
 	// Read current configuration register value
 	registerByte[0] = readRegister(0);
@@ -152,19 +141,19 @@ void TMP102::setExtendedMode(bool mode)
 
 									// Set configuration registers
 	this->device->Write(
-		CONFIG_REGISTER,
+		TMP102_CONFIG_REGISTER,
 		registerByte[0],
 		registerByte[1]
 	);
 }
 
 
-void TMP102::sleep(void)
+void TMP102::Sleep(void)
 {
 	byte registerByte; // Store the data from the register here
 
 					   // Change pointer address to configuration register (0x01)
-	openPointerRegister(CONFIG_REGISTER);
+	openPointerRegister(TMP102_CONFIG_REGISTER);
 
 	// Read current configuration register value
 	registerByte = readRegister(0);
@@ -172,17 +161,17 @@ void TMP102::sleep(void)
 	registerByte |= 0x01;	// Set SD (bit 0 of first byte)
 
 							// Set configuration register
-	this->device->Write(CONFIG_REGISTER,
+	this->device->Write(TMP102_CONFIG_REGISTER,
 		registerByte);
 }
 
 
-void TMP102::wakeup(void)
+void TMP102::Wakeup(void)
 {
 	byte registerByte; // Store the data from the register here
 
 					   // Change pointer address to configuration register (1)
-	openPointerRegister(CONFIG_REGISTER);
+	openPointerRegister(TMP102_CONFIG_REGISTER);
 
 	// Read current configuration register value
 	registerByte = readRegister(0);
@@ -190,17 +179,17 @@ void TMP102::wakeup(void)
 	registerByte &= 0xFE;	// Clear SD (bit 0 of first byte)
 
 							// Set configuration registers
-	this->device->Write(CONFIG_REGISTER,
+	this->device->Write(TMP102_CONFIG_REGISTER,
 		registerByte);
 }
 
 
-void TMP102::setAlertPolarity(bool polarity)
+void TMP102::SetAlertPolarity(bool polarity)
 {
 	byte registerByte; // Store the data from the register here
 
 					   // Change pointer address to configuration register (1)
-	openPointerRegister(CONFIG_REGISTER);
+	openPointerRegister(TMP102_CONFIG_REGISTER);
 
 	// Read current configuration register value
 	registerByte = readRegister(0);
@@ -210,17 +199,17 @@ void TMP102::setAlertPolarity(bool polarity)
 	registerByte |= polarity << 2;  // Shift in new POL bit
 
 									// Set configuration register
-	this->device->Write(CONFIG_REGISTER,
+	this->device->Write(TMP102_CONFIG_REGISTER,
 		registerByte);
 }
 
 
-bool TMP102::alert(void)
+uint8_t TMP102::Alert()
 {
 	byte registerByte; // Store the data from the register here
 
 					   // Change pointer address to configuration register (1)
-	openPointerRegister(CONFIG_REGISTER);
+	openPointerRegister(TMP102_CONFIG_REGISTER);
 
 	// Read current configuration register value
 	registerByte = readRegister(1);
@@ -230,7 +219,7 @@ bool TMP102::alert(void)
 }
 
 
-void TMP102::setLowTempC(float temperature)
+void TMP102::SetLowTemperatureCelsius(double temperature)
 {
 	int registerByte[2];	// Store the data from the register here
 	bool extendedMode;	// Store extended mode bit here 0:-55C to +128C, 1:-55C to +150C
@@ -246,7 +235,7 @@ void TMP102::setLowTempC(float temperature)
 	}
 
 	//Check if temperature should be 12 or 13 bits
-	openPointerRegister(CONFIG_REGISTER);	// Read configuration register settings
+	openPointerRegister(TMP102_CONFIG_REGISTER);	// Read configuration register settings
 
 											// Read current configuration register value
 	registerByte[0] = readRegister(0);
@@ -271,14 +260,14 @@ void TMP102::setLowTempC(float temperature)
 
 	// Write to T_LOW Register
 	this->device->Write(
-		T_LOW_REGISTER,
+		TMP102_T_LOW_REGISTER,
 		registerByte[0],
 		registerByte[1]
 	);
 }
 
 
-void TMP102::setHighTempC(float temperature)
+void TMP102::SetHighTemperatureCelsius(double temperature)
 {
 	int registerByte[2];	// Store the data from the register here
 	bool extendedMode;	// Store extended mode bit here 0:-55C to +128C, 1:-55C to +150C
@@ -294,7 +283,7 @@ void TMP102::setHighTempC(float temperature)
 	}
 
 	// Check if temperature should be 12 or 13 bits
-	openPointerRegister(CONFIG_REGISTER);	// Read configuration register settings
+	openPointerRegister(TMP102_CONFIG_REGISTER);	// Read configuration register settings
 
 											// Read current configuration register value
 	registerByte[0] = readRegister(0);
@@ -319,28 +308,13 @@ void TMP102::setHighTempC(float temperature)
 
 	// Write to T_HIGH Register
 	this->device->Write(
-		T_HIGH_REGISTER,
+		TMP102_T_HIGH_REGISTER,
 		registerByte[0],
 		registerByte[1]
 	);
 }
 
-
-void TMP102::setLowTempF(float temperature)
-{
-	temperature = (temperature - 32) * 5 / 9; // Convert temperature to C
-	setLowTempC(temperature); // Set T_LOW
-}
-
-
-void TMP102::setHighTempF(float temperature)
-{
-	temperature = (temperature - 32) * 5 / 9; // Convert temperature to C
-	setHighTempC(temperature); // Set T_HIGH
-}
-
-
-float TMP102::readLowTempC(void)
+double TMP102::ReadLowTemperatureCelsius(void)
 {
 	int registerByte[2];	// Store the data from the register here
 	bool extendedMode;	// Store extended mode bit here 0:-55C to +128C, 1:-55C to +150C
@@ -348,13 +322,13 @@ float TMP102::readLowTempC(void)
 	float temperature;	// Store the analog temperature value here
 
 						// Check if temperature should be 12 or 13 bits
-	openPointerRegister(CONFIG_REGISTER);	// Read configuration register settings
+	openPointerRegister(TMP102_CONFIG_REGISTER);	// Read configuration register settings
 											// Read current configuration register value
 	registerByte[0] = readRegister(0);
 	registerByte[1] = readRegister(1);
 	extendedMode = (registerByte[1] & 0x10) >> 4;	// 0 - temp data will be 12 bits
 													// 1 - temp data will be 13 bits
-	openPointerRegister(T_LOW_REGISTER);
+	openPointerRegister(TMP102_T_LOW_REGISTER);
 	registerByte[0] = readRegister(0);
 	registerByte[1] = readRegister(1);
 
@@ -385,7 +359,7 @@ float TMP102::readLowTempC(void)
 }
 
 
-float TMP102::readHighTempC(void)
+double TMP102::ReadHighTemperatureCelsius(void)
 {
 	int registerByte[2];	// Store the data from the register here
 	bool extendedMode;	// Store extended mode bit here 0:-55C to +128C, 1:-55C to +150C
@@ -393,13 +367,13 @@ float TMP102::readHighTempC(void)
 	float temperature;	// Store the analog temperature value here
 
 						// Check if temperature should be 12 or 13 bits
-	openPointerRegister(CONFIG_REGISTER);	// read configuration register settings
+	openPointerRegister(TMP102_CONFIG_REGISTER);	// read configuration register settings
 											// Read current configuration register value
 	registerByte[0] = readRegister(0);
 	registerByte[1] = readRegister(1);
 	extendedMode = (registerByte[1] & 0x10) >> 4;	// 0 - temp data will be 12 bits
 													// 1 - temp data will be 13 bits
-	openPointerRegister(T_HIGH_REGISTER);
+	openPointerRegister(TMP102_T_HIGH_REGISTER);
 	registerByte[0] = readRegister(0);
 	registerByte[1] = readRegister(1);
 
@@ -429,27 +403,14 @@ float TMP102::readHighTempC(void)
 	return digitalTemp*0.0625;
 }
 
-
-float TMP102::readLowTempF(void)
+void TMP102::SetFault(uint8_t faultSetting)
 {
-	return readLowTempC()*9.0 / 5.0 + 32.0;
-}
-
-
-float TMP102::readHighTempF(void)
-{
-	return readHighTempC()*9.0 / 5.0 + 32.0;
-}
-
-
-void TMP102::setFault(byte faultSetting)
-{
-	byte registerByte; // Store the data from the register here
+	uint8_t registerByte; // Store the data from the register here
 
 	faultSetting = faultSetting & 3; // Make sure rate is not set higher than 3.
 
 									 // Change pointer address to configuration register (0x01)
-	openPointerRegister(CONFIG_REGISTER);
+	openPointerRegister(TMP102_CONFIG_REGISTER);
 
 	// Read current configuration register value
 	registerByte = readRegister(0);
@@ -460,18 +421,18 @@ void TMP102::setFault(byte faultSetting)
 
 										// Set configuration registers
 	this->device->Write(
-		CONFIG_REGISTER,
+		TMP102_CONFIG_REGISTER,
 		registerByte
 	);
 }
 
 
-void TMP102::setAlertMode(bool mode)
+void TMP102::SetAlertMode(bool mode)
 {
-	byte registerByte; // Store the data from the register here
+	uint8_t registerByte; // Store the data from the register here
 
 					   // Change pointer address to configuration register (1)
-	openPointerRegister(CONFIG_REGISTER);
+	openPointerRegister(TMP102_CONFIG_REGISTER);
 
 	// Read current configuration register value
 	registerByte = readRegister(0);
@@ -482,12 +443,7 @@ void TMP102::setAlertMode(bool mode)
 
 								// Set configuration registers
 	this->device->Write(
-		CONFIG_REGISTER,
+		TMP102_CONFIG_REGISTER,
 		registerByte
 	);
-}
-
-double TMP102::GetTemperatureCelsius()
-{
-	return double(this->readTempC());
 }

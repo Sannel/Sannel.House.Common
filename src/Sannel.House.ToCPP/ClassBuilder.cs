@@ -33,7 +33,7 @@ namespace Sannel.House.ToCPP
 					MethodImplementation.Append(", ");
 				}
 
-				Code.Append($"{GetCppType(v.ParameterType)}& {v.Name}");
+				Code.Append($"{GetCppType(v.ParameterType)} {v.Name}");
 				MethodImplementation.Append($"{GetCppType(v.ParameterType)}& {v.Name}");
 
 				firstRun = false;

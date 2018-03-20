@@ -46,6 +46,16 @@ void AWireDevice::Write(uint8_t b1, uint8_t b2, uint8_t b3)
 	Wire.endTransmission();
 }
 
+void AWireDevice::Write(uint8_t* b, int length)
+{
+	Wire.beginTransmission(address);
+	for (int i = 0; i < length; i++) 
+	{
+		Wire.write(b[i]);
+	}
+	Wire.endTransmission();
+}
+
 unsigned int AWireDevice::Read(uint8_t* read, int length) 
 {
 	Wire.requestFrom((int)address, length);
@@ -60,33 +70,6 @@ unsigned int AWireDevice::Read(uint8_t* read, int length)
 	return index;
 }
 
-unsigned int AWireDevice::Read(int* read, int length) 
-{
-	Wire.requestFrom((int)address, length);
-	//Wire.endTransmission();
-	unsigned int index = 0;
-	while (Wire.available())
-	{
-		read[index] = Wire.read();
-		index++;
-	}
-
-	return index;
-}
-
-unsigned int AWireDevice::Read(unsigned int* read, int length) 
-{
-	Wire.requestFrom((int)address, length);
-	//Wire.endTransmission();
-	unsigned int index = 0;
-	while (Wire.available())
-	{
-		read[index] = Wire.read();
-		index++;
-	}
-
-	return index;
-}
 
 uint8_t AWireDevice::ReadByte()
 {

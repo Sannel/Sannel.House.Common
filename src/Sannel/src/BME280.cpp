@@ -52,7 +52,7 @@ BME280::BME280(IWireDevice& device)
 	//  0, Sleep mode
 	//  1 or 2, Forced mode
 	//  3, Normal mode
-	runMode = 3; //Normal mode
+	RunMode = 3; //Normal mode
 
 	//tStandby can be:
 	//  0, 0.5ms
@@ -63,7 +63,7 @@ BME280::BME280(IWireDevice& device)
 	//  5, 1000ms
 	//  6, 10ms
 	//  7, 20ms
-	tStandby = 0;
+	TimeStandBy = 0;
 
 	//filter can be off or number of FIR coefficients to use:
 	//  0, filter off
@@ -71,22 +71,22 @@ BME280::BME280(IWireDevice& device)
 	//  2, coefficients = 4
 	//  3, coefficients = 8
 	//  4, coefficients = 16
-	filter = 0;
+	Filter = 0;
 
 	// tempOverSample can be :
 	//  0, skipped
 	//  1 through 5, oversampling *1, *2, *4, *8, *16 respectively
-	tempOverSample = 1;
+	TemperatureOverSample = 1;
 
 	//pressOverSample can be:
 	//  0, skipped
 	//  1 through 5, oversampling *1, *2, *4, *8, *16 respectively
-	pressOverSample = 1;
+	PressureOverSample = 1;
 
 	//humidOverSample can be:
 	//  0, skipped
 	//  1 through 5, oversampling *1, *2, *4, *8, *16 respectively
-	humidOverSample = 1;
+	HumidityOverSample = 1;
 }
 
 //****************************************************************************//
@@ -129,21 +129,21 @@ void BME280::Begin()
 	writeRegister(BME280_CTRL_MEAS_REG, 0x00);
 
 	//Set the config word
-	dataToWrite = ( tStandby << 0x5) & 0xE0;
-	dataToWrite |= (filter << 0x02) & 0x1C;
+	dataToWrite = (TimeStandBy << 0x5) & 0xE0;
+	dataToWrite |= (Filter << 0x02) & 0x1C;
 	writeRegister(BME280_CONFIG_REG, dataToWrite);
 
 	//Set ctrl_hum first, then ctrl_meas to activate ctrl_hum
-	dataToWrite = humidOverSample & 0x07; //all other bits can be ignored
+	dataToWrite = HumidityOverSample & 0x07; //all other bits can be ignored
 	writeRegister(BME280_CTRL_HUMIDITY_REG, dataToWrite);
 
 	//set ctrl_meas
 	//First, set temp oversampling
-	dataToWrite = (tempOverSample << 0x5) & 0xE0;
+	dataToWrite = (TemperatureOverSample << 0x5) & 0xE0;
 	//Next, pressure oversampling
-	dataToWrite |= (pressOverSample << 0x02) & 0x1C;
+	dataToWrite |= (PressureOverSample << 0x02) & 0x1C;
 	//Last, set mode
-	dataToWrite |= (runMode) & 0x03;
+	dataToWrite |= (RunMode) & 0x03;
 	//Load the byte
 	writeRegister(BME280_CTRL_MEAS_REG, dataToWrite);
 
