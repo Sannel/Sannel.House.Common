@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <!-- <ClInclude Include="$(MSBuildThisFileDirectory)Sannel.h" /> -->
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\APDS9301.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\APDS9301IntegrationTimes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\ILightSensor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\AWire.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\AWireDevice.h" />
@@ -45,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Sannel.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\APDS9301.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\AWire.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\AWireDevice.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\BME280.cpp" />

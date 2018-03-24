@@ -34,12 +34,14 @@ using System.Threading.Tasks;
 
 namespace Sannel.House.Sensor.Temperature
 {
-	[Exportable(Includes = @"#include ""IWire.h""
+	[Exportable(Includes = @"
+#include ""IWire.h""
 #include ""IWireDevice.h""
 #include ""ISensor.h""
 #include ""ITemperatureSensor.h""
 #include ""IHumiditySensor.h""
-#include ""Si7021Resolutions.h""")]
+#include ""Si7021Resolutions.h""
+")]
 	public class Si7021 : ISensor, ITemperatureSensor, IHumiditySensor
 	{
 		public enum Si7021Resolutions

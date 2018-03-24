@@ -21,12 +21,14 @@
 	#include "WProgram.h"
 #endif
 
+
 #include "IWire.h"
 #include "IWireDevice.h"
 #include "ISensor.h"
 #include "ITemperatureSensor.h"
 #include "IHumiditySensor.h"
 #include "Si7021Resolutions.h"
+
 
 #define SI7021_TEMP_MEASURE_HOLD 227
 #define SI7021_HUMD_MEASURE_HOLD 229
