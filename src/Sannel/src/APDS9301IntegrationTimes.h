@@ -11,35 +11,14 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-/* This is generated code so probably best not to edit it */
-#ifndef _ITHPSENSOR_H_
-#define _ITHPSENSOR_H_
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#ifndef _APDS9301INT_TIMES_H_
+#define _APDS9301INT_TIMES_H_
 
-#include "ISensor.h"
-#include "IHumiditySensor.h"
-#include "IPressureSensor.h"
-#include "ITemperatureSensor.h"
-
-
-namespace Sannel
-{
-	namespace House
-	{
-		namespace Sensor
-		{
-			class ITHPSensor : public ITemperatureSensor, public ISensor, public IHumiditySensor, public IPressureSensor
-			{
-			public:
-			private:
-			};
-		}
-	}
-}
+enum APDS9301_IntegrationTime {
+	_13_7_MS,
+	_101_MS,
+	_402_MS
+};
 
 #endif

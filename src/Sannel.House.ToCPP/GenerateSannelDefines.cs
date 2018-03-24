@@ -1,4 +1,4 @@
-﻿/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2017 Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the ""License"");
    you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ namespace Sannel.House.ToCPP
 			builder.AppendLine("#endif");
 			builder.AppendLine("#endif");
 
-			var path = Path.GetFullPath("..\\Sannel\\src\\SannelDefines.h");
+			var path = Path.GetFullPath("..\\..\\..\\..\\Sannel\\src\\SannelDefines.h");
 			File.WriteAllText(path, builder.ToString());
 		}
 	}

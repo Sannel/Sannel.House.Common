@@ -28,19 +28,17 @@ For a copy of the GNU General Public License, see
 */
 
 #include "Si7021.h"
-#include <Wire.h>
+#include "IWireDevice.h"
 
-using namespace Sannel::House::Sensor::Temp;
+using namespace Sannel::House::Sensor::Temperature;
 
-Si7021::Si7021(uint8_t address)
+Si7021::Si7021(IWireDevice& device)
 {
-	this->address = address;
+	this->device = &device;
 }
 
-bool Si7021::begin()
+void Si7021::Begin()
 {
-	Wire.begin();
-
 	uint8_t id_Temp_Hum = checkID();
 
 	int x = 0;
@@ -70,66 +68,53 @@ bool Si7021::begin()
 	{
 		Serial.println("No Devices Detected");
 	}
-
-	return x > 0;
 }
 
 /****************Si7021 & HTU21D Functions**************************************/
 
 
-float Si7021::getRH()
+double Si7021::GetRelativeHumidity()
 {
 	// Measure the relative humidity
 	uint16_t RH_Code = makeMeasurment(SI7021_HUMD_MEASURE_NOHOLD);
-	float result = (125.0*RH_Code / 65536) - 6;
+	double result = (125.0*RH_Code / 65536) - 6;
 	return result;
 }
 
-float Si7021::readTemp()
+double Si7021::GetTemperatureCelsius()
 {
 	// Read temperature from previous RH measurement.
 	uint16_t temp_Code = makeMeasurment(SI7021_TEMP_PREV);
-	float result = (175.72*temp_Code / 65536) - 46.85;
+	double result = (175.72*temp_Code / 65536) - 46.85;
 	return result;
 }
 
-float Si7021::getTemp()
+double Si7021::ReadStoredTemp()
 {
 	// Measure temperature
 	uint16_t temp_Code = makeMeasurment(SI7021_TEMP_MEASURE_NOHOLD);
 	float result = (175.72*temp_Code / 65536) - 46.85;
 	return result;
 }
-//Give me temperature in fahrenheit!
-float Si7021::readTempF()
-{
-	return((readTemp() * 1.8) + 32.0); // Convert celsius to fahrenheit
-}
 
-float Si7021::getTempF()
-{
-	return((getTemp() * 1.8) + 32.0); // Convert celsius to fahrenheit
-}
-
-
-void Si7021::heaterOn()
+void Si7021::HeaterOn()
 {
 	// Turns on the ADDRESS heater
 	uint8_t regVal = readReg();
-	regVal |= SI7021__BV(SI7021_HTRE);
+	regVal |= bv(SI7021_HTRE);
 	//turn on the heater
 	writeReg(regVal);
 }
 
-void Si7021::heaterOff()
+void Si7021::HeaterOff()
 {
 	// Turns off the ADDRESS heater
 	uint8_t regVal = readReg();
-	regVal &= ~SI7021__BV(SI7021_HTRE);
+	regVal &= ~bv(SI7021_HTRE);
 	writeReg(regVal);
 }
 
-void Si7021::changeResolution(uint8_t i)
+void Si7021::ChangeResolution(Si7021Resolutions i)
 {
 	// Changes to resolution of ADDRESS measurements.
 	// Set i to:
@@ -143,14 +128,15 @@ void Si7021::changeResolution(uint8_t i)
 	// zero resolution bits
 	regVal &= 0b011111110;
 	switch (i) {
-	case 1:
+	case Si7021Resolutions::_8Bit:
 		regVal |= 0b00000001;
 		break;
-	case 2:
+	case Si7021Resolutions::_10Bit:
 		regVal |= 0b10000000;
 		break;
-	case 3:
+	case Si7021Resolutions::_11Bit:
 		regVal |= 0b10000001;
+		break;
 	default:
 		regVal |= 0b00000000;
 		break;
@@ -159,7 +145,7 @@ void Si7021::changeResolution(uint8_t i)
 	writeReg(regVal);
 }
 
-void Si7021::reset()
+void Si7021::Reset()
 {
 	//Reset user resister
 	writeReg(SI7021_SOFT_RESET);
@@ -170,14 +156,9 @@ uint8_t Si7021::checkID()
 	uint8_t ID_1;
 
 	// Check device ID
-	Wire.beginTransmission(address);
-	Wire.write(0xFC);
-	Wire.write(0xC9);
-	Wire.endTransmission();
+	this->device->Write(0xFC, 0xC9);
 
-	Wire.requestFrom(address, 1);
-
-	ID_1 = Wire.read();
+	ID_1 = this->device->ReadByte();
 
 	return(ID_1);
 }
@@ -188,24 +169,26 @@ uint16_t Si7021::makeMeasurment(uint8_t command)
 	// It can be either temperature or relative humidity
 	// TODO: implement checksum checking
 
-	uint16_t nBytes = 3;
+	int nBytes = 3;
 	// if we are only reading old temperature, read only msb and lsb
 	if (command == 0xE0) nBytes = 2;
 
-	Wire.beginTransmission(address);
-	Wire.write(command);
-	Wire.endTransmission();
+	this->device->Write(command);
 	// When not using clock stretching (*_NOHOLD commands) delay here
 	// is needed to wait for the measurement.
 	// According to datasheet the max. conversion time is ~22ms
 	delay(100);
 
-	Wire.requestFrom(address, nBytes);
-	if (Wire.available() != nBytes)
-		return 100;
+	uint8_t data[3];
 
-	unsigned int msb = Wire.read();
-	unsigned int lsb = Wire.read();
+	int read = this->device->Read(data, nBytes);
+	if (read != nBytes) 
+	{
+		return 100;
+	}
+
+	unsigned int msb = data[0];
+	unsigned int lsb = data[1];
 	// Clear the last to bits of LSB to 00.
 	// According to datasheet LSB of RH is always xxxxxx10
 	lsb &= 0xFC;
@@ -217,34 +200,12 @@ uint16_t Si7021::makeMeasurment(uint8_t command)
 void Si7021::writeReg(uint8_t value)
 {
 	// Write to user register on ADDRESS
-	Wire.beginTransmission(address);
-	Wire.write(SI7021_WRITE_USER_REG);
-	Wire.write(value);
-	Wire.endTransmission();
+	this->device->Write(SI7021_WRITE_USER_REG, value);
 }
 
 uint8_t Si7021::readReg()
 {
 	// Read from user register on ADDRESS
-	Wire.beginTransmission(address);
-	Wire.write(SI7021_READ_USER_REG);
-	Wire.endTransmission();
-	Wire.requestFrom(address, 1);
-	uint8_t regVal = Wire.read();
+	uint8_t regVal = this->device->WriteRead(SI7021_READ_USER_REG);
 	return regVal;
-}
-
-void Si7021::Begin()
-{
-	begin();
-}
-
-double Si7021::GetTemperatureCelsius()
-{
-	return double(getTemp());
-}
-
-double Si7021::GetRelativeHumidity()
-{
-	return double(getRH());
 }

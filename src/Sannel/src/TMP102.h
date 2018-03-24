@@ -1,4 +1,4 @@
-/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2018 Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -23,7 +23,9 @@
 
 #include "IWire.h"
 #include "IWireDevice.h"
+#include "ISensor.h"
 #include "ITemperatureSensor.h"
+
 
 #define TMP102_TEMPERATURE_REGISTER 0
 #define TMP102_CONFIG_REGISTER 1
@@ -41,23 +43,24 @@ namespace Sannel
 				class TMP102 : public ITemperatureSensor
 				{
 				public:
-					TMP102(IWire& wire, uint8_t& address);
 					TMP102(IWireDevice& device);
 					double GetTemperatureCelsius() override;
 					void Sleep();
 					void Wakeup();
-					bool Alert();
-					void SetConversionRate(uint8_t& rate);
-					void SetExtendedMode(bool& mode);
-					void SetAlertPolarity(bool& polarity);
-					void SetLowTemperatureCelsius(double& temperature);
-					void SetHighTemperatureCelsius(double& temperature);
+					void SetLowTemperatureCelsius(double temperature);
+					void SetHighTemperatureCelsius(double temperature);
 					double ReadLowTemperatureCelsius();
 					double ReadHighTemperatureCelsius();
-					void SetFault(uint8_t& faultSetting);
-					void SetAlertMode(bool& mode);
+					void SetConversionRate(uint8_t rate);
+					void SetExtendedMode(bool mode);
+					void SetAlertPolarity(bool polarity);
+					void SetFault(uint8_t faultSetting);
+					void SetAlertMode(bool mode);
 					void Begin() override;
 				private:
+					uint8_t Alert();
+					void openPointerRegister(uint8_t pointerReg);
+					uint8_t readRegister(uint8_t registerNumber);
 					IWireDevice* device;
 				};
 			}

@@ -11,21 +11,12 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-/* This is generated code so probably best not to edit it */
-#ifndef _ITHPSENSOR_H_
-#define _ITHPSENSOR_H_
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
 
-#include "ISensor.h"
-#include "IHumiditySensor.h"
-#include "IPressureSensor.h"
-#include "ITemperatureSensor.h"
+#ifndef _AWIREDEVICE_H_
+#define _AWIREDEVICE_H_
 
+#include "IWireDevice.h"
 
 namespace Sannel
 {
@@ -33,13 +24,24 @@ namespace Sannel
 	{
 		namespace Sensor
 		{
-			class ITHPSensor : public ITemperatureSensor, public ISensor, public IHumiditySensor, public IPressureSensor
+			class AWireDevice : public IWireDevice
 			{
 			public:
+				AWireDevice(uint8_t id);
+				void Write(uint8_t b) override;
+				void Write(uint8_t b1, uint8_t b2) override;
+				void Write(uint8_t b1, uint8_t b2, uint8_t b3) override;
+				void Write(uint8_t* b, int length) override;
+				uint8_t WriteRead(uint8_t write) override;
+				void WriteRead(uint8_t write, uint8_t* read, int length) override;
+				unsigned int Read(uint8_t* read, int length) override;
+				uint8_t ReadByte() override;
 			private:
+				uint8_t address;
 			};
 		}
 	}
 }
 
 #endif
+

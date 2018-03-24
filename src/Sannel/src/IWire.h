@@ -1,4 +1,4 @@
-/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2018 Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ namespace Sannel
 			class IWire
 			{
 			public:
-				virtual IWireDevice GetDeviceById(uint8_t deviceId) = 0;
+				virtual IWireDevice& GetDeviceById(uint8_t deviceId) = 0;
 			private:
 			};
 		}

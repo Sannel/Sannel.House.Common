@@ -12,6 +12,7 @@
 	#include "arduino.h"
 #else
 	#include "../../Sannel.Tests/stdafx.h"
+typedef unsigned int uint16_t;
 #endif
 
 

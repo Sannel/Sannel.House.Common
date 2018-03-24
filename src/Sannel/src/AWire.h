@@ -11,9 +11,7 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-/* This is generated code so probably best not to edit it */
-#ifndef _ITHPSENSOR_H_
-#define _ITHPSENSOR_H_
+
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "Arduino.h"
@@ -21,22 +19,23 @@
 	#include "WProgram.h"
 #endif
 
-#include "ISensor.h"
-#include "IHumiditySensor.h"
-#include "IPressureSensor.h"
-#include "ITemperatureSensor.h"
+#ifndef _AWIRE_H_
+#define _AWIRE_H_
 
-
+#include "IWire.h"
 namespace Sannel
 {
 	namespace House
 	{
 		namespace Sensor
 		{
-			class ITHPSensor : public ITemperatureSensor, public ISensor, public IHumiditySensor, public IPressureSensor
+			class AWire : IWire
 			{
 			public:
-			private:
+				AWire();
+				void Begin();
+				void Begin(int sda, int scl);
+				IWireDevice& GetDeviceById(uint8_t deviceId) override;
 			};
 		}
 	}

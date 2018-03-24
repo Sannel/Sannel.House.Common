@@ -11,35 +11,30 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-/* This is generated code so probably best not to edit it */
-#ifndef _ITHPSENSOR_H_
-#define _ITHPSENSOR_H_
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#include "AWire.h"
 
-#include "ISensor.h"
-#include "IHumiditySensor.h"
-#include "IPressureSensor.h"
-#include "ITemperatureSensor.h"
+#include "Wire.h"
+#include "AWireDevice.h"
 
+using namespace Sannel::House::Sensor;
 
-namespace Sannel
+AWire::AWire()
 {
-	namespace House
-	{
-		namespace Sensor
-		{
-			class ITHPSensor : public ITemperatureSensor, public ISensor, public IHumiditySensor, public IPressureSensor
-			{
-			public:
-			private:
-			};
-		}
-	}
 }
 
-#endif
+void AWire::Begin()
+{
+	Wire.begin();
+}
+
+void AWire::Begin(int sda, int scl)
+{
+	Wire.begin(sda, scl);
+}
+
+IWireDevice& AWire::GetDeviceById(uint8_t deviceId)
+{
+	return *(new AWireDevice(deviceId));
+}
+

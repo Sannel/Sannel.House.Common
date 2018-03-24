@@ -1,4 +1,4 @@
-﻿/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2017 Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the ""License"");
    you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@ using System.Reflection;
 
 namespace Sannel.House.ToCPP
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
+	class Program
+	{
+		static void Main(string[] args)
+		{
 			var license = $@"/* Copyright {DateTime.Now.Year} Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the ""License"");
@@ -49,5 +49,5 @@ namespace Sannel.House.ToCPP
 				}
 			}
 		}
-    }
+	}
 }

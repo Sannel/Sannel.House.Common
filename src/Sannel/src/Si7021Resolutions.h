@@ -11,35 +11,15 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-/* This is generated code so probably best not to edit it */
-#ifndef _ITHPSENSOR_H_
-#define _ITHPSENSOR_H_
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#ifndef _SI7021RESOLUTIONS_H_
+#define _SI7021RESOLUTIONS_H_
 
-#include "ISensor.h"
-#include "IHumiditySensor.h"
-#include "IPressureSensor.h"
-#include "ITemperatureSensor.h"
-
-
-namespace Sannel
-{
-	namespace House
-	{
-		namespace Sensor
-		{
-			class ITHPSensor : public ITemperatureSensor, public ISensor, public IHumiditySensor, public IPressureSensor
-			{
-			public:
-			private:
-			};
-		}
-	}
-}
+enum Si7021Resolutions {
+			_12Bit = 0,
+			_8Bit = 1,
+			_10Bit = 2,
+			_11Bit = 3
+};
 
 #endif

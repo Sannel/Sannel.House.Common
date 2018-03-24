@@ -1,4 +1,4 @@
-/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2018 Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -83,7 +83,6 @@ namespace Sannel
 				class BME280 : public ITHPSensor
 				{
 				public:
-					BME280(IWire& wire, uint8_t& deviceId);
 					BME280(IWireDevice& device);
 					void Begin() override;
 					void Reset();
@@ -97,6 +96,10 @@ namespace Sannel
 					uint8_t PressureOverSample;
 					uint8_t HumidityOverSample;
 				private:
+					uint8_t readRegister(uint8_t offset);
+					void readRegisterRegion(uint8_t* outputPointer, uint8_t offset, uint8_t length);
+					int16_t readRegisterInt16(uint8_t offset);
+					void writeRegister(uint8_t offset, uint8_t dataToWrite);
 					IWireDevice* device;
 					int64_t storedTemperature;
 					uint16_t digT1;
