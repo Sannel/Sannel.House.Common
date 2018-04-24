@@ -33,7 +33,7 @@ namespace Sannel
 			class IPressureSensor : public ISensor
 			{
 			public:
-				virtual double GetPressure() = 0;
+				virtual float GetPressure() = 0;
 			private:
 			};
 		}

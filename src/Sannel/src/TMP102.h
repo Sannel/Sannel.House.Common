@@ -44,13 +44,13 @@ namespace Sannel
 				{
 				public:
 					TMP102(IWireDevice& device);
-					double GetTemperatureCelsius() override;
+					float GetTemperatureCelsius() override;
 					void Sleep();
 					void Wakeup();
 					void SetLowTemperatureCelsius(double temperature);
 					void SetHighTemperatureCelsius(double temperature);
-					double ReadLowTemperatureCelsius();
-					double ReadHighTemperatureCelsius();
+					float ReadLowTemperatureCelsius();
+					float ReadHighTemperatureCelsius();
 					void SetConversionRate(uint8_t rate);
 					void SetExtendedMode(bool mode);
 					void SetAlertPolarity(bool polarity);

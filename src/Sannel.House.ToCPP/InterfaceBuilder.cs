@@ -85,6 +85,10 @@ namespace Sannel.House.ToCPP
 			{
 				return "bool";
 			}
+			else if(t == typeof(float))
+			{
+				return "float";
+			}
 
 			return t.Name;
 		}

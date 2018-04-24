@@ -161,7 +161,7 @@ void BME280::Reset()
 //  Pressure Section
 //
 //****************************************************************************//
-double BME280::GetPressure()
+float BME280::GetPressure()
 {
 	// Returns pressure in Pa as unsigned 32 bit integer in Q24.8 format (24 integer bits and 8 fractional bits).
 	// Output value of “24674867” represents 24674867/256 = 96386.2 Pa = 963.862 hPa
@@ -192,7 +192,7 @@ double BME280::GetPressure()
 //  Humidity Section
 //
 //****************************************************************************//
-double BME280::GetRelativeHumidity()
+float BME280::GetRelativeHumidity()
 {
 	// Returns humidity in %RH as unsigned 32 bit integer in Q22. 10 format (22 integer and 10 fractional bits).
 	// Output value of “47445” represents 47445/1024 = 46. 333 %RH
@@ -219,7 +219,7 @@ double BME280::GetRelativeHumidity()
 //
 //****************************************************************************//
 
-double BME280::GetTemperatureCelsius()
+float BME280::GetTemperatureCelsius()
 {
 	// Returns temperature in DegC, resolution is 0.01 DegC. Output value of “5123” equals 51.23 DegC.
 	// t_fine carries fine temperature as global value
@@ -234,7 +234,7 @@ double BME280::GetTemperatureCelsius()
 	var2 = (((((adc_T >> 4) - ((int32_t)digT1)) * ((adc_T >> 4) - ((int32_t)digT1))) >> 12) *
 		((int32_t)digT3)) >> 14;
 	storedTemperature = var1 + var2;
-	double output = (storedTemperature * 5 + 128) >> 8;
+	float output = (storedTemperature * 5 + 128) >> 8;
 
 	output = output / 100;
 

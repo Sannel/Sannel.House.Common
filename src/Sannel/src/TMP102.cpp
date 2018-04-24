@@ -60,7 +60,7 @@ uint8_t TMP102::readRegister(uint8_t registerNumber) {
 }
 
 
-double TMP102::GetTemperatureCelsius(void)
+float TMP102::GetTemperatureCelsius(void)
 {
 	int registerByte[2];	// Store the data from the register here
 	int digitalTemp;  // Temperature stored in TMP102 register
@@ -219,7 +219,7 @@ uint8_t TMP102::Alert()
 }
 
 
-void TMP102::SetLowTemperatureCelsius(double temperature)
+void TMP102::SetLowTemperatureCelsius(float temperature)
 {
 	int registerByte[2];	// Store the data from the register here
 	bool extendedMode;	// Store extended mode bit here 0:-55C to +128C, 1:-55C to +150C
@@ -267,7 +267,7 @@ void TMP102::SetLowTemperatureCelsius(double temperature)
 }
 
 
-void TMP102::SetHighTemperatureCelsius(double temperature)
+void TMP102::SetHighTemperatureCelsius(float temperature)
 {
 	int registerByte[2];	// Store the data from the register here
 	bool extendedMode;	// Store extended mode bit here 0:-55C to +128C, 1:-55C to +150C
@@ -314,7 +314,7 @@ void TMP102::SetHighTemperatureCelsius(double temperature)
 	);
 }
 
-double TMP102::ReadLowTemperatureCelsius(void)
+float TMP102::ReadLowTemperatureCelsius(void)
 {
 	int registerByte[2];	// Store the data from the register here
 	bool extendedMode;	// Store extended mode bit here 0:-55C to +128C, 1:-55C to +150C
@@ -359,7 +359,7 @@ double TMP102::ReadLowTemperatureCelsius(void)
 }
 
 
-double TMP102::ReadHighTemperatureCelsius(void)
+float TMP102::ReadHighTemperatureCelsius(void)
 {
 	int registerByte[2];	// Store the data from the register here
 	bool extendedMode;	// Store extended mode bit here 0:-55C to +128C, 1:-55C to +150C

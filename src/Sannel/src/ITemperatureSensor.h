@@ -33,7 +33,7 @@ namespace Sannel
 			class ITemperatureSensor : public ISensor
 			{
 			public:
-				virtual double GetTemperatureCelsius() = 0;
+				virtual float GetTemperatureCelsius() = 0;
 			private:
 			};
 		}

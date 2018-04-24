@@ -52,7 +52,7 @@ namespace Sannel.House.Tests.Sensor
 
 				var mstream = new MemoryStream();
 
-				var m = new EventHandler<SensorPacketsReceivedEventArgs>((o, a) =>
+				var m = new EventHandler<SensorEntryReceivedEventArgs>((o, a) =>
 				{
 					called = true;
 				});
@@ -86,7 +86,7 @@ namespace Sannel.House.Tests.Sensor
 				var expectedType = SensorTypes.SoilMoisture;
 				var offset = 30u;
 
-				m = new EventHandler<SensorPacketsReceivedEventArgs>((o, a) =>
+				m = new EventHandler<SensorEntryReceivedEventArgs>((o, a) =>
 				{
 					called = true;
 					Assert.Equal(a.MacAddress, int.MaxValue);

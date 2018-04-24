@@ -71,7 +71,7 @@ namespace Sannel
 					uint16_t GetHighThreshold();
 					uint16_t ReadCH0Level();
 					uint16_t ReadCH1Level();
-					double GetLuxLevel() override;
+					float GetLuxLevel() override;
 				private:
 					uint8_t getRegister(uint8_t regAddress);
 					bool setRegister(uint8_t regAddress, uint8_t newVal);

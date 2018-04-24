@@ -14,6 +14,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -28,12 +29,14 @@ namespace Sannel.House.Sensor
 		protected TcpListener listener;
 		protected ILogger<TCPSensorPacketListener> logger;
 
-		public event EventHandler<SensorPacketsReceivedEventArgs> PacketReceived;
+		public event EventHandler<SensorEntryReceivedEventArgs> PacketReceived;
 
 		public TCPSensorPacketListener(ILogger<TCPSensorPacketListener> logger)
 		{
 			this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
+
+		public NameValueCollection Abbreviations { get; } = new NameValueCollection();
 
 		public async void Begin(uint port)
 		{
@@ -99,10 +102,20 @@ namespace Sannel.House.Sensor
 
 		}
 
-		protected virtual SensorPacketsReceivedEventArgs ReadStream(Stream stream)
+		protected virtual string FixAbbreviation(string value)
+		{
+			if (!string.IsNullOrWhiteSpace(Abbreviations[value]))
+			{
+				return Abbreviations[value];
+			}
+
+			return value;
+		}
+
+		protected virtual void ReadStream(Stream stream)
 		{
 
-			logger.LogInformation("Begin of ReadStreamAsync");
+			logger.LogInformation("Begin of ReadStream");
 			if (stream == null)
 			{
 				throw new ArgumentNullException(nameof(stream));
@@ -119,43 +132,81 @@ namespace Sannel.House.Sensor
 			if(!ReadBytes(ref macBytes, 6, stream))
 			{
 				logger.LogDebug("Mac address was not the correct length.");
-				return null;
+				return;
 			}
 
 			var mac = BitConverter.ToInt64(macBytes, 0);
 
 			logger.LogDebug("Mac address for packets {0}", mac);
 
-			var args = new SensorPacketsReceivedEventArgs
+			var args = new SensorEntryReceivedEventArgs
 			{
 				MacAddress = mac
 			};
 
 			for (var i = 0; i < count; i++)
 			{
-				var buffer = new byte[88];
-				for(var k = 0; k < 8; k++)
+				var buffer = new byte[4];
+
+				if(!ReadBytes(ref buffer, buffer.Length, stream))
 				{
-					buffer[k] = 0;
-				}
-				for(var b = 9;b < buffer.Length; b++)
-				{
-					buffer[b] = 255;
+					logger.LogError("Invalid Packet from {0}", mac);
+					return;
 				}
 
-				ReadBytes(ref buffer, buffer.Length, stream);
+				var entry = new SensorEntry();
 
-				var packet = new SensorPacket();
-				packet.Fill(buffer);
-				logger.LogDebug("Filled Packet {0}", packet);
-				args.Packets.Add(packet);
+				var t = BitConverter.ToUInt32(buffer, 0);
+
+				if(Enum.IsDefined(typeof(SensorTypes), t))
+				{
+					entry.SensorType = ((SensorTypes)t).ToString();
+				}
+				else
+				{
+					entry.SensorType = t.ToString();
+				}
+
+
+				if(!ReadBytes(ref buffer, 1, stream))
+				{
+					logger.LogError("Invalid Packet from {0}", mac);
+					return;
+				}
+
+				var cc = buffer[0];
+
+				for(byte b = 0; b < cc; b++)
+				{
+					if (!ReadBytes(ref buffer, buffer.Length, stream))
+					{
+						logger.LogError("Invalid Packet from {0}", mac);
+						return;
+					}
+
+					var property = Encoding.ASCII.GetString(buffer);
+
+					property = FixAbbreviation(property);
+
+					if (!ReadBytes(ref buffer, buffer.Length, stream))
+					{
+						logger.LogError("Invalid Packet from {0}", mac);
+						return;
+					}
+
+					var value = BitConverter.ToSingle(buffer, 0);
+					entry.Values[property] = value;
+				}
+
+
+				logger.LogDebug("Filled Packet {0}", entry);
+				args.Packets.Add(entry);
 			}
 
 			FirePacketReceived(args);
-			return args;
 		}
 
-		protected virtual void FirePacketReceived(SensorPacketsReceivedEventArgs args)
+		protected virtual void FirePacketReceived(SensorEntryReceivedEventArgs args)
 		{
 			logger.LogInformation("Firing PackateReceived");
 			PacketReceived?.Invoke(this, args);

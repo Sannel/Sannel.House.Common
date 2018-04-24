@@ -166,19 +166,19 @@ namespace Sannel.House.Sensor.Temperature
 			return mesurment;
 		}
 
-		public double GetRelativeHumidity()
+		public float GetRelativeHumidity()
 		{
 			// Measure the relative humidity
 			var RH_Code = makeMeasurment(SI7021_HUMD_MEASURE_NOHOLD);
-			var result = (125.0 * RH_Code / 65536) - 6;
+			var result = (125f * RH_Code / 65536f) - 6f;
 			return result;
 		}
 
-		public double GetTemperatureCelsius()
+		public float GetTemperatureCelsius()
 		{
 			// Measure temperature
 			var temp_Code = makeMeasurment(SI7021_TEMP_MEASURE_NOHOLD);
-			var result = (175.72*temp_Code / 65536) - 46.85;
+			var result = (175.72f*temp_Code / 65536f) - 46.85f;
 			return result;
 		}
 

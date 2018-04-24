@@ -286,12 +286,12 @@ uint16_t APDS9301::ReadCH1Level()
 /// Calculated Lux level. Accurate to within +/- 40%.
 /// </summary>
 /// <returns></returns>
-double APDS9301::GetLuxLevel()
+float APDS9301::GetLuxLevel()
 {
 	uint16_t ch1Int = ReadCH1Level();
 	uint16_t ch0Int = ReadCH0Level();
-	double ch0 = ReadCH0Level();
-	double ch1 = ReadCH1Level();
+	float ch0 = ReadCH0Level();
+	float ch1 = ReadCH1Level();
 	switch (GetIntegrationTime())
 	{
 	case APDS9301_IntegrationTime::_13_7_MS:
@@ -315,7 +315,7 @@ double APDS9301::GetLuxLevel()
 		}
 		break;
 	}
-	double ratio = ch1 / ch0;
+	float ratio = ch1 / ch0;
 	switch (GetIntegrationTime())
 	{
 	case APDS9301_IntegrationTime::_13_7_MS:
@@ -340,7 +340,7 @@ double APDS9301::GetLuxLevel()
 		ch1 *= 16;
 	}
 
-	double luxVal = 0.0;
+	float luxVal = 0.0;
 
 	if (ratio <= 0.5)
 	{

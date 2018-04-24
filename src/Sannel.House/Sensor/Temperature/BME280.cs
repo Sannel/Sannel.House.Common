@@ -302,7 +302,7 @@ namespace Sannel.House.Sensor.Temperature
 		/// Output value of “24674867” represents 24674867/256 = 96386.2 Pa = 963.862 hPa
 		/// </summary>
 		/// <returns></returns>
-		public double GetPressure()
+		public float GetPressure()
 		{
 			// Returns pressure in Pa as unsigned 32 bit integer in Q24.8 format (24 integer bits and 8 fractional bits).
 			// Output value of “24674867” represents 24674867/256 = 96386.2 Pa = 963.862 hPa
@@ -325,7 +325,7 @@ namespace Sannel.House.Sensor.Temperature
 			var2 = (((long)digP8) * p_acc) >> 19;
 			p_acc = ((p_acc + var1 + var2) >> 8) + (((long)digP7) << 4);
 
-			return (float)p_acc / 256.0;
+			return (float)p_acc / 256f;
 		}
 
 		/// <summary>
@@ -333,7 +333,7 @@ namespace Sannel.House.Sensor.Temperature
 		/// Output value of “47445” represents 47445/1024 = 46. 333 %RH
 		/// </summary>
 		/// <returns></returns>
-		public double GetRelativeHumidity()
+		public float GetRelativeHumidity()
 		{
 			// Returns humidity in %RH as unsigned 32 bit integer in Q22. 10 format (22 integer and 10 fractional bits).
 			// Output value of “47445” represents 47445/1024 = 46. 333 %RH
@@ -348,7 +348,7 @@ namespace Sannel.House.Sensor.Temperature
 			var1 = (var1 < 0 ? 0 : var1);
 			var1 = (var1 > 419430400 ? 419430400 : var1);
 
-			return (float)(var1 >> 12) / 1024.0;
+			return (float)(var1 >> 12) / 1024f;
 		}
 
 		/// <summary>
@@ -356,7 +356,7 @@ namespace Sannel.House.Sensor.Temperature
 		/// Resolution is 0.01 Degrease Celsius
 		/// </summary>
 		/// <returns></returns>
-		public double GetTemperatureCelsius()
+		public float GetTemperatureCelsius()
 		{
 			// Returns temperature in DegC, resolution is 0.01 DegC. Output value of “5123” equals 51.23 DegC.
 			// t_fine carries fine temperature as global value
@@ -371,7 +371,7 @@ namespace Sannel.House.Sensor.Temperature
 			var2 = (((((adc_T >> 4) - ((int)digT1)) * ((adc_T >> 4) - ((int)digT1))) >> 12) *
 				((int)digT3)) >> 14;
 			storedTemperature = var1 + var2;
-			double output = (storedTemperature * 5 + 128) >> 8;
+			float output = (storedTemperature * 5 + 128) >> 8;
 
 			output = output / 100;
 

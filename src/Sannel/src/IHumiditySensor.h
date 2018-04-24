@@ -33,7 +33,7 @@ namespace Sannel
 			class IHumiditySensor : public ISensor
 			{
 			public:
-				virtual double GetRelativeHumidity() = 0;
+				virtual float GetRelativeHumidity() = 0;
 			private:
 			};
 		}

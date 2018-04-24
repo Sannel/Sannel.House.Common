@@ -86,9 +86,9 @@ namespace Sannel
 					BME280(IWireDevice& device);
 					void Begin() override;
 					void Reset();
-					double GetPressure() override;
-					double GetRelativeHumidity() override;
-					double GetTemperatureCelsius() override;
+					float GetPressure() override;
+					float GetRelativeHumidity() override;
+					float GetTemperatureCelsius() override;
 					uint8_t RunMode;
 					uint8_t TimeStandBy;
 					uint8_t Filter;

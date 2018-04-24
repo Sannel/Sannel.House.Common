@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Version>0.5.1-alpha-0001</Version>
+		<Version>0.6.0-alpha-0001</Version>
 		<VersionSufix>$(VersionSuffix)</VersionSufix>
 		<Authors>Adam Holt</Authors>
 		<Description>Common Classes and Enums that are shared between layers of Sannel House</Description>

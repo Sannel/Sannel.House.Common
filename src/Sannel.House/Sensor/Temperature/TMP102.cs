@@ -57,7 +57,7 @@ namespace Sannel.House.Sensor.Temperature
 		/// Gets the temperature Celsius.
 		/// </summary>
 		/// <returns></returns>
-		public double GetTemperatureCelsius()
+		public float GetTemperatureCelsius()
 		{
 			var registerByte = new byte[2];    // Store the data from the register here
 			int digitalTemp;  // Temperature stored in TMP102 register
@@ -93,7 +93,7 @@ namespace Sannel.House.Sensor.Temperature
 				}
 			}
 			// Convert digital reading to analog temperature (1-bit is equal to 0.0625 C)
-			return digitalTemp * 0.0625;
+			return digitalTemp * 0.0625f;
 		}
 
 		/// <summary>
@@ -242,7 +242,7 @@ namespace Sannel.House.Sensor.Temperature
 		/// Reads the low temperature Celsius.
 		/// </summary>
 		/// <returns></returns>
-		public double ReadLowTemperatureCelsius()
+		public float ReadLowTemperatureCelsius()
 		{
 			var registerByte = new int[2];    // Store the data from the register here
 			bool extendedMode;  // Store extended mode bit here 0:-55C to +128C, 1:-55C to +150C
@@ -282,10 +282,10 @@ namespace Sannel.House.Sensor.Temperature
 				}
 			}
 			// Convert digital reading to analog temperature (1-bit is equal to 0.0625 C)
-			return digitalTemp * 0.0625;
+			return digitalTemp * 0.0625f;
 		}
 
-		public double ReadHighTemperatureCelsius()
+		public float ReadHighTemperatureCelsius()
 		{
 			var registerByte = new int[2];    // Store the data from the register here
 			bool extendedMode;  // Store extended mode bit here 0:-55C to +128C, 1:-55C to +150C
@@ -325,7 +325,7 @@ namespace Sannel.House.Sensor.Temperature
 				}
 			}
 			// Convert digital reading to analog temperature (1-bit is equal to 0.0625 C)
-			return digitalTemp * 0.0625;
+			return digitalTemp * 0.0625f;
 		}
 
 		/// <summary>

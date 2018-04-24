@@ -7,6 +7,6 @@ namespace Sannel.House.Sensor
 	[Exportable]
 	public interface ILightSensor
 	{
-		double GetLuxLevel();
+		float GetLuxLevel();
 	}
 }

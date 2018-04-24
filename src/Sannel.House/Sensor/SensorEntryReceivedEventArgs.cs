@@ -17,7 +17,7 @@ using System.Text;
 
 namespace Sannel.House.Sensor
 {
-	public class SensorPacketsReceivedEventArgs : EventArgs
+	public class SensorEntryReceivedEventArgs : EventArgs
 	{
 		/// <summary>
 		/// Gets or sets the mac address.
@@ -32,6 +32,6 @@ namespace Sannel.House.Sensor
 		/// <value>
 		/// The packets.
 		/// </value>
-		public IList<SensorPacket> Packets { get; } = new List<SensorPacket>();
+		public IList<SensorEntry> Packets { get; } = new List<SensorEntry>();
 	}
 }

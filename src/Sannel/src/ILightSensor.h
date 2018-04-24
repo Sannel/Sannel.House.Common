@@ -31,7 +31,7 @@ namespace Sannel
 			class ILightSensor
 			{
 			public:
-				virtual double GetLuxLevel() = 0;
+				virtual float GetLuxLevel() = 0;
 			private:
 			};
 		}

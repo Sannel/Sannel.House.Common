@@ -20,6 +20,6 @@ namespace Sannel.House.Sensor
 	[Exportable(Includes = @"#include ""ISensor.h""")]
 	public interface ITemperatureSensor : ISensor
 	{
-		double GetTemperatureCelsius();
+		float GetTemperatureCelsius();
 	}
 }

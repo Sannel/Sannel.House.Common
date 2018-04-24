@@ -56,8 +56,8 @@ namespace Sannel
 				public:
 					Si7021(IWireDevice& device);
 					void Begin() override;
-					double GetRelativeHumidity() override;
-					double GetTemperatureCelsius() override;
+					float GetRelativeHumidity() override;
+					float GetTemperatureCelsius() override;
 					void Reset();
 					void ChangeResolution(Si7021Resolutions i);
 					void HeaterOn();

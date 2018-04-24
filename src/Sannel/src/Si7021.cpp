@@ -73,23 +73,23 @@ void Si7021::Begin()
 /****************Si7021 & HTU21D Functions**************************************/
 
 
-double Si7021::GetRelativeHumidity()
+float Si7021::GetRelativeHumidity()
 {
 	// Measure the relative humidity
 	uint16_t RH_Code = makeMeasurment(SI7021_HUMD_MEASURE_NOHOLD);
-	double result = (125.0*RH_Code / 65536) - 6;
+	float result = (125.0*RH_Code / 65536) - 6;
 	return result;
 }
 
-double Si7021::GetTemperatureCelsius()
+float Si7021::GetTemperatureCelsius()
 {
 	// Read temperature from previous RH measurement.
 	uint16_t temp_Code = makeMeasurment(SI7021_TEMP_PREV);
-	double result = (175.72*temp_Code / 65536) - 46.85;
+	float result = (175.72*temp_Code / 65536) - 46.85;
 	return result;
 }
 
-double Si7021::ReadStoredTemp()
+float Si7021::ReadStoredTemp()
 {
 	// Measure temperature
 	uint16_t temp_Code = makeMeasurment(SI7021_TEMP_MEASURE_NOHOLD);

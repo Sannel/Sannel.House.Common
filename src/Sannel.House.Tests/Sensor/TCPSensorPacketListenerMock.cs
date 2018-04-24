@@ -14,7 +14,7 @@ namespace Sannel.House.Tests.Sensor
 		{
 		}
 
-		public SensorPacketsReceivedEventArgs ReadStreamWrapper(Stream s)
+		public SensorEntryReceivedEventArgs ReadStreamWrapper(Stream s)
 		{
 			return ReadStream(s);
 		}

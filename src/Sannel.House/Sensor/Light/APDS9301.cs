@@ -334,32 +334,32 @@ namespace Sannel.House.Sensor.Light
 		/// Calculated Lux level. Accurate to within +/- 40%.
 		/// </summary>
 		/// <returns></returns>
-		public double GetLuxLevel()
+		public float GetLuxLevel()
 		{
 			var ch1Int = ReadCH1Level();
 			var ch0Int = ReadCH0Level();
-			var ch0 = (double)ReadCH0Level();
-			var ch1 = (double)ReadCH1Level();
+			var ch0 = (float)ReadCH0Level();
+			var ch1 = (float)ReadCH1Level();
 			switch (GetIntegrationTime())
 			{
 				case APDS9301_IntegrationTime._13_7_MS:
 					if ((ch1Int >= 5047) || (ch0Int >= 5047))
 					{
-						return 1.0 / 0.0;
+						return 1.0f / 0.0f;
 					}
 					break;
 
 				case APDS9301_IntegrationTime._101_MS:
 					if ((ch1Int >= 37177) || (ch0Int >= 37177))
 					{
-						return 1.0 / 0.0;
+						return 1.0f / 0.0f;
 					}
 					break;
 
 				case APDS9301_IntegrationTime._402_MS:
 					if ((ch1Int >= 65535) || (ch0Int >= 65535))
 					{
-						return 1.0 / 0.0;
+						return 1.0f / 0.0f;
 					}
 					break;
 			}
@@ -367,13 +367,13 @@ namespace Sannel.House.Sensor.Light
 			switch (GetIntegrationTime())
 			{
 				case APDS9301_IntegrationTime._13_7_MS:
-					ch0 *= 1 / 0.034;
-					ch1 *= 1 / 0.034;
+					ch0 *= 1 / 0.034f;
+					ch1 *= 1 / 0.034f;
 					break;
 
 				case APDS9301_IntegrationTime._101_MS:
-					ch0 *= 1 / 0.252;
-					ch1 *= 1 / 0.252;
+					ch0 *= 1 / 0.252f;
+					ch1 *= 1 / 0.252f;
 					break;
 
 				case APDS9301_IntegrationTime._402_MS:
@@ -407,7 +407,7 @@ namespace Sannel.House.Sensor.Light
 				luxVal = (0.00146 * ch0) - (0.00112 * ch1);
 			}
 
-			return luxVal;
+			return (float)luxVal;
 		}
 
 		/// <summary>

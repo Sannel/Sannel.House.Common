@@ -20,6 +20,6 @@ namespace Sannel.House.Sensor
 	[Exportable(Includes = @"#include ""ISensor.h""")]
 	public interface IHumiditySensor : ISensor
 	{
-		double GetRelativeHumidity();
+		float GetRelativeHumidity();
 	}
 }
