@@ -22,6 +22,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sannel", "src\Sannel\Sannel
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sannel.Tests", "src\Sannel.Tests\Sannel.Tests.vcxproj", "{17CC2479-667E-47B4-9E2A-B3148A90D4D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sannel.House.Sensor.Devices", "src\Sannel.House.Sensor.Devices\Sannel.House.Sensor.Devices.csproj", "{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +96,22 @@ Global
 		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Release|x64.Build.0 = Release|x64
 		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Release|x86.ActiveCfg = Release|Win32
 		{17CC2479-667E-47B4-9E2A-B3148A90D4D7}.Release|x86.Build.0 = Release|Win32
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Debug|ARM.Build.0 = Debug|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Debug|x64.Build.0 = Debug|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Debug|x86.Build.0 = Debug|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Release|ARM.ActiveCfg = Release|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Release|ARM.Build.0 = Release|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Release|x64.ActiveCfg = Release|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Release|x64.Build.0 = Release|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Release|x86.ActiveCfg = Release|Any CPU
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +122,7 @@ Global
 		{BA2ED84D-A4D6-45D8-B2C7-760DDA4C79EF} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
 		{4C4B7312-3B0C-4973-B431-E3C4A08CE0AB} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
 		{17CC2479-667E-47B4-9E2A-B3148A90D4D7} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
+		{DED6A65B-A0CC-4D4E-9CAC-35DDFDC84292} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {39A1912D-C82B-4B54-A2C2-CB22583396DD}

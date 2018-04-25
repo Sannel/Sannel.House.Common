@@ -10,10 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="2.4.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="2.7.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sannel.House.Sensor.Devices\Sannel.House.Sensor.Devices.csproj" />
     <ProjectReference Include="..\Sannel.House\Sannel.House.csproj" />
   </ItemGroup>
 

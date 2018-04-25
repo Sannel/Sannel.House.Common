@@ -36,7 +36,7 @@ namespace Sannel.House.ToCPP
    limitations under the License.*/
 /* This is generated code so probably best not to edit it */";
 
-			var sannelAssembly = Assembly.Load(new AssemblyName("Sannel.House"));
+			var assem = new Assembly[] { Assembly.Load(new AssemblyName("Sannel.House")), Assembly.Load(new AssemblyName("Sannel.House.Sensor.Devices")) };
 			var ass = System.Reflection.Assembly.GetEntryAssembly();
 			var irun = typeof(IRun);
 
@@ -45,7 +45,10 @@ namespace Sannel.House.ToCPP
 				if (ti.ImplementedInterfaces.Contains(irun))
 				{
 					var r = ass.CreateInstance(ti.FullName) as IRun;
-					r?.Generate(license, sannelAssembly);
+					foreach (var a in assem)
+					{
+						r?.Generate(license, a);
+					}
 				}
 			}
 		}

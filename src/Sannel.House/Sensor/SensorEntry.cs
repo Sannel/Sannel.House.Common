@@ -18,6 +18,12 @@ namespace Sannel.House.Sensor
 			set;
 		}
 
+		public virtual Guid? DeviceUuid
+		{
+			get;
+			set;
+		}
+
 		public virtual DateTime DateCreated { get; set; }
 
 		public virtual IDictionary<string, object> ExtraElements { get; set; }
