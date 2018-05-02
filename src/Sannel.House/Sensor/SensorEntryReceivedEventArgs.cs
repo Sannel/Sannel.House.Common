@@ -1,4 +1,4 @@
-/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2018 Sannel Software, L.L.C.
 
    Licensed under the Apache License, Version 2.0 (the ""License"");
    you may not use this file except in compliance with the License.
@@ -32,6 +32,6 @@ namespace Sannel.House.Sensor
 		/// <value>
 		/// The packets.
 		/// </value>
-		public IList<SensorEntry> Packets { get; } = new List<SensorEntry>();
+		public IList<RemoteSensorEntry> Entries { get; } = new List<RemoteSensorEntry>();
 	}
 }

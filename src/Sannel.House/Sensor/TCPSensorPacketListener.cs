@@ -1,4 +1,4 @@
-/* Copyright 2017 Sannel Software, L.L.C.
+/* Copyright 2018 Sannel Software, L.L.C.
 
 	Licensed under the Apache License, Version 2.0 (the ""License"");
 	you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ namespace Sannel.House.Sensor
 		protected TcpListener listener;
 		protected ILogger<TCPSensorPacketListener> logger;
 
-		public event EventHandler<SensorEntryReceivedEventArgs> PacketReceived;
+		public event EventHandler<SensorEntryReceivedEventArgs> EntriesReceived;
 
 		public TCPSensorPacketListener(ILogger<TCPSensorPacketListener> logger)
 		{
@@ -57,8 +57,7 @@ namespace Sannel.House.Sensor
 		}
 
 		protected virtual void ProcessClient(TcpClient client)
-		{
-			Task.Run(() =>
+			=> Task.Run(() =>
 			{
 				try
 				{
@@ -74,12 +73,11 @@ namespace Sannel.House.Sensor
 						}
 					}
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					logger.LogError(new EventId(), ex, "Exception while dealing with client");
 				}
 			});
-		}
 
 		protected virtual bool ReadBytes(ref byte[] bits, int length, Stream stream)
 		{
@@ -87,9 +85,9 @@ namespace Sannel.House.Sensor
 			var count = 0;
 			var tryCount = 0;
 
-			while(count < length && stream.CanRead && tryCount < 30)
+			while (count < length && stream.CanRead && tryCount < 30)
 			{
-				if(tryCount > 0)
+				if (tryCount > 0)
 				{
 					Task.Delay(200).GetAwaiter().GetResult();
 				}
@@ -129,7 +127,7 @@ namespace Sannel.House.Sensor
 					0,0,0,0,0,0,0,0
 				};
 
-			if(!ReadBytes(ref macBytes, 6, stream))
+			if (!ReadBytes(ref macBytes, 6, stream))
 			{
 				logger.LogDebug("Mac address was not the correct length.");
 				return;
@@ -148,17 +146,27 @@ namespace Sannel.House.Sensor
 			{
 				var buffer = new byte[4];
 
-				if(!ReadBytes(ref buffer, buffer.Length, stream))
+				if (!ReadBytes(ref buffer, buffer.Length, stream))
 				{
 					logger.LogError("Invalid Packet from {0}", mac);
 					return;
 				}
 
-				var entry = new SensorEntry();
+				var entry = new RemoteSensorEntry();
 
 				var t = BitConverter.ToUInt32(buffer, 0);
 
-				if(Enum.IsDefined(typeof(SensorTypes), t))
+				entry.MillisOffset = t;
+
+				if (!ReadBytes(ref buffer, buffer.Length, stream))
+				{
+					logger.LogError("Invalid Packet from {0}", mac);
+					return;
+				}
+
+				t = BitConverter.ToUInt32(buffer, 0);
+
+				if (Enum.IsDefined(typeof(SensorTypes), t))
 				{
 					entry.SensorType = ((SensorTypes)t).ToString();
 				}
@@ -168,7 +176,7 @@ namespace Sannel.House.Sensor
 				}
 
 
-				if(!ReadBytes(ref buffer, 1, stream))
+				if (!ReadBytes(ref buffer, 1, stream))
 				{
 					logger.LogError("Invalid Packet from {0}", mac);
 					return;
@@ -176,7 +184,7 @@ namespace Sannel.House.Sensor
 
 				var cc = buffer[0];
 
-				for(byte b = 0; b < cc; b++)
+				for (byte b = 0; b < cc; b++)
 				{
 					if (!ReadBytes(ref buffer, buffer.Length, stream))
 					{
@@ -200,7 +208,7 @@ namespace Sannel.House.Sensor
 
 
 				logger.LogDebug("Filled Packet {0}", entry);
-				args.Packets.Add(entry);
+				args.Entries.Add(entry);
 			}
 
 			FirePacketReceived(args);
@@ -209,7 +217,7 @@ namespace Sannel.House.Sensor
 		protected virtual void FirePacketReceived(SensorEntryReceivedEventArgs args)
 		{
 			logger.LogInformation("Firing PackateReceived");
-			PacketReceived?.Invoke(this, args);
+			EntriesReceived?.Invoke(this, args);
 		}
 
 		public void Dispose()
