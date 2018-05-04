@@ -36,7 +36,14 @@ namespace Sannel.House.Sensor
 			this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
 
-		public NameValueCollection Abbreviations { get; } = new NameValueCollection();
+		public NameValueCollection Abbreviations { get; } = new NameValueCollection()
+		{
+			{"TEMP", SensorHelper.TEMPERATURE },
+			{"HUMI", SensorHelper.HUMIDITY },
+			{"PRES", SensorHelper.PRESSURE },
+			{"WISP", SensorHelper.WIND_SPEED },
+			{"WIDI", SensorHelper.WIND_DIRECTION }
+		};
 
 		public async void Begin(uint port)
 		{

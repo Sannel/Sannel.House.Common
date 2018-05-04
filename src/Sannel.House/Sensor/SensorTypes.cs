@@ -21,11 +21,11 @@ namespace Sannel.House.Sensor
 	{
 		Test = 0,
 		Temperature = 1,
-		TemperatureHumidityPresure = 2,
+		TemperatureHumidityPressure = 2,
 		WindSpeed = 3,
 		WindDirection = 4,
 		SoilMoisture = 5,
-		RainAmount = 6,
-		LightSensor = 7
+		Rain = 6,
+		Lux = 7
 	}
 }
