@@ -14,12 +14,12 @@ limitations under the License.*/
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Sannel.House.Sensor
 {
-	[Exportable(Includes = @"#include ""IWireDevice.h""")]
 	public interface IWire : IDisposable
 	{
-		IWireDevice GetDeviceById(byte deviceId);
+		Task<IWireDevice> GetDeviceByIdAsync(byte deviceId);
 	}
 }
