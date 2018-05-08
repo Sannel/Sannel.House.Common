@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Sannel.House.Sensor.Devices</AssemblyName>
-    <Version>0.6.1-alpha-00001</Version>
+    <Version>0.6.1-alpha-0001</Version>
     <PackageId>Sannel.House.Sensor.Devices</PackageId>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Adam Holt</Authors>
