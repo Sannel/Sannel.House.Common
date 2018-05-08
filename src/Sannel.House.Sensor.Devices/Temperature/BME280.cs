@@ -104,6 +104,29 @@ namespace Sannel.House.Sensor.Temperature
 		}
 
 		/// <summary>
+		/// Run Mods for BME280
+		/// </summary>
+		public enum RunModes
+		{
+			/// <summary>
+			/// Sleep
+			/// </summary>
+			Sleep = 0,
+			/// <summary>
+			/// Forced
+			/// </summary>
+			Forced1 = 1,
+			/// <summary>
+			/// Forced
+			/// </summary>
+			Forced2 = 2,
+			/// <summary>
+			/// Normal
+			/// </summary>
+			Normal = 3
+		}
+
+		/// <summary>
 		/// Gets or sets the run mode.
 		/// 0 Sleep mode
 		/// 1 or 2 Forced mode
@@ -112,10 +135,49 @@ namespace Sannel.House.Sensor.Temperature
 		/// <value>
 		/// The run mode.
 		/// </value>
-		public byte RunMode
+		public RunModes RunMode
 		{
 			get;
 			set;
+		}
+
+		/// <summary>
+		/// TimeStandBys for BME280
+		/// </summary>
+		public enum TimeStandBys
+		{
+			/// <summary>
+			/// 0.5ms
+			/// </summary>
+			_0_5ms = 0,
+			/// <summary>
+			/// 62.5ms
+			/// </summary>
+			_62_5ms = 1,
+			/// <summary>
+			/// 125ms
+			/// </summary>
+			_125ms = 2,
+			/// <summary>
+			/// 250ms
+			/// </summary>
+			_250ms = 3,
+			/// <summary>
+			/// 500ms
+			/// </summary>
+			_500ms = 4,
+			/// <summary>
+			/// 1000ms
+			/// </summary>
+			_1000ms = 5,
+			/// <summary>
+			/// 10ms
+			/// </summary>
+			_10ms = 6,
+			/// <summary>
+			/// 20ms
+			/// </summary>
+			_20ms = 7
 		}
 
 		/// <summary>
@@ -132,7 +194,7 @@ namespace Sannel.House.Sensor.Temperature
 		/// <value>
 		/// The time stand by.
 		/// </value>
-		public byte TimeStandBy
+		public TimeStandBys TimeStandBy
 		{
 			get;
 			set;
@@ -276,7 +338,7 @@ namespace Sannel.House.Sensor.Temperature
 			//Next, pressure oversampling
 			dataToWrite |= (byte)((PressureOverSample << 0x02) & 0x1C);
 			//Last, set mode
-			dataToWrite |= (byte)((RunMode) & 0x03);
+			dataToWrite |= (byte)(((byte)RunMode) & 0x03);
 			//Load the byte
 			writeRegister(BME280_CTRL_MEAS_REG, dataToWrite);
 
@@ -378,10 +440,10 @@ namespace Sannel.House.Sensor.Temperature
 			return output;
 		}
 
-		private byte readRegister(byte offset) 
+		private byte readRegister(byte offset)
 			=> device.WriteRead(offset);
 
-		private void readRegisterRegion(byte[] outputPointer, byte offset, byte length) 
+		private void readRegisterRegion(byte[] outputPointer, byte offset, byte length)
 			=> device.WriteRead(offset, ref outputPointer, length);
 
 		short readRegisterInt16(byte offset)
@@ -394,7 +456,7 @@ namespace Sannel.House.Sensor.Temperature
 		}
 
 
-		private void writeRegister(byte offset, byte dataToWrite) 
+		private void writeRegister(byte offset, byte dataToWrite)
 			=> device.Write(offset, dataToWrite);
 
 
