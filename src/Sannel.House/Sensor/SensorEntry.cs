@@ -19,28 +19,87 @@ namespace Sannel.House.Sensor
 {
 	public class SensorEntry
 	{
+		/// <summary>
+		/// Gets or sets the identifier.
+		/// </summary>
+		/// <value>
+		/// The identifier.
+		/// </value>
 		public virtual Guid Id { get; set; }
 
+		/// <summary>
+		/// Gets or sets the type of the sensor.
+		/// </summary>
+		/// <value>
+		/// The type of the sensor.
+		/// </value>
 		public virtual string SensorType { get; set; }
 
+		/// <summary>
+		/// Sets the SensorType from the passed SensorTypes
+		/// </summary>
+		/// <value>
+		/// The type.
+		/// </value>
+		public virtual SensorTypes Type
+		{
+			set => SensorType = value.ToString();
+		}
+
+		/// <summary>
+		/// Gets or sets the device identifier.
+		/// </summary>
+		/// <value>
+		/// The device identifier.
+		/// </value>
 		public virtual int DeviceId { get; set; }
 
+		/// <summary>
+		/// Gets or sets the device mac address.
+		/// </summary>
+		/// <value>
+		/// The device mac address.
+		/// </value>
 		public virtual long? DeviceMacAddress
 		{
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Gets or sets the device UUID.
+		/// </summary>
+		/// <value>
+		/// The device UUID.
+		/// </value>
 		public virtual Guid? DeviceUuid
 		{
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Gets or sets the date created.
+		/// </summary>
+		/// <value>
+		/// The date created.
+		/// </value>
 		public virtual DateTime DateCreated { get; set; }
 
+		/// <summary>
+		/// Gets or sets the extra elements.
+		/// </summary>
+		/// <value>
+		/// The extra elements.
+		/// </value>
 		public virtual IDictionary<string, object> ExtraElements { get; set; }
 
+		/// <summary>
+		/// Gets or sets the values.
+		/// </summary>
+		/// <value>
+		/// The values.
+		/// </value>
 		public virtual IDictionary<string, float> Values { get; set; } = new Dictionary<string, float>();
 
 	}
