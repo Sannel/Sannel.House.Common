@@ -378,26 +378,24 @@ namespace Sannel.House.Sensor.Temperature
 			return output;
 		}
 
-		private byte readRegister(byte offset)
-		{
-			return offset;
-		}
+		private byte readRegister(byte offset) 
+			=> device.WriteRead(offset);
 
-		private void readRegisterRegion(byte[] outputPointer, byte offset, byte length)
-		{
-
-		}
+		private void readRegisterRegion(byte[] outputPointer, byte offset, byte length) 
+			=> device.WriteRead(offset, ref outputPointer, length);
 
 		short readRegisterInt16(byte offset)
 		{
-			return 0;
+			var b = new byte[2];
+			device.WriteRead(offset, ref b, 2);
+			var output = (short)(b[0] | b[1] << 8);
+
+			return output;
 		}
 
 
-		private void writeRegister(byte offset, byte dataToWrite)
-		{
-
-		}
+		private void writeRegister(byte offset, byte dataToWrite) 
+			=> device.Write(offset, dataToWrite);
 
 
 	}

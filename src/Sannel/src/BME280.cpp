@@ -249,9 +249,6 @@ uint8_t BME280::readRegister(uint8_t offset)
 void BME280::readRegisterRegion(uint8_t *outputPointer, uint8_t offset, uint8_t length)
 {
 	//define pointer that will point to the external space
-	uint8_t i = 0;
-	char c = 0;
-
 	this->device->WriteRead(offset, outputPointer, length);
 }
 
