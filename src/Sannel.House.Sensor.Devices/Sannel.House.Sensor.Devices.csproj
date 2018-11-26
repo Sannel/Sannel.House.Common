@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Sannel.House.Sensor.Devices</AssemblyName>
-    <Version>0.6.1-alpha-0000</Version>
+    <Version>0.6.1-alpha-0001</Version>
     <PackageId>Sannel.House.Sensor.Devices</PackageId>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Adam Holt</Authors>
@@ -12,8 +12,10 @@
     <PackageLicenseUrl>https://github.com/Sannel/Sannel.House.Common/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Sannel/Sannel.House.Common</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Sannel/Sannel.House.Common</RepositoryUrl>
-    <PackageReleaseNotes>Created containing drivers for devices</PackageReleaseNotes>
+    <PackageReleaseNotes>Updated BME280 to use enums</PackageReleaseNotes>
     <RootNamespace>Sannel.House.Sensor</RootNamespace>
+    <AssemblyVersion>0.6.1.1</AssemblyVersion>
+    <FileVersion>0.6.1.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

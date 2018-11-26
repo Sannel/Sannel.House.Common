@@ -97,10 +97,12 @@ namespace Sannel.House.Sensor.Temperature
 			}
 
 			this.device = device;
-			RunMode = 0;
-			TemperatureOverSample = 0;
-			PressureOverSample = 0;
-			HumidityOverSample = 0;
+			RunMode = RunModes.Normal;
+			TimeStandBy = TimeStandBys._0_5ms;
+			Filter = Filters.Off;
+			TemperatureOverSample = OverSamples.OneTime;
+			PressureOverSample = OverSamples.OneTime;
+			HumidityOverSample = OverSamples.OneTime;
 		}
 
 		/// <summary>
@@ -201,6 +203,18 @@ namespace Sannel.House.Sensor.Temperature
 		}
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public enum Filters
+		{
+			Off=0,
+			Coefficients2=1,
+			Coefficients4=2,
+			Coefficients8=3,
+			Coefficients16=4,
+		}
+
+		/// <summary>
 		/// Gets or sets the filter.
 		/// filter can be off or number of FIR coefficient to use
 		/// 0 filter off
@@ -212,10 +226,20 @@ namespace Sannel.House.Sensor.Temperature
 		/// <value>
 		/// The filter.
 		/// </value>
-		public byte Filter
+		public Filters Filter
 		{
 			get;
 			set;
+		}
+
+		public enum OverSamples
+		{
+			Skip=0,
+			OneTime=1,
+			TwoTime=2,
+			FourTime=3,
+			EightTime=4,
+			SixTeenTime=5
 		}
 
 		/// <summary>
@@ -230,7 +254,7 @@ namespace Sannel.House.Sensor.Temperature
 		/// <value>
 		/// The temperature over sample.
 		/// </value>
-		public byte TemperatureOverSample
+		public OverSamples TemperatureOverSample
 		{
 			get;
 			set;
@@ -248,7 +272,7 @@ namespace Sannel.House.Sensor.Temperature
 		/// <value>
 		/// The pressure over sample.
 		/// </value>
-		public byte PressureOverSample
+		public OverSamples PressureOverSample
 		{
 			get;
 			set;
@@ -266,7 +290,7 @@ namespace Sannel.House.Sensor.Temperature
 		/// <value>
 		/// The humidity over sample.
 		/// </value>
-		public byte HumidityOverSample
+		public OverSamples HumidityOverSample
 		{
 			get;
 			set;
@@ -324,19 +348,19 @@ namespace Sannel.House.Sensor.Temperature
 			writeRegister(BME280_CTRL_MEAS_REG, 0x00);
 
 			//Set the config word
-			dataToWrite = (byte)((TimeStandBy << 0x5) & 0xE0);
-			dataToWrite |= (byte)((Filter << 0x02) & 0x1C);
+			dataToWrite = (byte)(((byte)TimeStandBy << 0x5) & 0xE0);
+			dataToWrite |= (byte)(((byte)Filter << 0x02) & 0x1C);
 			writeRegister(BME280_CONFIG_REG, dataToWrite);
 
 			//Set ctrl_hum first, then ctrl_meas to activate ctrl_hum
-			dataToWrite = (byte)(HumidityOverSample & 0x07); //all other bits can be ignored
+			dataToWrite = (byte)((byte)HumidityOverSample & 0x07); //all other bits can be ignored
 			writeRegister(BME280_CTRL_HUMIDITY_REG, dataToWrite);
 
 			//set ctrl_meas
 			//First, set temp oversampling
-			dataToWrite = (byte)((TemperatureOverSample << 0x5) & 0xE0);
+			dataToWrite = (byte)(((byte)TemperatureOverSample << 0x5) & 0xE0);
 			//Next, pressure oversampling
-			dataToWrite |= (byte)((PressureOverSample << 0x02) & 0x1C);
+			dataToWrite |= (byte)(((byte)PressureOverSample << 0x02) & 0x1C);
 			//Last, set mode
 			dataToWrite |= (byte)(((byte)RunMode) & 0x03);
 			//Load the byte
