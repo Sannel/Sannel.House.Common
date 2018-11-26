@@ -102,7 +102,7 @@ namespace Sannel.House.Web
 					{
 						log.LogInformation("/etc/ssl/certs exists check if the cert is installed");
 						var fileName = Path.GetFileNameWithoutExtension(fullPath);
-						var sslPath = Path.Join("/etc/ssl/certs", $"{fileName}.pem");
+						var sslPath = Path.Combine("/etc/ssl/certs", $"{fileName}.pem");
 						if(!File.Exists(sslPath))
 						{
 							log.LogInformation($"Installing cert {fullPath}");

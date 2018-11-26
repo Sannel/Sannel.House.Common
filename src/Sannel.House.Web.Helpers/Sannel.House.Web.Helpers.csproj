@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Sannel.House.Web</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AssemblyVersion>$(Major).$(Minor).$(Patch).0</AssemblyVersion>
     <FileVersion>$(Major).$(Minor).$(Patch).0</FileVersion>
-    <Version>$(Major).$(Minor).0-beta</Version>
+    <Version>$(Major).$(Minor).1-beta</Version>
     <Authors>Adam Holt</Authors>
     <Company>Sannel Software, L.L.C.</Company>
     <Description>Extensions and Helpers used by at least one web project</Description>
@@ -15,8 +15,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.6" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.0" />
+    <PackageReference Include="System.Security.Principal" Version="4.3.0" />
+    <PackageReference Include="System.Security.Principal.Windows" Version="4.5.1" />
   </ItemGroup>
 
 </Project>
