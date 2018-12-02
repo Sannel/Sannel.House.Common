@@ -36,7 +36,7 @@ namespace Sannel.House.Web
 		{
 			using (var cert = new X509Certificate2(fullPath))
 			{
-				using (var store = new X509Store(StoreName.AuthRoot, StoreLocation.LocalMachine))
+				using (var store = new X509Store(name, location))
 				{
 					try
 					{
@@ -84,10 +84,12 @@ namespace Sannel.House.Web
 						var principle = new WindowsPrincipal(identity);
 						if(principle.IsInRole(WindowsBuiltInRole.Administrator))
 						{
-							installCertificate(StoreName.AuthRoot, StoreLocation.LocalMachine, fullPath, log);
+							log.LogInformation("User is admin");
+							installCertificate(StoreName.CertificateAuthority, StoreLocation.LocalMachine, fullPath, log);
 						}
 						else
 						{
+							log.LogInformation("User is not admin");
 							installCertificate(StoreName.CertificateAuthority, StoreLocation.CurrentUser, fullPath, log);
 						}
 					}
