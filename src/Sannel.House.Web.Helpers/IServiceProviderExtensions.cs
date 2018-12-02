@@ -32,7 +32,7 @@ namespace Sannel.House.Web
 		/// <param name="location">The location.</param>
 		/// <param name="fullPath">The full path.</param>
 		/// <param name="log">The log.</param>
-		private static void installCertificate(StoreName name, StoreLocation location, string fullPath, ILogger log)
+		private static bool installCertificate(StoreName name, StoreLocation location, string fullPath, ILogger log)
 		{
 			using (var cert = new X509Certificate2(fullPath))
 			{
@@ -45,16 +45,19 @@ namespace Sannel.House.Web
 						{
 							log.LogInformation($"Trying to install cert {cert.SubjectName}");
 							store.Add(cert);
+							log.LogInformation("Cert Installed");
 						}
 						else
 						{
 							log.LogInformation("Cert is already installed");
 						}
 						store.Close();
+						return true;
 					}
 					catch (Exception ex)
 					{
 						log.LogError(ex, "Exception installing Cert");
+						return false;
 					}
 				}
 			}
@@ -81,17 +84,23 @@ namespace Sannel.House.Web
 				{
 					using (var identity = WindowsIdentity.GetCurrent())
 					{
-						var principle = new WindowsPrincipal(identity);
-						if(principle.IsInRole(WindowsBuiltInRole.Administrator))
+						if(!installCertificate(StoreName.AuthRoot, StoreLocation.LocalMachine, fullPath, log))
 						{
-							log.LogInformation("User is admin");
-							installCertificate(StoreName.CertificateAuthority, StoreLocation.LocalMachine, fullPath, log);
+							log.LogWarning("Unable to install cert in LocalMachine trying to install in CurrentUser");
+							if(!installCertificate(StoreName.CertificateAuthority, StoreLocation.CurrentUser, fullPath, log))
+							{
+								log.LogError("Unable to install certificate");
+							}
+							else
+							{
+								log.LogInformation("Cert installed into CurrentUser");
+							}
 						}
 						else
 						{
-							log.LogInformation("User is not admin");
-							installCertificate(StoreName.CertificateAuthority, StoreLocation.CurrentUser, fullPath, log);
+							log.LogInformation("Cert installed into LocalMachine");
 						}
+
 					}
 				}
 				else if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
