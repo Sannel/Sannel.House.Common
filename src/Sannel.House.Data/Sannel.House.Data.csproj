@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AssemblyVersion>$(Major).$(Minor).$(Patch).0</AssemblyVersion>
     <FileVersion>$(Major).$(Minor).$(Patch).0</FileVersion>
-    <Version>$(Major).$(Minor).0-beta</Version>
+    <Version>$(Major).$(Minor).1-beta</Version>
     <Authors>Adam Holt</Authors>
     <Company>Sannel Software, L.L.C.</Company>
     <Description>Extensions and Helpers related to EntityFrameworkCore</Description>
@@ -16,6 +16,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
 </Project>

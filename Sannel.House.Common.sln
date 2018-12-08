@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House.Sensor.Devices
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House.Web.Helpers", "src\Sannel.House.Web.Helpers\Sannel.House.Web.Helpers.csproj", "{B41F6901-16B3-4F3D-9214-356F609D08D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sannel.House.Data", "src\Sannel.House.Data\Sannel.House.Data.csproj", "{B71CFE19-43B6-4F52-930A-487BB545D2FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House.Data", "src\Sannel.House.Data\Sannel.House.Data.csproj", "{B71CFE19-43B6-4F52-930A-487BB545D2FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
