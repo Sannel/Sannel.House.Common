@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Sannel.House.Client.Common</AssemblyName>
+    <RootNamespace>Sannel.House.Client</RootNamespace>
+    <AssemblyVersion>$(Major).$(Minor).$(Patch).0</AssemblyVersion>
+    <FileVersion>$(Major).$(Minor).$(Patch).0</FileVersion>
+    <Version>$(Major).$(Minor).1-beta</Version>
+    <Authors>Adam Holt</Authors>
+    <Company>Sannel Software, L.L.C.</Company>
+    <Description>Common classes used in one or more sannel house client library</Description>
+    <PackageLicenseUrl>https://github.com/Sannel/Sannel.House.Common/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Sannel/Sannel.House.Common</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
+</Project>
