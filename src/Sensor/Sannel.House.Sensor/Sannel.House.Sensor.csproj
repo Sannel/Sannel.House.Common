@@ -11,8 +11,9 @@
 		<PackageProjectUrl>https://github.com/Sannel/Sannel.House.Common</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Sannel/Sannel.House.Common</RepositoryUrl>
 		<AssemblyVersion>0.6.1.0</AssemblyVersion>
-		<PackageReleaseNotes>Fixed IWire it has an async method.</PackageReleaseNotes>
+		<PackageReleaseNotes></PackageReleaseNotes>
 		<FileVersion>0.6.1.0</FileVersion>
+		<Company>Sannel Software, L.L.C.</Company>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -29,7 +30,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Sensor\" />
 	  <Folder Include="System.Devices\I2c\" />
 	</ItemGroup>
 
