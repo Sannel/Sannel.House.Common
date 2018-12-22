@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sannel.House.Client\Sannel.House.Client.csproj" />
+    <ProjectReference Include="..\Sannel.House.Web\Sannel.House.Web.csproj" />
   </ItemGroup>
 
 </Project>

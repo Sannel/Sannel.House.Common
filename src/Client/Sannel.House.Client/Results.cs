@@ -69,6 +69,14 @@ namespace Sannel.House.Client
 		public string TraceId { get; set; }
 
 		/// <summary>
+		/// Gets or sets the exception captured by any method
+		/// </summary>
+		/// <value>
+		/// The exception.
+		/// </value>
+		public Exception Exception { get; set; }
+
+		/// <summary>
 		/// Fills this object with data from a asp.net core validation errors.
 		/// </summary>
 		/// <param name="jsonString">The json string.</param>
@@ -90,7 +98,7 @@ namespace Sannel.House.Client
 					Message = obj.Title;
 					TraceId = obj.TraceId;
 					Status = (HttpStatusCode)obj.Status;
-					foreach (var kv in obj.Errors)
+					foreach (var kv in obj.Errors ?? new Dictionary<string, string[]>()) // if the Errors object is null just fake it with an empty one so we don't get an exception
 					{
 						Errors.Add(kv.Key, string.Join(",", kv.Value));
 					}
@@ -99,19 +107,38 @@ namespace Sannel.House.Client
 
 				return false;
 			}
-			catch(JsonSerializationException)
+			catch(JsonSerializationException jse)
 			{
+				this.Exception = jse;
 				return false;
 			}
 		});
-		/*"errors": {
-		"Name": [
-			"The Name field is required."
-		]
-	},
-	"title": "One or more validation errors occurred.",
-	"status": 400,
-	"traceId": "0HLIURDPH1MOO:00000001"*/
+
+		/// <summary>
+		/// Attempts to deserialize the json string <paramref name="json"/> and set it to the Data property of this object
+		/// If <paramref name="json"/> is null returns null and does not set Data
+		/// If there is a json parse exception catches the exception sets it in Exception and returns null
+		/// </summary>
+		/// <param name="json">The json.</param>
+		/// <returns></returns>
+		public Task<T> SafelyDeserializeAndSetDataAsync(string json)
+			=> Task.Run(() =>
+			{
+				try
+				{
+					if(json == null)
+					{
+						return null;
+					}
+
+					return Data = JsonConvert.DeserializeObject<T>(json);
+				}
+				catch(JsonSerializationException jse)
+				{
+					this.Exception = jse;
+					return null;
+				}
+			});
 	}
 
 	internal class ValidationResult

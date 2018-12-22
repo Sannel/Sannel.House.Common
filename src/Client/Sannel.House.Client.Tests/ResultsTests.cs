@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -43,6 +44,55 @@ namespace Sannel.House.Client.Tests
 
 			success = await results.FillWithValidationErrorsAsync(null);
 			Assert.False(success);
+		}
+
+		public class TestObject
+		{
+			public int Prop1 { get; set; }
+			public string Prop2 { get; set; }
+		}
+
+		[Fact]
+		public async Task SafelyDeserializeAndSetDataAsyncTest()
+		{
+			var results = new Results<TestObject>();
+			var r = await results.SafelyDeserializeAndSetDataAsync(null);
+			Assert.Null(r);
+			Assert.Null(results.Data);
+			Assert.Null(results.Exception);
+
+			r = await results.SafelyDeserializeAndSetDataAsync("{");
+			Assert.Null(r);
+			Assert.Null(results.Data);
+			Assert.IsType<JsonSerializationException>(results.Exception);
+			results.Exception = null;
+
+			r = await results.SafelyDeserializeAndSetDataAsync("{}");
+			Assert.NotNull(r);
+			Assert.Equal(default(int), r.Prop1);
+			Assert.Equal(default(string), r.Prop2);
+			Assert.Null(results.Exception);
+			Assert.NotNull(results.Data);
+
+			r = await results.SafelyDeserializeAndSetDataAsync(@"{""Prop1"": 2}");
+			Assert.NotNull(r);
+			Assert.Equal(2, r.Prop1);
+			Assert.Equal(default(string), r.Prop2);
+			Assert.Null(results.Exception);
+			Assert.NotNull(results.Data);
+
+			r = await results.SafelyDeserializeAndSetDataAsync(@"{""Prop1"": 2, ""Prop2"":""test""}");
+			Assert.NotNull(r);
+			Assert.Equal(2, r.Prop1);
+			Assert.Equal("test", r.Prop2);
+			Assert.Null(results.Exception);
+			Assert.Equal(2, results.Data.Prop1);
+			Assert.Equal("test", results.Data.Prop2);
+			Assert.NotNull(results.Data);
+
+			r = await results.SafelyDeserializeAndSetDataAsync("");
+			Assert.Null(r);
+			Assert.Null(results.Data);
 		}
 	}
 }

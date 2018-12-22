@@ -1,0 +1,1 @@
+This will be removed from the library when we upgrade to .net standard 2.1 and can use the System.Device.GPIO nuget package instead. This will happen when .net core 3.0 releases.

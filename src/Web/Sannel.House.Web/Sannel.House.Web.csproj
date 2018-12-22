@@ -6,7 +6,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AssemblyVersion>$(Major).$(Minor).$(Patch).0</AssemblyVersion>
     <FileVersion>$(Major).$(Minor).$(Patch).0</FileVersion>
-    <Version>$(Major).$(Minor).2-beta</Version>
+    <Version>$(Major).$(Minor).0-beta</Version>
     <Authors>Adam Holt</Authors>
     <Company>Sannel Software, L.L.C.</Company>
     <Description>Extensions and Helpers used by at least one web project</Description>
