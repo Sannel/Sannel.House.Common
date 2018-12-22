@@ -16,7 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sannel.House.Web
+namespace Sannel.House.Models
 {
 	/// <summary>
 	/// The base response model for api responses

@@ -8,6 +8,8 @@ Contains different projects that contain extensions and Classes are used in at l
 Common classes used for client libraries for micro services.
 #### Sannel.House.Data
 Extensions used to help with Entity Framework Core projects
+#### Sannel.House.Models
+Models that exist both in the web and the client.
 #### Sannel.House.Sensor
 Interfaces and Base Classes to use for reading and writing to sensors.
 #### Sannel.House.Web

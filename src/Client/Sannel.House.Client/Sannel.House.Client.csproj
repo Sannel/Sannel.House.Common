@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Sannel.House.Client.Common</AssemblyName>
+    <AssemblyName>Sannel.House.Client</AssemblyName>
     <RootNamespace>Sannel.House.Client</RootNamespace>
     <AssemblyVersion>$(Major).$(Minor).$(Patch).0</AssemblyVersion>
     <FileVersion>$(Major).$(Minor).$(Patch).0</FileVersion>

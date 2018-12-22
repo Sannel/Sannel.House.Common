@@ -16,39 +16,51 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sannel.House.Web
+namespace Sannel.House.Models
 {
 	/// <summary>
 	/// The Error Response Model
 	/// </summary>
-	/// <seealso cref="Sannel.House.Web.ResponseModel" />
+	/// <seealso cref="Sannel.House.Models.ResponseModel" />
 	public class ErrorResponseModel : ResponseModel
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ErrorResponseModel"/> class.
+		/// </summary>
 		public ErrorResponseModel()
 		{
 
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ErrorResponseModel"/> class.
+		/// </summary>
+		/// <param name="statusCode">The status code.</param>
 		public ErrorResponseModel(int statusCode) : base(statusCode)
 		{
 
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ErrorResponseModel"/> class.
+		/// </summary>
+		/// <param name="statusCode">The status code.</param>
+		/// <param name="title">The title.</param>
 		public ErrorResponseModel(int statusCode, string title): base(statusCode, title)
 		{
 
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ErrorResponseModel"/> class.
+		/// </summary>
+		/// <param name="statusCode">The status code.</param>
+		/// <param name="title">The title.</param>
+		/// <param name="key">The key.</param>
+		/// <param name="value">The value.</param>
 		public ErrorResponseModel(int statusCode, string title, string key, string value) : base(statusCode, title) 
 			=> Errors.Add(key, new string[] { value });
 
-		public ErrorResponseModel(int statusCode, string title, ModelStateDictonary modelState)
-		{
-			foreach (var k in modelState)
-			{
-				Errors.Add(k.Key, k.Value.Errors.Select(i => i.ErrorMessage).ToArray());
-			}
-		}
 
 		[JsonProperty("errors")]
 		public Dictionary<string, string[]> Errors { get; set; } = new Dictionary<string, string[]>();
