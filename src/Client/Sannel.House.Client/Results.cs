@@ -24,7 +24,6 @@ namespace Sannel.House.Client
 	/// </summary>
 	/// <typeparam name="T">The class for the Data property</typeparam>
 	public class Results<T> : ResponseModel<T>
-		where T : class
 	{
 		/// <summary>
 		/// Creates a Results object from json.
@@ -67,14 +66,7 @@ namespace Sannel.House.Client
 		///   <c>true</c> if success; otherwise, <c>false</c>.
 		/// </value>
 		public bool Success { get; set; }
-		/// <summary>
-		/// Gets or sets the status code.
-		/// </summary>
-		/// <value>
-		/// The status code.
-		/// </value>
-		public HttpStatusCode StatusCode 
-			=> (HttpStatusCode)Status;
+
 		/// <summary>
 		/// Gets the errors.
 		/// </summary>
