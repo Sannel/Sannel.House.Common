@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Sannel.House.Models" Version="1812.22.0-beta" />
   </ItemGroup>
 
 </Project>
