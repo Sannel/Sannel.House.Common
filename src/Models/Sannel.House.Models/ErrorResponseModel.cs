@@ -14,6 +14,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 
 namespace Sannel.House.Models
@@ -27,7 +28,7 @@ namespace Sannel.House.Models
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ErrorResponseModel"/> class.
 		/// </summary>
-		public ErrorResponseModel()
+		public ErrorResponseModel() : base()
 		{
 
 		}
@@ -37,6 +38,15 @@ namespace Sannel.House.Models
 		/// </summary>
 		/// <param name="statusCode">The status code.</param>
 		public ErrorResponseModel(int statusCode) : base(statusCode)
+		{
+
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ErrorResponseModel"/> class.
+		/// </summary>
+		/// <param name="code">The status code.</param>
+		public ErrorResponseModel(HttpStatusCode code) : this((int)code)
 		{
 
 		}
@@ -54,12 +64,45 @@ namespace Sannel.House.Models
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ErrorResponseModel"/> class.
 		/// </summary>
+		/// <param name="code">The status code.</param>
+		/// <param name="title">The title.</param>
+		public ErrorResponseModel(HttpStatusCode code, string title) : base((int)code, title)
+		{
+
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ErrorResponseModel"/> class.
+		/// </summary>
 		/// <param name="statusCode">The status code.</param>
 		/// <param name="title">The title.</param>
 		/// <param name="key">The key.</param>
 		/// <param name="value">The value.</param>
 		public ErrorResponseModel(int statusCode, string title, string key, string value) : base(statusCode, title) 
 			=> Errors.Add(key, new string[] { value });
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ErrorResponseModel"/> class.
+		/// </summary>
+		/// <param name="code">The code.</param>
+		/// <param name="title">The title.</param>
+		/// <param name="key">The key.</param>
+		/// <param name="value">The value.</param>
+		public ErrorResponseModel(HttpStatusCode code, string title, string key, string value) : this((int)code, title, key, value)
+		{
+
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ErrorResponseModel"/> class.
+		/// </summary>
+		/// <param name="title">The title.</param>
+		/// <param name="key">The key.</param>
+		/// <param name="value">The value.</param>
+		public ErrorResponseModel(string title, string key, string value) : this(HttpStatusCode.BadRequest, title, key, value)
+		{
+
+		}
 
 
 		[JsonProperty("errors")]

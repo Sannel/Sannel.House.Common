@@ -13,6 +13,7 @@
    limitations under the License.*/
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using Xunit;
 
@@ -34,6 +35,11 @@ namespace Sannel.House.Models.Tests
 			var r = new ResponseModel(300);
 			Assert.Equal(300, r.Status);
 			Assert.Null(r.Title);
+
+			r = new ResponseModel(HttpStatusCode.Gone);
+			Assert.Equal(410, r.Status);
+			Assert.Equal(HttpStatusCode.Gone, r.StatusCode);
+			Assert.Null(r.Title);
 		}
 		
 		[Fact]
@@ -41,6 +47,10 @@ namespace Sannel.House.Models.Tests
 		{
 			var r = new ResponseModel(400, "Title 1");
 			Assert.Equal(400, r.Status);
+			Assert.Equal("Title 1", r.Title);
+
+			r = new ResponseModel(HttpStatusCode.LengthRequired, "Title 1");
+			Assert.Equal(411, r.Status);
 			Assert.Equal("Title 1", r.Title);
 		}
 
@@ -51,6 +61,11 @@ namespace Sannel.House.Models.Tests
 			Assert.Equal(200, r.Status);
 			Assert.Null(r.Title);
 			Assert.Null(r.Data);
+
+			var r1 = new ResponseModel<int>();
+			Assert.Equal(200, r1.Status);
+			Assert.Null(r1.Title);
+			Assert.Equal(default(int), r1.Data);
 		}
 
 		[Fact]
@@ -58,6 +73,11 @@ namespace Sannel.House.Models.Tests
 		{
 			var r = new ResponseModel<string>(300);
 			Assert.Equal(300, r.Status);
+			Assert.Null(r.Title);
+			Assert.Null(r.Data);
+
+			r = new ResponseModel<string>(HttpStatusCode.MultiStatus);
+			Assert.Equal(207, r.Status);
 			Assert.Null(r.Title);
 			Assert.Null(r.Data);
 		}
@@ -69,6 +89,11 @@ namespace Sannel.House.Models.Tests
 			Assert.Equal(400, r.Status);
 			Assert.Equal("Title 1", r.Title);
 			Assert.Null(r.Data);
+
+			r = new ResponseModel<string>(HttpStatusCode.NetworkAuthenticationRequired, "Title 1");
+			Assert.Equal(511, r.Status);
+			Assert.Equal("Title 1", r.Title);
+			Assert.Null(r.Data);
 		}
 		
 		[Fact]
@@ -78,6 +103,29 @@ namespace Sannel.House.Models.Tests
 			Assert.Equal(400, r.Status);
 			Assert.Equal("Title 1", r.Title);
 			Assert.Equal("lemon", r.Data);
+
+			var r1 = new ResponseModel<int>(HttpStatusCode.NoContent, "Title 2", 22);
+			Assert.Equal(204, r1.Status);
+			Assert.Equal("Title 2", r1.Title);
+			Assert.Equal(22, r1.Data);
+		}
+
+		[Fact]
+		public void ConstructorTest8()
+		{
+			var r = new ResponseModel<int>("Test 1", 23);
+			Assert.Equal(200, r.Status);
+			Assert.Equal("Test 1", r.Title);
+			Assert.Equal(23, r.Data);
+		}
+
+		[Fact]
+		public void ConstructorTest9()
+		{
+			var r = new ResponseModel<long>(300L);
+			Assert.Equal(200, r.Status);
+			Assert.Null(r.Title);
+			Assert.Equal(300, r.Data);
 		}
 	}
 }

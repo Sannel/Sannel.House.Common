@@ -12,9 +12,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.*/
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Net;
 
 namespace Sannel.House.Models
 {
@@ -26,10 +24,8 @@ namespace Sannel.House.Models
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ResponseModel"/> class.
 		/// </summary>
-		public ResponseModel()
-		{
-
-		}
+		public ResponseModel() 
+			=> Status = (int)HttpStatusCode.OK;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ResponseModel"/> class.
@@ -41,9 +37,24 @@ namespace Sannel.House.Models
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ResponseModel"/> class.
 		/// </summary>
+		/// <param name="code">The status code.</param>
+		public ResponseModel(HttpStatusCode code)
+			=> Status = (int)code;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ResponseModel"/> class.
+		/// </summary>
 		/// <param name="statusCode">The status code.</param>
 		/// <param name="title">The title.</param>
 		public ResponseModel(int statusCode, string title) : this(statusCode) 
+			=> Title = title;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ResponseModel"/> class.
+		/// </summary>
+		/// <param name="code">The status code.</param>
+		/// <param name="title">The title.</param>
+		public ResponseModel(HttpStatusCode code, string title) : this(code)
 			=> Title = title;
 
 		/// <summary>
@@ -54,6 +65,15 @@ namespace Sannel.House.Models
 		/// </value>
 		[JsonProperty("status")]
 		public int Status { get; set; } = 200;
+
+		/// <summary>
+		/// Gets the status code.
+		/// </summary>
+		/// <value>
+		/// The status code.
+		/// </value>
+		[JsonIgnore]
+		public HttpStatusCode StatusCode => (HttpStatusCode)Status;
 
 		/// <summary>
 		/// Gets or sets the title.
@@ -70,7 +90,6 @@ namespace Sannel.House.Models
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	public class ResponseModel<T> : ResponseModel
-		where T : class
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ResponseModel{T}"/> class.
@@ -90,10 +109,29 @@ namespace Sannel.House.Models
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ResponseModel{T}"/> class.
 		/// </summary>
+		/// <param name="code">The status code.</param>
+		public ResponseModel(HttpStatusCode code): base(code)
+		{
+
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ResponseModel{T}"/> class.
+		/// </summary>
 		/// <param name="statusCode">The status code.</param>
 		/// <param name="title">The title.</param>
 		public ResponseModel(int statusCode, string title) : base(statusCode, title)
 		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ResponseModel{T}"/> class.
+		/// </summary>
+		/// <param name="code">The status code.</param>
+		/// <param name="title">The title.</param>
+		public ResponseModel(HttpStatusCode code, string title) : base(code, title)
+		{
+
 		}
 
 		/// <summary>
@@ -104,6 +142,34 @@ namespace Sannel.House.Models
 		/// <param name="data">The data.</param>
 		public ResponseModel(int statusCode, string title, T data) : base(statusCode, title)
 			=> Data = data;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ResponseModel{T}"/> class.
+		/// </summary>
+		/// <param name="code">The status code.</param>
+		/// <param name="title">The title.</param>
+		/// <param name="data">The data.</param>
+		public ResponseModel(HttpStatusCode code, string title, T data) : base(code, title)
+			=> Data = data;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ResponseModel{T}"/> class.
+		/// </summary>
+		/// <param name="title">The title.</param>
+		/// <param name="data">The data.</param>
+		public ResponseModel(string title, T data) : this(HttpStatusCode.OK, title, data)
+		{
+
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ResponseModel{T}"/> class.
+		/// </summary>
+		/// <param name="data">The data.</param>
+		public ResponseModel(T data) : this(HttpStatusCode.OK, null, data)
+		{
+
+		}
 
 
 		/// <summary>
