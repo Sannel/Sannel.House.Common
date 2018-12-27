@@ -118,7 +118,7 @@ namespace Sannel.House.Models
 
 		}
 		/// <summary>
-		/// The Total number of items returned by the filter
+		/// The Total number of items returned
 		/// </summary>
 		/// <value>
 		/// The total count.
