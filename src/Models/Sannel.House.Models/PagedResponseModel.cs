@@ -18,7 +18,7 @@ using System.Text;
 
 namespace Sannel.House.Models
 {
-	public class PagedResponseModel<T> : ResponseModel<IEnumerable<T>>, IPagedResults<T>
+	public class PagedResponseModel<T> : ResponseModel<IEnumerable<T>>, IPagedResponse<T>
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PagedResponseModel{T}"/> class.
@@ -82,7 +82,7 @@ namespace Sannel.House.Models
 		/// <param name="statusCode">The status code.</param>
 		/// <param name="title">The title.</param>
 		/// <param name="pagedResults">The paged results.</param>
-		public PagedResponseModel(int statusCode, string title, IPagedResults<T> pagedResults)
+		public PagedResponseModel(int statusCode, string title, IPagedResponse<T> pagedResults)
 			: this(statusCode, 
 				title, 
 				(pagedResults ?? throw new ArgumentNullException(nameof(pagedResults))).Data, 
@@ -99,7 +99,7 @@ namespace Sannel.House.Models
 		/// <param name="code">The code.</param>
 		/// <param name="title">The title.</param>
 		/// <param name="pagedResults">The paged results.</param>
-		public PagedResponseModel(HttpStatusCode code, string title, IPagedResults<T> pagedResults)
+		public PagedResponseModel(HttpStatusCode code, string title, IPagedResponse<T> pagedResults)
 			: this((int)code, title, pagedResults)
 		{
 
@@ -110,7 +110,7 @@ namespace Sannel.House.Models
 		/// </summary>
 		/// <param name="title">The title.</param>
 		/// <param name="pagedResults">The paged results.</param>
-		public PagedResponseModel(string title, IPagedResults<T> pagedResults) 
+		public PagedResponseModel(string title, IPagedResponse<T> pagedResults) 
 			: this(HttpStatusCode.OK, 
 				title,
 				pagedResults)

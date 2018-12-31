@@ -15,13 +15,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sannel.House.Models.Tests
+namespace Sannel.House.Models
 {
-	public class MockPagedResults : IPagedResponse<string>
+	public interface IErrorResponse : IResponse
 	{
-		public IEnumerable<string> Data { get; set; }
-		public long TotalCount { get; set; }
-		public long Page { get; set; }
-		public int PageSize { get; set; }
+		/// <summary>
+		/// Gets or sets the errors.
+		/// </summary>
+		/// <value>
+		/// The errors.
+		/// </value>
+		Dictionary<string, string[]> Errors { get; set; }
 	}
 }

@@ -19,7 +19,7 @@ namespace Sannel.House.Models
 	/// <summary>
 	/// The base response model for api responses
 	/// </summary>
-	public class ResponseModel
+	public class ResponseModel : IResponse
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ResponseModel"/> class.
@@ -89,7 +89,7 @@ namespace Sannel.House.Models
 	/// The base response model with data api responses
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class ResponseModel<T> : ResponseModel
+	public class ResponseModel<T> : ResponseModel, IResponse<T>
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ResponseModel{T}"/> class.
