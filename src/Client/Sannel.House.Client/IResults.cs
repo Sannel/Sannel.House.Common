@@ -1,4 +1,4 @@
-/* Copyright 2018 Sannel Software, L.L.C.
+/* Copyright 2019 Sannel Software, L.L.C.
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
@@ -15,8 +15,14 @@ using System.Text;
 
 namespace Sannel.House.Client
 {
-	public interface IResults<T> : IResponse<T>
+	public interface IResults : IResponse
 	{
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="IResults"/> is success.
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if success; otherwise, <c>false</c>.
+		/// </value>
 		bool Success { get; set; }
 
 		/// <summary>
@@ -42,5 +48,9 @@ namespace Sannel.House.Client
 		/// The exception.
 		/// </value>
 		Exception Exception { get; set; }
+	}
+
+	public interface IResults<T> : IResults, IResponse<T>
+	{
 	}
 }
