@@ -15,7 +15,7 @@ using System.Text;
 
 namespace Sannel.House.Client
 {
-	public class PagedResults<T> : Results<IEnumerable<T>>, IPagedResponse<T>
+	public class PagedResults<T> : Results<IEnumerable<T>>, IResults, IResults<IEnumerable<T>>, IPagedResponse<T>, IResponse, IResponse<IEnumerable<T>>
 	{
 		/// <summary>
 		/// The Total number of items returned

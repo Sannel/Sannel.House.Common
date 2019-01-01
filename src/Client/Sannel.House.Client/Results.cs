@@ -23,7 +23,7 @@ namespace Sannel.House.Client
 	/// 
 	/// </summary>
 	/// <typeparam name="T">The class for the Data property</typeparam>
-	public class Results<T> : ResponseModel<T>, IResponse<T>
+	public class Results<T> : ResponseModel<T>, IResponse, IResponse<T>, IResults
 	{
 		/// <summary>
 		/// Creates a Results object from json.
