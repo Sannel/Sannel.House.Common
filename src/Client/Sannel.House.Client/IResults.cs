@@ -15,28 +15,32 @@ using System.Text;
 
 namespace Sannel.House.Client
 {
-	public class PagedResults<T> : Results<IEnumerable<T>>, IPagedResponse<T>
+	public interface IResults<T> : IResponse<T>
 	{
+		bool Success { get; set; }
+
 		/// <summary>
-		/// The Total number of items returned
+		/// Gets the errors.
 		/// </summary>
 		/// <value>
-		/// The total count.
+		/// The errors.
 		/// </value>
-		public long TotalCount { get; set; }
+		Dictionary<string, string[]> Errors { get; }
+
 		/// <summary>
-		/// Gets or sets the page.
+		/// Gets or sets the trace identifier.
 		/// </summary>
 		/// <value>
-		/// The page.
+		/// The trace identifier.
 		/// </value>
-		public long Page { get; set; }
+		string TraceId { get; set; }
+
 		/// <summary>
-		/// Gets or sets the size of the page.
+		/// Gets or sets the exception captured by any method
 		/// </summary>
 		/// <value>
-		/// The size of the page.
+		/// The exception.
 		/// </value>
-		public int PageSize { get; set; }
+		Exception Exception { get; set; }
 	}
 }
