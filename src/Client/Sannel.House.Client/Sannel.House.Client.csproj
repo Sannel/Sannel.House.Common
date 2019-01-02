@@ -4,9 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Sannel.House.Client</AssemblyName>
     <RootNamespace>Sannel.House.Client</RootNamespace>
-    <AssemblyVersion>$(Major).$(Minor).$(Patch).0</AssemblyVersion>
-    <FileVersion>$(Major).$(Minor).$(Patch).0</FileVersion>
-    <Version>$(Major).$(Minor).0-beta</Version>
+    <AssemblyVersion>$(Major).$(Minor).$(Patch).1</AssemblyVersion>
+    <FileVersion>$(Major).$(Minor).$(Patch).1</FileVersion>
+    <Version>$(Major).$(Minor).1-beta</Version>
     <Authors>Adam Holt</Authors>
     <Company>Sannel Software, L.L.C.</Company>
     <Description>Common classes used in one or more sannel house client library</Description>

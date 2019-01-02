@@ -58,3 +58,6 @@ Using Particle hardware. This project will monitor weather conditions and log th
 This project will monitor moisture conditions inside the lawn and log them back to the MQTT bus.
 ## Sannel.House.Room.Tempature
 This project will monitor temperature conditions in different rooms and log them back to the MQTT bus.
+
+# External Services
+- [My Get Feed](https://www.myget.org/feed/Packages/sannel-house)
