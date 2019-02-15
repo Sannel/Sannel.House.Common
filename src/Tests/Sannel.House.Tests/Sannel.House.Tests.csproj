@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	<IsPackable>true</IsPackable>
+    <RootNamespace>Sannel.House.Tests</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>$(Major).$(Minor).$(Patch).$(BuildNumber)</AssemblyVersion>
+    <FileVersion>$(Major).$(Minor).$(Patch).$(BuildNumber)</FileVersion>
+    <Version Condition="'$(IsRelease)' != 'true'">$(Major)$(Minor).1$(Patch).1$(BuildNumber)-beta</Version>
+    <Version Condition="'$(IsRelease)' == 'true'">$(Major)$(Minor).1$(Patch).1$(BuildNumber)</Version>
+    <Authors>Adam Holt</Authors>
+    <Company>Sannel Software, L.L.C.</Company>
+    <Description>Extensions and Helpers used to help with tests</Description>
+    <PackageLicenseUrl>https://github.com/Sannel/Sannel.House.Common/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Sannel/Sannel.House.Common</PackageProjectUrl>
+  </PropertyGroup>
+<ItemGroup>
+<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.2" />
+<PackageReference Include="xunit" Version="2.4.1" />
+</ItemGroup>
+
+</Project>

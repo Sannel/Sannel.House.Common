@@ -34,9 +34,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House.Sensor", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{59BACD57-FC25-49CA-A0BB-BD5CF608F529}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sannel.House.Models", "src\Models\Sannel.House.Models\Sannel.House.Models.csproj", "{E1EC99B1-E7C3-477E-9CEA-1E96BF85A197}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House.Models", "src\Models\Sannel.House.Models\Sannel.House.Models.csproj", "{E1EC99B1-E7C3-477E-9CEA-1E96BF85A197}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sannel.House.Models.Tests", "src\Models\Sannel.House.Models.Tests\Sannel.House.Models.Tests.csproj", "{FAAD3224-C1DC-4DAF-944F-3C2B4D42EF7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House.Models.Tests", "src\Models\Sannel.House.Models.Tests\Sannel.House.Models.Tests.csproj", "{FAAD3224-C1DC-4DAF-944F-3C2B4D42EF7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{503DE1A0-73C1-4279-B6B6-EFB4289F03E5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House.Tests", "src\Tests\Sannel.House.Tests\Sannel.House.Tests.csproj", "{693620C0-53A6-4219-A50E-E06C8120E9D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -178,6 +182,22 @@ Global
 		{FAAD3224-C1DC-4DAF-944F-3C2B4D42EF7C}.Release|x64.Build.0 = Release|Any CPU
 		{FAAD3224-C1DC-4DAF-944F-3C2B4D42EF7C}.Release|x86.ActiveCfg = Release|Any CPU
 		{FAAD3224-C1DC-4DAF-944F-3C2B4D42EF7C}.Release|x86.Build.0 = Release|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Debug|ARM.Build.0 = Debug|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Debug|x64.Build.0 = Debug|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Debug|x86.Build.0 = Debug|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Release|ARM.ActiveCfg = Release|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Release|ARM.Build.0 = Release|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Release|x64.ActiveCfg = Release|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Release|x64.Build.0 = Release|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Release|x86.ActiveCfg = Release|Any CPU
+		{693620C0-53A6-4219-A50E-E06C8120E9D3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -196,6 +216,8 @@ Global
 		{59BACD57-FC25-49CA-A0BB-BD5CF608F529} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
 		{E1EC99B1-E7C3-477E-9CEA-1E96BF85A197} = {59BACD57-FC25-49CA-A0BB-BD5CF608F529}
 		{FAAD3224-C1DC-4DAF-944F-3C2B4D42EF7C} = {59BACD57-FC25-49CA-A0BB-BD5CF608F529}
+		{503DE1A0-73C1-4279-B6B6-EFB4289F03E5} = {F84321D6-5C74-4960-AC46-AED4DB263C94}
+		{693620C0-53A6-4219-A50E-E06C8120E9D3} = {503DE1A0-73C1-4279-B6B6-EFB4289F03E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {39A1912D-C82B-4B54-A2C2-CB22583396DD}
