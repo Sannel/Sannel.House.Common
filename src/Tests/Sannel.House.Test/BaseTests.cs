@@ -18,6 +18,7 @@ namespace Sannel.House.Tests
 	public abstract class BaseTests : IDisposable
 	{
 		private ILoggerFactory loggerFactory;
+		private SqliteConnection connection;
 
 		/// <summary>
 		/// Creates the logger.
@@ -36,14 +37,16 @@ namespace Sannel.House.Tests
 		/// <returns></returns>
 		protected SqliteConnection OpenConnection()
 		{
-			var connection = new SqliteConnection("DataSource=:memory:");
-			connection.Open();
+			if (connection == null)
+			{
+				connection = new SqliteConnection("DataSource=:memory:");
+				connection.Open();
+			}
 			return connection;
 		}
 
-		public void Dispose()
-		{
-		}
+		public void Dispose() 
+			=> connection?.Dispose();
 	}
 
 	public abstract class BaseTests<T> : BaseTests
@@ -76,5 +79,12 @@ namespace Sannel.House.Tests
 			context.Database.Migrate();
 			return context;
 		}
+
+		/// <summary>
+		/// Creates the test database.
+		/// </summary>
+		/// <returns></returns>
+		public T CreateTestDB() 
+			=> GetTestDB(OpenConnection());
 	}
 }
