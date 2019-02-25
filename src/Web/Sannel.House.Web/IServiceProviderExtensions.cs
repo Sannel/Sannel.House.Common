@@ -32,7 +32,7 @@ namespace Sannel.House.Web
 		/// <param name="location">The location.</param>
 		/// <param name="fullPath">The full path.</param>
 		/// <param name="log">The log.</param>
-		private static bool installCertificate(StoreName name, StoreLocation location, string fullPath, ILogger log)
+		public static bool InstallCertificate(StoreName name, StoreLocation location, string fullPath, ILogger log)
 		{
 			using (var cert = new X509Certificate2(fullPath))
 			{
@@ -84,10 +84,10 @@ namespace Sannel.House.Web
 				{
 					using (var identity = WindowsIdentity.GetCurrent())
 					{
-						if(!installCertificate(StoreName.AuthRoot, StoreLocation.LocalMachine, fullPath, log))
+						if(!InstallCertificate(StoreName.AuthRoot, StoreLocation.LocalMachine, fullPath, log))
 						{
 							log.LogWarning("Unable to install cert in LocalMachine trying to install in CurrentUser");
-							if(!installCertificate(StoreName.CertificateAuthority, StoreLocation.CurrentUser, fullPath, log))
+							if(!InstallCertificate(StoreName.CertificateAuthority, StoreLocation.CurrentUser, fullPath, log))
 							{
 								log.LogError("Unable to install certificate");
 							}
@@ -105,7 +105,7 @@ namespace Sannel.House.Web
 				}
 				else if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 				{
-					installCertificate(StoreName.CertificateAuthority, StoreLocation.CurrentUser, fullPath, log);
+					InstallCertificate(StoreName.CertificateAuthority, StoreLocation.CurrentUser, fullPath, log);
 				}
 				else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
 				{
