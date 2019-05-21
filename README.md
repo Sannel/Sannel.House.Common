@@ -1,5 +1,22 @@
 # Sannel House
-Sannel House is a home automation framework. It uses docker for services that make since to run on docker. It uses MQTT for a local message bus specifically [eclipse-mosquitto](https://mosquitto.org/). Supports [Microsoft Sql Server](https://www.microsoft.com/en-us/sql-server), [MySql](https://www.mysql.com/), and [Sqlite](https://sqlite.org) for data storage. Some layers also support [MongoDB](https://www.mongodb.com/) for data storage.  
+Sannel House is a home automation framework. It uses docker for services that make since to run on docker. It uses MQTT for a local message bus specifically [eclipse-mosquitto](https://mosquitto.org/). Supports [Microsoft Sql Server](https://www.microsoft.com/en-us/sql-server), [MySql](https://www.mysql.com/), and [Sqlite](https://sqlite.org) for data storage.
+
+# Builds
+|enviornment|status|
+|----|----|
+|master|[![Build Status](https://dev.azure.com/SannelHouse/House%20Builds/_apis/build/status/House/Common?branchName=master)](https://dev.azure.com/SannelHouse/House%20Builds/_build/latest?definitionId=11&branchName=master)|
+|develop|[![Build Status](https://dev.azure.com/SannelHouse/House%20Builds/_apis/build/status/House/Common?branchName=develop)](https://dev.azure.com/SannelHouse/House%20Builds/_build/latest?definitionId=11&branchName=develop)|
+
+
+# Release
+|package|status|
+|----|----|
+|Client|[![Deployment Status](https://vsrm.dev.azure.com/SannelHouse/_apis/public/Release/badge/86b07db9-9ed4-4c59-845b-494cffefe9c9/4/5)](https://dev.azure.com/SannelHouse/House%20Builds/_releaseDefinition?definitionId=4)|
+|Data|[![Deployment Status](https://vsrm.dev.azure.com/SannelHouse/_apis/public/Release/badge/86b07db9-9ed4-4c59-845b-494cffefe9c9/4/6)](https://dev.azure.com/SannelHouse/House%20Builds/_releaseDefinition?definitionId=4)|
+|Models|[![Deployment Status](https://vsrm.dev.azure.com/SannelHouse/_apis/public/Release/badge/86b07db9-9ed4-4c59-845b-494cffefe9c9/4/7)](https://dev.azure.com/SannelHouse/House%20Builds/_releaseDefinition?definitionId=4)|
+|Sensor|[![Deployment Status](https://vsrm.dev.azure.com/SannelHouse/_apis/public/Release/badge/86b07db9-9ed4-4c59-845b-494cffefe9c9/4/8)](https://dev.azure.com/SannelHouse/House%20Builds/_releaseDefinition?definitionId=4)|
+|Test|[![Deployment Status](https://vsrm.dev.azure.com/SannelHouse/_apis/public/Release/badge/86b07db9-9ed4-4c59-845b-494cffefe9c9/4/9)](https://dev.azure.com/SannelHouse/House%20Builds/_releaseDefinition?definitionId=4)|
+|Web|[![Deployment Status](https://vsrm.dev.azure.com/SannelHouse/_apis/public/Release/badge/86b07db9-9ed4-4c59-845b-494cffefe9c9/4/10)](https://dev.azure.com/SannelHouse/House%20Builds/_releaseDefinition?definitionId=4)|
 
 # Sannel.House.Common
 Contains different projects that contain extensions and Classes are used in at least two projects/layers
