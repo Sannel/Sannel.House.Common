@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,8 +6,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AssemblyVersion>$(Major).$(Minor).$(Patch).$(BuildNumber)</AssemblyVersion>
     <FileVersion>$(Major).$(Minor).$(Patch).$(BuildNumber)</FileVersion>
-    <Version Condition="'$(IsRelease)' != 'true'">$(Major).$(Minor).$(Patch)-beta</Version>
-    <Version Condition="'$(IsRelease)' == 'true'">$(Major).$(Minor).$(Patch)</Version>
+    <Version Condition="'$(Configuration)' != 'Release'">$(Major).$(Minor).$(Patch)-beta</Version>
+    <Version Condition="'$(Configuration)' == 'Release'">$(Major).$(Minor).$(Patch)</Version>
     <Authors>Adam Holt</Authors>
     <Company>Sannel Software, L.L.C.</Company>
     <Description>Extensions and Helpers used by at least one web project</Description>
@@ -21,7 +21,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
-    <PackageReference Include="Sannel.House.Models" Version="201901.129.106-beta" />
+    <PackageReference Include="Sannel.House.Models" Version="0.5.137-beta" />
     <PackageReference Include="System.Security.Principal" Version="4.3.0" />
     <PackageReference Include="System.Security.Principal.Windows" Version="4.5.1" />
   </ItemGroup>
