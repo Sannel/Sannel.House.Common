@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,8 +6,8 @@
     <RootNamespace>Sannel.House.Client</RootNamespace>
     <AssemblyVersion>$(Major).$(Minor).$(Patch).$(BuildNumber)</AssemblyVersion>
     <FileVersion>$(Major).$(Minor).$(Patch).$(BuildNumber)</FileVersion>
-    <Version Condition="'$(IsRelease)' != 'true'">$(Major).$(Minor).$(Patch)-beta</Version>
-    <Version Condition="'$(IsRelease)' == 'true'">$(Major).$(Minor).$(Patch)</Version>
+    <Version Condition="'$(Configuration)' != 'Release'">$(Major).$(Minor).$(Patch)-beta</Version>
+    <Version Condition="'$(Configuration)' == 'Release'">$(Major).$(Minor).$(Patch)</Version>
     <Authors>Adam Holt</Authors>
     <Company>Sannel Software, L.L.C.</Company>
     <Description>Common classes used in one or more sannel house client library</Description>
