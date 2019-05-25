@@ -18,8 +18,8 @@ namespace Sannel.House.Client
 {
 	public abstract class ClientBase
 	{
-		private readonly IHttpClientFactory factory;
-		private readonly ILogger logger;
+		protected readonly IHttpClientFactory factory;
+		protected readonly ILogger logger;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DevicesClient" /> class.
