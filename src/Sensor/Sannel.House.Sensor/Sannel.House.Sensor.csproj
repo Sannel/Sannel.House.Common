@@ -9,15 +9,23 @@
     <Version Condition="'$(Configuration)' == 'Release'">$(Major).$(Minor).$(Patch)</Version>
 		<Authors>Adam Holt</Authors>
 		<Description>Common Classes and Enums that are shared between layers of Sannel House</Description>
-		<PackageLicenseUrl>https://github.com/Sannel/Sannel.House.Common/blob/master/LICENSE</PackageLicenseUrl>
+		<PackageLicenseUrl></PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/Sannel/Sannel.House.Common</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Sannel/Sannel.House.Common</RepositoryUrl>
 		<PackageReleaseNotes></PackageReleaseNotes>
 		<Company>Sannel Software, L.L.C.</Company>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	</PropertyGroup>
 
 	<ItemGroup>
 	  <PackageReference Update="NETStandard.Library" Version="2.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\..\LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>

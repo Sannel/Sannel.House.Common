@@ -11,8 +11,9 @@
     <Authors>Adam Holt</Authors>
     <Company>Sannel Software, L.L.C.</Company>
     <Description>Extensions and Helpers used by at least one web project</Description>
-    <PackageLicenseUrl>https://github.com/Sannel/Sannel.House.Common/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Sannel/Sannel.House.Common</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +25,13 @@
     <PackageReference Include="Sannel.House.Models" Version="0.5.137-beta" />
     <PackageReference Include="System.Security.Principal" Version="4.3.0" />
     <PackageReference Include="System.Security.Principal.Windows" Version="4.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
