@@ -7,7 +7,7 @@ namespace Sannel.House.Client
 {
 	public static class Helpers
 	{
-		public static void RegisterClient<T>(IServiceCollection service, Uri baseUrl, string path, string clientName, string version)
+		public static void RegisterClient(IServiceCollection service, Uri baseUrl, string path, string clientName, string version)
 		{
 			var builder = new UriBuilder(baseUrl)
 			{
