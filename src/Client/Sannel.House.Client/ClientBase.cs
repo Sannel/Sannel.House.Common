@@ -18,8 +18,9 @@ namespace Sannel.House.Client
 {
 	public abstract class ClientBase
 	{
-		protected readonly IHttpClientFactory factory;
+		protected readonly IHttpClientFactory factory=null;
 		protected readonly ILogger logger;
+		protected readonly HttpClient client = null;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DevicesClient" /> class.
@@ -34,6 +35,22 @@ namespace Sannel.House.Client
 		protected ClientBase(IHttpClientFactory factory, ILogger logger)
 		{
 			this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
+			this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ClientBase"/> class.
+		/// </summary>
+		/// <param name="client">The client.</param>
+		/// <param name="logger">The logger.</param>
+		/// <exception cref="ArgumentNullException">
+		/// client
+		/// or
+		/// logger
+		/// </exception>
+		protected ClientBase(HttpClient client, ILogger logger)
+		{
+			this.client = client ?? throw new ArgumentNullException(nameof(client));
 			this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
 
