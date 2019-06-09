@@ -60,7 +60,7 @@ namespace Sannel.House.Client
 		/// <value>
 		/// The authentication token.
 		/// </value>
-		public string AuthToken
+		public virtual string AuthToken
 		{
 			get;
 			set;
@@ -103,7 +103,7 @@ namespace Sannel.House.Client
 		/// Adds the authorization header.
 		/// </summary>
 		/// <param name="message">The message.</param>
-		protected void AddAuthorizationHeader(HttpRequestMessage message)
+		protected virtual void AddAuthorizationHeader(HttpRequestMessage message)
 			=> message.Headers.Authorization
 				= new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AuthToken);
 
