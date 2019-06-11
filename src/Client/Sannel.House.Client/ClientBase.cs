@@ -21,35 +21,36 @@ namespace Sannel.House.Client
 		protected readonly IHttpClientFactory factory=null;
 		protected readonly ILogger logger;
 		protected readonly HttpClient client = null;
+		protected readonly string basePath = "/";
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DevicesClient" /> class.
 		/// </summary>
 		/// <param name="factory">The HttpClientFactory.</param>
+		/// <param name="basePath">The base path i.e. http://host/v1/ or http://host/</param>
 		/// <param name="logger">The logger.</param>
-		/// <exception cref="ArgumentNullException">
-		/// factory
+		/// <exception cref="ArgumentNullException">factory
 		/// or
-		/// logger
-		/// </exception>
-		protected ClientBase(IHttpClientFactory factory, ILogger logger)
+		/// logger</exception>
+		protected ClientBase(IHttpClientFactory factory, string basePath, ILogger logger)
 		{
+			this.basePath = basePath ?? throw new ArgumentNullException(nameof(basePath));
 			this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
 			this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ClientBase"/> class.
+		/// Initializes a new instance of the <see cref="ClientBase" /> class.
 		/// </summary>
 		/// <param name="client">The client.</param>
+		/// <param name="basePath">The base path i.e. http://host/v1/ or http://host/</param>
 		/// <param name="logger">The logger.</param>
-		/// <exception cref="ArgumentNullException">
-		/// client
+		/// <exception cref="ArgumentNullException">client
 		/// or
-		/// logger
-		/// </exception>
-		protected ClientBase(HttpClient client, ILogger logger)
+		/// logger</exception>
+		protected ClientBase(HttpClient client, string basePath, ILogger logger)
 		{
+			this.basePath = basePath ?? throw new ArgumentNullException(nameof(basePath));
 			this.client = client ?? throw new ArgumentNullException(nameof(client));
 			this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
@@ -115,6 +116,32 @@ namespace Sannel.House.Client
 		protected abstract HttpClient GetClient();
 
 		/// <summary>
+		/// Prepares the path.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentNullException">path</exception>
+		protected virtual Uri PreparePath(string path)
+		{
+			if(path == null)
+			{
+				throw new ArgumentNullException(nameof(path));
+			}
+
+			var builder = new UriBuilder(basePath);
+			if(path.StartsWith("/"))
+			{
+				builder.Path = path;
+			}
+			else
+			{
+				builder.Path += path;
+			}
+
+			return builder.Uri;
+		}
+
+		/// <summary>
 		/// Does a get call to the provided url
 		/// </summary>
 		/// <param name="url">The URL.</param>
@@ -125,7 +152,7 @@ namespace Sannel.House.Client
 			var client = GetClient();
 			try
 			{
-				using (var message = new HttpRequestMessage(HttpMethod.Get, url))
+				using (var message = new HttpRequestMessage(HttpMethod.Get, PreparePath(url)))
 				{
 					AddAuthorizationHeader(message);
 					if (logger.IsEnabled(LogLevel.Debug))
@@ -162,7 +189,7 @@ namespace Sannel.House.Client
 			var client = GetClient();
 			try
 			{
-				using (var message = new HttpRequestMessage(HttpMethod.Post, url))
+				using (var message = new HttpRequestMessage(HttpMethod.Post, PreparePath(url)))
 				{
 					AddAuthorizationHeader(message);
 					if (logger.IsEnabled(LogLevel.Debug))
@@ -203,7 +230,7 @@ namespace Sannel.House.Client
 			var client = GetClient();
 			try
 			{
-				using (var message = new HttpRequestMessage(HttpMethod.Put, url))
+				using (var message = new HttpRequestMessage(HttpMethod.Put, PreparePath(url)))
 				{
 					AddAuthorizationHeader(message);
 					if (logger.IsEnabled(LogLevel.Debug))
@@ -243,7 +270,7 @@ namespace Sannel.House.Client
 			var client = GetClient();
 			try
 			{
-				using (var message = new HttpRequestMessage(HttpMethod.Delete, url))
+				using (var message = new HttpRequestMessage(HttpMethod.Delete, PreparePath(url)))
 				{
 					AddAuthorizationHeader(message);
 					if (logger.IsEnabled(LogLevel.Debug))
