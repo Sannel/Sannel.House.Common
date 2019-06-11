@@ -21,20 +21,25 @@ namespace Sannel.House.Client
 		protected readonly IHttpClientFactory factory=null;
 		protected readonly ILogger logger;
 		protected readonly HttpClient client = null;
-		protected readonly string basePath = "/";
+		protected readonly string baseUri = "/";
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DevicesClient" /> class.
 		/// </summary>
 		/// <param name="factory">The HttpClientFactory.</param>
-		/// <param name="basePath">The base path i.e. http://host/v1/ or http://host/</param>
+		/// <param name="baseUri">The base path i.e. http://host/v1/ or http://host/</param>
 		/// <param name="logger">The logger.</param>
 		/// <exception cref="ArgumentNullException">factory
 		/// or
 		/// logger</exception>
-		protected ClientBase(IHttpClientFactory factory, string basePath, ILogger logger)
+		protected ClientBase(IHttpClientFactory factory, string baseUri, ILogger logger)
 		{
-			this.basePath = basePath ?? throw new ArgumentNullException(nameof(basePath));
+			if(!Uri.IsWellFormedUriString(baseUri ?? throw new ArgumentNullException(nameof(baseUri))
+				, UriKind.Absolute))
+			{
+				throw new ArgumentException("Invalid Uri format", nameof(baseUri));
+			}
+			this.baseUri = baseUri;
 			this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
 			this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
@@ -43,14 +48,19 @@ namespace Sannel.House.Client
 		/// Initializes a new instance of the <see cref="ClientBase" /> class.
 		/// </summary>
 		/// <param name="client">The client.</param>
-		/// <param name="basePath">The base path i.e. http://host/v1/ or http://host/</param>
+		/// <param name="baseUri">The base path i.e. http://host/v1/ or http://host/</param>
 		/// <param name="logger">The logger.</param>
 		/// <exception cref="ArgumentNullException">client
 		/// or
 		/// logger</exception>
-		protected ClientBase(HttpClient client, string basePath, ILogger logger)
+		protected ClientBase(HttpClient client, string baseUri, ILogger logger)
 		{
-			this.basePath = basePath ?? throw new ArgumentNullException(nameof(basePath));
+			if(!Uri.IsWellFormedUriString(baseUri ?? throw new ArgumentNullException(nameof(baseUri))
+				, UriKind.Absolute))
+			{
+				throw new ArgumentException("Invalid Uri format", nameof(baseUri));
+			}
+			this.baseUri = baseUri;
 			this.client = client ?? throw new ArgumentNullException(nameof(client));
 			this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
@@ -128,7 +138,7 @@ namespace Sannel.House.Client
 				throw new ArgumentNullException(nameof(path));
 			}
 
-			var builder = new UriBuilder(basePath);
+			var builder = new UriBuilder(baseUri);
 			if(path.StartsWith("/"))
 			{
 				builder.Path = path;
