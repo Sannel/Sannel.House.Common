@@ -22,8 +22,8 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Sannel.House.Models" Version="0.5.137-beta" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
-		<PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="3.0.0" />
+		<PackageReference Include="System.ComponentModel.Annotations" Version="4.6.0" />
 	</ItemGroup>
 
   <ItemGroup>

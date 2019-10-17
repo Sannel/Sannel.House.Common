@@ -16,15 +16,22 @@ steps:
     packageType: 'sdk'
     version: '3.0.100'
     includePreviewVersions: true
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet restore'
+#- task: DotNetCoreCLI@2
+#  displayName: 'dotnet restore'
+#  inputs:
+#    command: custom
+#    projects: src/**/*.csproj
+#    custom: restore
+#    arguments: '--configfile .nuget/nuget.config'
+#    feedsToUse: config
+#    nugetConfigPath: .nuget/nuget.config
+#    externalFeedCredentials: 'Sannel Github'
+- task: NuGetCommand@2
   inputs:
-    command: custom
-    projects: src/**/*.csproj
-    custom: restore
-    arguments: '--configfile .nuget/nuget.config'
-    feedsToUse: config
-    nugetConfigPath: .nuget/nuget.config
+    command: 'restore'
+    restoreSolution: 'src/**/*.csproj'
+    feedsToUse: 'config'
+    nugetConfigPath: '.nuget/nuget.config'
     externalFeedCredentials: 'Sannel Github'
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build Release'
