@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House.Data", "src\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House.Sensor", "src\Sensor\Sannel.House.Sensor\Sannel.House.Sensor.csproj", "{191C5AF1-3AEC-496B-815C-7838E627D6E5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sannel.House.Test", "src\Tests\Sannel.House.Test\Sannel.House.Test.csproj", "{84B5A256-B326-4610-BA80-820B07411B12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,22 @@ Global
 		{191C5AF1-3AEC-496B-815C-7838E627D6E5}.Release|x64.Build.0 = Release|Any CPU
 		{191C5AF1-3AEC-496B-815C-7838E627D6E5}.Release|x86.ActiveCfg = Release|Any CPU
 		{191C5AF1-3AEC-496B-815C-7838E627D6E5}.Release|x86.Build.0 = Release|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Debug|ARM.Build.0 = Debug|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Debug|x64.Build.0 = Debug|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Debug|x86.Build.0 = Debug|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Release|ARM.ActiveCfg = Release|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Release|ARM.Build.0 = Release|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Release|x64.ActiveCfg = Release|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Release|x64.Build.0 = Release|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Release|x86.ActiveCfg = Release|Any CPU
+		{84B5A256-B326-4610-BA80-820B07411B12}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,6 +147,7 @@ Global
 		{6A459B6D-83FE-4487-A722-7B2C8A174C2B} = {59BACD57-FC25-49CA-A0BB-BD5CF608F529}
 		{BB44AAFD-3BD9-41BB-827B-13313E8B0935} = {09DD5FDA-A6C6-4421-B7BB-39BA5E86059D}
 		{191C5AF1-3AEC-496B-815C-7838E627D6E5} = {E6E6D86A-4F25-40CE-95E3-4E46497AFF3E}
+		{84B5A256-B326-4610-BA80-820B07411B12} = {503DE1A0-73C1-4279-B6B6-EFB4289F03E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {39A1912D-C82B-4B54-A2C2-CB22583396DD}
