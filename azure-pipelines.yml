@@ -25,7 +25,7 @@ steps:
 #    arguments: '--configfile .nuget/nuget.config'
     feedsToUse: config
     nugetConfigPath: .nuget/nuget.config
-    externalFeedCredentials: 'Sannel Github'
+    externalFeedCredentials: 'Sannel Github Read'
 #- task: DotNetCoreCLI@2
 #  displayName: 'dotnet build Release'
 #  inputs:
