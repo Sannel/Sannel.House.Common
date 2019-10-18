@@ -22,7 +22,7 @@ steps:
     command: custom
     packagesToPack: 'src/**/*.csproj'
     custom: restore
-#    arguments: '--configfile .nuget/nuget.config'
+    arguments: '--configfile .nuget/nuget.config'
     feedsToUse: config
     nugetConfigPath: .nuget/nuget.config
     externalFeedCredentials: 'Sannel Github Read'
