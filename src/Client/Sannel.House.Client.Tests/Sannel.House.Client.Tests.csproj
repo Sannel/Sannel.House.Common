@@ -20,4 +20,5 @@
     <ProjectReference Include="..\Sannel.House.Client\Sannel.House.Client.csproj" />
   </ItemGroup>
 
+
 </Project>
