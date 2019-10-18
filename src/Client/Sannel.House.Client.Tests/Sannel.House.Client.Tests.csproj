@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
-    <PackageReference Include="Moq" Version="4.13.0" />
     <PackageReference Include="Sannel.House.Models" Version="0.5.317-beta" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
@@ -18,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sannel.House.Web\Sannel.House.Web.csproj" />
+    <ProjectReference Include="..\Sannel.House.Client\Sannel.House.Client.csproj" />
   </ItemGroup>
 
 </Project>
