@@ -20,7 +20,7 @@ steps:
   displayName: 'dotnet restore'
   inputs:
     command: custom
-    packagesToPack: 'src/Models/Sannel.House.Models/Sannel.House.Models.csproj'
+    packagesToPack: 'src/**/*.csproj'
     custom: restore
 #    arguments: '--configfile .nuget/nuget.config'
 #    feedsToUse: config
@@ -35,7 +35,7 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build Debug'
   inputs:
-    packagesToPack: 'src/Models/Sannel.House.Models/Sannel.House.Models.csproj'
+    packagesToPack: 'src/**/*.csproj'
     arguments: '-c Debug'
   condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
 - task: DotNetCoreCLI@2
@@ -43,7 +43,7 @@ steps:
   inputs:
     command: publish
     publishWebProjects: false
-    packagesToPack: 'src/Models/Sannel.House.Models/Sannel.House.Models.csproj'
+    packagesToPack: 'src/**/*.csproj'
     arguments: '-o $(Build.StagingDirectory)'
     zipAfterPublish: false
 #- task: DotNetCoreCLI@2
@@ -58,7 +58,7 @@ steps:
   inputs:
     command: 'pack'
     feedsToUse: 'select'
-    packagesToPack: 'src/Models/Sannel.House.Models/Sannel.House.Models.csproj'
+    packagesToPack: 'src/**/*.csproj'
     configuration: 'Release'
     versioningScheme: 'off'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
@@ -67,7 +67,7 @@ steps:
   inputs:
     command: 'pack'
     feedsToUse: 'select'
-    packagesToPack: 'src/Models/Sannel.House.Models/Sannel.House.Models.csproj'
+    packagesToPack: 'src/**/*.csproj'
     configuration: 'Debug'
     versioningScheme: 'off'
   condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
