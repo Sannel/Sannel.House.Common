@@ -46,13 +46,13 @@ steps:
     packagesToPack: 'src/**/*.csproj'
     arguments: '-o $(Build.StagingDirectory)'
     zipAfterPublish: false
-#- task: DotNetCoreCLI@2
-#  displayName: 'dotnet test'
-#  inputs:
-#    projects: '**/*Tests.csproj'
-#    command: test
-#    arguments: '--collect "Code coverage"'
-#    publishTestResults: true
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
+  inputs:
+    projects: '**/*Tests.csproj'
+    command: test
+    arguments: '--collect "Code coverage"'
+    publishTestResults: true
 - task: DotNetCoreCLI@2
   displayName: 'dotnet pack Release'
   inputs:
