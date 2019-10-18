@@ -31,7 +31,7 @@ steps:
     command: 'restore'
     restoreSolution: 'src/**/*.csproj'
     feedsToUse: 'config'
-    nugetConfigPath: '.nuget/nuget.config'
+#    nugetConfigPath: '.nuget/nuget.config'
     externalFeedCredentials: 'Sannel Github Read'
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build Release'
