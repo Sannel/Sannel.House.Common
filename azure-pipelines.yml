@@ -23,8 +23,8 @@ steps:
     packagesToPack: 'src/**/*.csproj'
     custom: restore
 #    arguments: '--configfile .nuget/nuget.config'
-#    feedsToUse: config
-#    nugetConfigPath: .nuget/nuget.config
+    feedsToUse: config
+    nugetConfigPath: .nuget/nuget.config
     externalFeedCredentials: 'Sannel Github'
 #- task: DotNetCoreCLI@2
 #  displayName: 'dotnet build Release'
