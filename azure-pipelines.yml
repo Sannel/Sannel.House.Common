@@ -20,7 +20,7 @@ steps:
   displayName: 'dotnet restore'
   inputs:
     command: custom
-    projects: Sannel.House.Common.sln
+    projects: src/**/*.csproj
     custom: restore
 #    arguments: '--configfile .nuget/nuget.config'
 #    feedsToUse: config
