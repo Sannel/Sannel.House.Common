@@ -14,8 +14,8 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '3.0.100'
-    includePreviewVersions: true
+    version: '3.0'
+    includePreviewVersions: false
 - task: DotNetCoreCLI@2
   displayName: 'dotnet restore'
   inputs:
@@ -25,13 +25,13 @@ steps:
     arguments: '--configfile .nuget/nuget.config'
     feedsToUse: config
     nugetConfigPath: .nuget/nuget.config
-    externalFeedCredentials: 'Sannel Github Read'
-#- task: DotNetCoreCLI@2
-#  displayName: 'dotnet build Release'
-#  inputs:
-#    projects: src/**/*.csproj
-#    arguments: '-c Release'
-#  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+#    externalFeedCredentials: 'Sannel Github Read'
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build Release'
+  inputs:
+    projects: src/**/*.csproj
+    arguments: '-c Release'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build Debug'
   inputs:
