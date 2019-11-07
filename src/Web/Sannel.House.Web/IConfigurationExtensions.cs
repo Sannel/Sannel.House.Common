@@ -15,10 +15,62 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Sannel.House.Web
 {
 	public static class IConfigurationExtensions
 	{
+		/// <summary>
+		/// The replacement regex
+		/// </summary>
+		public static readonly Regex ReplacementRegex = new Regex(
+			"\\$\\{(?<key>[a-zA-Z0-9_\\-:]+)\\}",
+			RegexOptions.CultureInvariant
+			| RegexOptions.Compiled
+		);
+
+		/// <summary>
+		/// Gets the configuration value with replacement.
+		/// </summary>
+		/// <param name="configuration">The configuration.</param>
+		/// <param name="key">The key.</param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentNullException">
+		/// configuration
+		/// or
+		/// key
+		/// </exception>
+		public static string GetWithReplacement(this IConfiguration configuration, string key)
+		{
+			if(configuration == null)
+			{
+				throw new ArgumentNullException(nameof(configuration));
+			}
+
+			if(string.IsNullOrWhiteSpace(key))
+			{
+				throw new ArgumentNullException(nameof(key));
+			}
+
+			var value = configuration[key];
+			if(value != null)
+			{
+				value = ReplacementRegex.Replace(value, (Match target) =>
+				{
+					var group = target.Groups["key"];
+					if (group.Success)
+					{
+						return configuration[group.Value];
+					}
+
+					return target.Value;
+
+				});
+			}
+
+			return value;
+		}
+
 	}
 }
