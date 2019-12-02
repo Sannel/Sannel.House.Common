@@ -11,8 +11,8 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-using Newtonsoft.Json;
 using System.Net;
+using System.Text.Json.Serialization;
 
 namespace Sannel.House.Models
 {
@@ -63,7 +63,7 @@ namespace Sannel.House.Models
 		/// <value>
 		/// The status.
 		/// </value>
-		[JsonProperty("status")]
+		[JsonPropertyName("status")]
 		public int Status { get; set; } = 200;
 
 		/// <summary>
@@ -81,7 +81,7 @@ namespace Sannel.House.Models
 		/// <value>
 		/// The title.
 		/// </value>
-		[JsonProperty("title")]
+		[JsonPropertyName("title")]
 		public string Title { get; set; }
 	}
 
@@ -178,7 +178,7 @@ namespace Sannel.House.Models
 		/// <value>
 		/// The data.
 		/// </value>
-		[JsonProperty("data")]
+		[JsonPropertyName("data")]
 		public T Data { get; set; }
 	}
 }

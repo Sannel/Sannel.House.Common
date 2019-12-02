@@ -11,11 +11,9 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Sannel.House.Models
 {
@@ -105,7 +103,7 @@ namespace Sannel.House.Models
 		}
 
 
-		[JsonProperty("errors")]
+		[JsonPropertyName("errors")]
 		public Dictionary<string, string[]> Errors { get; set; } = new Dictionary<string, string[]>();
 
 	}
