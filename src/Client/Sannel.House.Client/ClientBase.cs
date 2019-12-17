@@ -9,9 +9,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.*/
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Sannel.House.Client
@@ -86,15 +87,22 @@ namespace Sannel.House.Client
 		protected virtual async Task<T> DeserializeIfSupportedCodeAsync<T>(HttpResponseMessage message)
 			where T : IResults, new()
 		{
+			if(message == null)
+			{
+				throw new ArgumentNullException(nameof(message));
+			}
+
 			switch (message.StatusCode)
 			{
 				case System.Net.HttpStatusCode.OK:
 				case System.Net.HttpStatusCode.NotFound:
 				case System.Net.HttpStatusCode.BadRequest:
-					var data = await message.Content.ReadAsStringAsync();
-					var obj = await Task.Run(() => JsonConvert.DeserializeObject<T>(data));
-					obj.Success = message.StatusCode == System.Net.HttpStatusCode.OK;
-					return obj;
+					using (var data = await message.Content.ReadAsStreamAsync())
+					{
+						var obj = await System.Text.Json.JsonSerializer.DeserializeAsync<T>(data);
+						obj.Success = message.StatusCode == System.Net.HttpStatusCode.OK;
+						return obj;
+					}
 
 				default:
 					var err = new T
@@ -115,7 +123,7 @@ namespace Sannel.House.Client
 		/// </summary>
 		/// <param name="message">The message.</param>
 		protected virtual void AddAuthorizationHeader(HttpRequestMessage message)
-			=> message.Headers.Authorization
+			=> (message ?? throw new ArgumentNullException(nameof(message))).Headers.Authorization
 				= new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AuthToken);
 
 
@@ -139,7 +147,7 @@ namespace Sannel.House.Client
 			}
 
 			var builder = new UriBuilder(baseUri);
-			if(path.StartsWith("/"))
+			if (path.StartsWith("/", StringComparison.InvariantCulture))
 			{
 				builder.Path = path;
 			}
@@ -207,8 +215,9 @@ namespace Sannel.House.Client
 						logger.LogDebug("RequestUri: {0}", message.RequestUri);
 						logger.LogDebug("AuthHeader: {0}", message.Headers.Authorization);
 					}
+
 					message.Content = new StringContent(
-							await Task.Run(() => JsonConvert.SerializeObject(obj)),
+							await Task.Run(() => JsonSerializer.Serialize(obj)),
 							System.Text.Encoding.UTF8,
 							"application/json");
 					var response = await client.SendAsync(message);
@@ -249,7 +258,7 @@ namespace Sannel.House.Client
 						logger.LogDebug("AuthHeader: {0}", message.Headers.Authorization);
 					}
 					message.Content = new StringContent(
-							await Task.Run(() => JsonConvert.SerializeObject(obj)),
+							await Task.Run(() => JsonSerializer.Serialize(obj)),
 							System.Text.Encoding.UTF8,
 							"application/json");
 					var response = await client.SendAsync(message);

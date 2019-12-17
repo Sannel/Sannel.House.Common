@@ -8,13 +8,13 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Sannel.House.Models;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Sannel.House.Client
@@ -35,11 +35,11 @@ namespace Sannel.House.Client
 		{
 			try
 			{
-				var r = JsonConvert.DeserializeObject<Results<T>>(json ?? throw new ArgumentNullException(nameof(json)));
+				var r = JsonSerializer.Deserialize<Results<T>>(json ?? throw new ArgumentNullException(nameof(json)));
 				r.Success = true;
 				return r;
 			}
-			catch(JsonSerializationException jse)
+			catch(JsonException jse)
 			{
 				var r = new Results<T>
 				{
@@ -73,7 +73,9 @@ namespace Sannel.House.Client
 		/// <value>
 		/// The errors.
 		/// </value>
-		public Dictionary<string, string[]> Errors { get; } = new Dictionary<string, string[]>();
+		[JsonPropertyName("errors")]
+		public Dictionary<string, string[]> Errors { get; set; } = new Dictionary<string, string[]>();
+
 
 		/// <summary>
 		/// Gets or sets the trace identifier.
@@ -81,6 +83,7 @@ namespace Sannel.House.Client
 		/// <value>
 		/// The trace identifier.
 		/// </value>
+		[JsonPropertyName("traceId")]
 		public string TraceId { get; set; }
 
 		/// <summary>

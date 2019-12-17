@@ -11,11 +11,11 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.*/
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -31,11 +31,11 @@ namespace Sannel.House.Client.Tests
 
 			var results = Results<object>.CreateFromJson("{");
 			Assert.False(results.Success);
-			Assert.IsType<JsonSerializationException>(results.Exception);
+			Assert.IsType<JsonException>(results.Exception);
 
 			results = await Results<object>.CreateFromJsonAsync("{");
 			Assert.False(results.Success);
-			Assert.IsType<JsonSerializationException>(results.Exception);
+			Assert.IsType<JsonException>(results.Exception);
 		}
 
 		[Fact]
